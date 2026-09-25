@@ -1,0 +1,168 @@
+{
+  "upperNavbar": {
+    "live": "লাইভ",
+    "needHelp": "সাহায্য লাগবে? কল করুন:",
+    "becomeVendor": "বিক্রেতা হোন",
+    "orderTracking": "অর্ডার ট্র্যাকিং"
+  },
+  "navbar": {
+    "allCategories": "সব ক্যাটাগরি",
+    "searchCategories": "ক্যাটাগরি খুঁজুন...",
+    "searchPlaceholder": "আমি কিনতে চাই...",
+    "searchIcon": "সার্চ আইকন",
+    "untitledCategory": "নামহীন ক্যাটাগরি",
+    "browseCategories": "ক্যাটাগরি ব্রাউজ করুন",
+    "viewMoreCategories": "আরও ক্যাটাগরি দেখুন",
+    "cart": "কার্ট",
+    "account": "অ্যাকাউন্ট",
+    "logout": "লগআউট",
+    "login": "লগইন",
+    "signUp": "সাইন আপ",
+    "followUs": "আমাদের অনুসরণ করুন",
+    "developedBy": "ডেভেলপ করেছেন আনিক",
+    "mobile": {
+      "category": "ক্যাটাগরি",
+      "pages": "পেজসমূহ",
+      "languages": "ভাষাসমূহ",
+      "aboutUs": "আমাদের সম্পর্কে",
+      "returnPolicy": "রিটার্ন নীতি",
+      "supportPolicy": "গোপনীয়তা ও নীতি"
+    },
+    "menu": {
+      "home": "হোম",
+      "shop": "শপ",
+      "customOrder": "কাস্টম অর্ডার",
+      "customMedicineOrder": "কাস্টম মেডিসিন অর্ডার",
+      "laundryService": "লন্ড্রি সার্ভিস",
+      "foodHeaven": "ফুড হেভেন",
+      "womensClothing": "মহিলাদের পোশাক",
+      "mensClothing": "পুরুষদের পোশাক",
+      "womensCare": "মহিলাদের যত্ন",
+      "mensCare": "পুরুষদের যত্ন"
+    },
+    "laundryModal": {
+      "title": "লন্ড্রি সার্ভিস ফর্ম",
+      "imageAlt": "লন্ড্রি সার্ভিস",
+      "note": "লন্ড্রি হোম সার্ভিস নিতে call a rider বাটনে প্রেস করুন। লোকেশন নিশ্চিত করার পর submit এ ক্লিক করুন। আপনার দেওয়া লোকেশন অনুযায়ী রাইডার আপনার বাসায় পৌঁছে যাবে।",
+      "label": "সার্ভিস নাম",
+      "placeholder": "আপনার কোনো প্রশ্ন থাকলে এখানে লিখুন।",
+      "submit": "রাইডার কল করুন/সাবমিট",
+      "submitting": "সাবমিট হচ্ছে...",
+      "loginRequired": "চালিয়ে যেতে অনুগ্রহ করে লগইন করুন",
+      "noteRequired": "সাবমিট করার আগে অনুগ্রহ করে আপনার প্রশ্ন লিখুন",
+      "submitSuccess": "লন্ড্রি সার্ভিস রিকোয়েস্ট সফলভাবে সাবমিট হয়েছে",
+      "submitError": "লন্ড্রি সার্ভিস রিকোয়েস্ট সাবমিট করা যায়নি"
+    }
+  },
+  "foodNavbar": {
+      "searchPlaceholder": "রেস্টুরেন্ট খুঁজুন..."
+    },
+  "category": {
+    "browseBy": "দিয়ে ব্রাউজ করুন",
+    "categories": "ক্যাটাগরিগুলি",
+    "viewAll": "সব দেখুন",
+    "viewAllCategories": "সব ক্যাটাগরি দেখুন"
+  },
+
+  "super-shop-category": {
+    "browseBy": "সুপার শপ",
+    "categories": "ক্যাটাগরিগুলি"
+  },
+  "hero": {
+    "goToSlide": "স্লাইডে যান",
+    "bannerImageAlt": "প্রমোশনাল ব্যানারের ছবি",
+    "serviceCards": {
+      "superShop": "সুপার শপ",
+      "superShopAlt": "সুপার শপ",
+      "laundryService": "লন্ড্রি সার্ভিস",
+      "laundryAlt": "ওয়াশিং মেশিন",
+      "medicine": "মেডিসিন",
+      "medicineAlt": "মেডিসিন",
+      "food": "ফুড হেভেন",
+      "foodAlt": "খাদ্য"
+    }
+  },
+  "shopCard": {
+    "shopNow": "এখনই কিনুন",
+    "bannerAlt": "ব্যানার"
+  },
+  "offerCard": {
+    "title": "অফার",
+    "shopNow": "এখনই কিনুন",
+    "loading": "অফার লোড হচ্ছে...",
+    "error": "অফার লোড করা যায়নি।",
+    "empty": "কোনো অফার পাওয়া যায়নি।",
+    "imageAlt": "অফারের ছবি"
+  },
+  "productCardModal": {
+    "close": "বন্ধ করুন",
+    "category": "ক্যাটাগরি",
+    "variations": "ভ্যারিয়েশন",
+    "quantity": "পরিমাণ",
+    "addToCart": "কার্টে যোগ করুন",
+    "buyNow": "এখনই কিনুন",
+    "productImageAlt": "প্রোডাক্টের ছবি"
+  },
+  "productCard": {
+    "quickView": "কুইক ভিউ",
+    "unit": "ইউনিট",
+    "add": "যোগ করুন",
+    "productImageAlt": "প্রোডাক্টের ছবি"
+  },
+  "productDetails": {
+    "loading": "প্রোডাক্টের বিস্তারিত লোড হচ্ছে...",
+    "error": "প্রোডাক্টের বিস্তারিত লোড করা যায়নি।",
+    "thumbnail": "থাম্বনেইল",
+    "inStock": "স্টকে আছে",
+    "productImageAlt": "প্রোডাক্টের ছবি",
+    "category": "ক্যাটাগরি",
+    "notAvailable": "N/A",
+    "product": "প্রোডাক্ট",
+    "variations": "ভ্যারিয়েশন",
+    "variation": "ভ্যারিয়েশন",
+    "quantity": "পরিমাণ",
+    "addToCart": "কার্টে যোগ করুন",
+    "buyNow": "এখনই কিনুন",
+    "tabs": {
+      "description": "বিবরণ",
+      "delivery": "ডেলিভারি",
+      "review": "রিভিউ"
+    },
+    "noDescription": "কোনো বিবরণ পাওয়া যায়নি।",
+    "deliveryMessage": "বাংলাদেশের ভেতরে ২-৫ দিনের মধ্যে ডেলিভারি।",
+    "noReviews": "এখনও কোনো রিভিউ নেই।"
+  },
+  "featureProduct": {
+    "title": "ফিচার্ড প্রোডাক্ট",
+    "all": "সব",
+    "loadingProducts": "প্রোডাক্ট লোড হচ্ছে...",
+    "productNotFound": "প্রোডাক্ট পাওয়া যায়নি"
+  },
+  "trendingProduct": {
+    "title": "ট্রেন্ডিং প্রোডাক্ট"
+  },
+  "foodMerchantRestaurant": {
+    "title": "সব রেস্টুরেন্ট",
+    "all": "সব",
+    "loadingProducts": "রেস্টুরেন্ট লোড হচ্ছে...",
+    "productNotFound": "রেস্টুরেন্ট পাওয়া যায়নি"
+  },
+  "foodMerchantRestaurantProduct": {
+    "title": "সব প্রোডাক্ট",
+    "all": "সব",
+    "loadingProducts": "প্রোডাক্ট লোড হচ্ছে...",
+    "productNotFound": "প্রোডাক্ট পাওয়া যায়নি"
+  },
+  "super-shop-product": {
+    "title": "প্রোডাক্ট",
+    "all": "সব",
+    "loadingProducts": "প্রোডাক্ট লোড হচ্ছে...",
+    "productNotFound": "প্রোডাক্ট পাওয়া যায়নি"
+  },
+   "offer-product": {
+    "title": "অফার প্রোডাক্ট",
+    "all": "সব",
+    "loadingProducts": "প্রোডাক্ট লোড হচ্ছে...",
+    "productNotFound": "প্রোডাক্ট পাওয়া যায়নি"
+  }
+}

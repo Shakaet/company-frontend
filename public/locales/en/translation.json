@@ -1,0 +1,147 @@
+{
+  "upperNavbar": {
+    "live": "LIVE",
+    "needHelp": "Need help? Call Us:",
+    "becomeVendor": "Become a Vendor",
+    "orderTracking": "Order Tracking"
+  },
+  "navbar": {
+    "allCategories": "All Categories",
+    "searchCategories": "Search categories...",
+    "searchPlaceholder": "I am shopping for...",
+    "searchIcon": "Search icon",
+    "untitledCategory": "Untitled Category",
+    "browseCategories": "Browse Categories",
+    "viewMoreCategories": "View More Categories",
+    "cart": "Cart",
+    "account": "Account",
+    "logout": "Logout",
+    "login": "Login",
+    "signUp": "Sign Up",
+    "followUs": "Follow Us",
+    "developedBy": "Developed by Anik",
+    "mobile": {
+      "category": "Category",
+      "pages": "Pages",
+      "languages": "Languages",
+      "aboutUs": "About Us",
+      "returnPolicy": "Return Policy",
+      "supportPolicy": "Privacy & Policy"
+    },
+    "menu": {
+      "customMedicineOrder": "Custom Medicine Order"
+    }
+  },
+
+  "foodNavbar": {
+    "searchPlaceholder": "Search Restaurants..."
+  },
+
+  "category": {
+    "browseBy": "Browse by",
+    "categories": "Categories",
+    "viewAll": "View all",
+    "viewAllCategories": "View all categories"
+  },
+  "super-shop-category": {
+    "browseBy": "Super Shop",
+    "categories": "Categories"
+  },
+  "hero": {
+    "goToSlide": "Go to slide",
+    "bannerImageAlt": "Promotional banner image",
+    "serviceCards": {
+      "superShop": "Super Shop",
+      "superShopAlt": "Super Shop",
+      "laundryService": "Laundry Service",
+      "laundryAlt": "Washing Machine",
+      "medicine": "Medicine",
+      "medicineAlt": "Medicine",
+      "food": "Food Heaven",
+      "foodAlt": "Food"
+    }
+  },
+  "shopCard": {
+    "shopNow": "Shop Now",
+    "bannerAlt": "Banner"
+  },
+  "offerCard": {
+    "title": "Offers",
+    "shopNow": "Shop Now",
+    "loading": "Loading offers...",
+    "error": "Failed to load offers.",
+    "empty": "No offers found.",
+    "imageAlt": "Offer image"
+  },
+  "productCardModal": {
+    "close": "Close",
+    "category": "Category",
+    "variations": "Variations",
+    "quantity": "Quantity",
+    "addToCart": "Add to cart",
+    "buyNow": "Buy Now",
+    "productImageAlt": "Product image"
+  },
+  "productCard": {
+    "quickView": "Quick view",
+    "unit": "Unit",
+    "add": "Add",
+    "productImageAlt": "Product image"
+  },
+  "productDetails": {
+    "loading": "Loading product details...",
+    "error": "Failed to load product details.",
+    "thumbnail": "Thumbnail",
+    "inStock": "In Stock",
+    "productImageAlt": "Product image",
+    "category": "Category",
+    "notAvailable": "N/A",
+    "product": "Product",
+    "variations": "Variations",
+    "variation": "Variation",
+    "quantity": "Quantity",
+    "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
+    "tabs": {
+      "description": "Description",
+      "delivery": "Delivery",
+      "review": "Review"
+    },
+    "noDescription": "No description available.",
+    "deliveryMessage": "Delivery within 2-5 days inside Bangladesh.",
+    "noReviews": "No reviews yet."
+  },
+  "featureProduct": {
+    "title": "Featured Products",
+    "all": "All",
+    "loadingProducts": "Loading products...",
+    "productNotFound": "Product Not Found"
+  },
+  "trendingProduct": {
+    "title": "Trending Products"
+  },
+  "foodMerchantRestaurant": {
+    "title": "All Restaurants",
+    "all": "All",
+    "loadingProducts": "Loading restaurants...",
+    "productNotFound": "Restaurant Not Found"
+  },
+  "foodMerchantRestaurantProduct": {
+    "title": "All Products",
+    "all": "All",
+    "loadingProducts": "Loading products...",
+    "productNotFound": "Product Not Found"
+  },
+  "super-shop-product": {
+    "title": "Products",
+    "all": "All",
+    "loadingProducts": "Loading products...",
+    "productNotFound": "Product Not Found"
+  },
+  "offer-product": {
+    "title": "Offer Products",
+    "all": "All",
+    "loadingProducts": "Loading products...",
+    "productNotFound": "Product Not Found"
+  }
+}
