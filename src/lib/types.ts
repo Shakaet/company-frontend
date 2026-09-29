@@ -1,0 +1,46 @@
+export type Service = {
+  slug: string;
+  title: string;
+  shortDesc: string;
+  icon: string;
+  description: string;
+  features: string[];
+};
+
+export type Project = {
+  id: string;
+  title: string;
+  category: "web" | "app" | "marketing" | "uiux";
+  image: string;
+  client: string;
+  description: string;
+  tags: string[];
+};
+
+export type BlogPost = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  cover: string;
+  author: string;
+  date: string;
+  category: string;
+};
+
+export type Job = {
+  id: string;
+  title: string;
+  type: "Full-time" | "Part-time" | "Remote";
+  location: string;
+  description: string;
+  requirements: string[];
+};
+
+export type Testimonial = {
+  id: string;
+  name: string;
+  role: string;
+  message: string;
+  avatar: string;
+};
