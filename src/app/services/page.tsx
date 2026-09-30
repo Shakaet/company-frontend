@@ -3,8 +3,6 @@ import { getServices } from "@/lib/data";
 import ServiceHero from "@/components/services/ServiceHero";
 import ServiceListFilter from "@/components/services/ServiceListFilter";
 import ServiceProcess from "@/components/services/ServiceProcess";
-import ServiceConsultationForm from "@/components/services/ServiceConsultationForm";
-import { ShieldCheck, Sparkles, Clock, Lock } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Professional Digital Services & Engineering | ITStartup",
@@ -19,14 +17,8 @@ export default async function ServicesPage() {
   // Dynamically fetched services prepared for backend/API
   const allServices = await getServices();
 
-  const guarantees = [
-    { icon: Lock, title: "100% IP & Code Ownership", desc: "You own all repository rights, assets, and design files upon project completion." },
-    { icon: ShieldCheck, title: "Enterprise Grade Security", desc: "Adherence to OWASP standards, data encryption at rest and in transit." },
-    { icon: Clock, title: "On-Time Sprint Guarantee", desc: "Rigorous milestone delivery with weekly updates and live staging previews." },
-  ];
-
   return (
-    <main className="min-h-screen bg-slate-50/30">
+    <main className="min-h-screen bg-slate-50/30 pb-20">
       {/* Hero Header */}
       <ServiceHero totalServices={allServices.length} />
 
@@ -52,40 +44,6 @@ export default async function ServicesPage() {
 
       {/* Agile 4-Step Process Section */}
       <ServiceProcess />
-
-      {/* Guarantees Strip */}
-      <section className="py-16 bg-white border-b border-slate-100">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
-            {guarantees.map((g, idx) => {
-              const Icon = g.icon;
-              return (
-                <div
-                  key={idx}
-                  className="bg-slate-50/70 rounded-3xl p-6 sm:p-7 border border-slate-200/80 hover:bg-white hover:shadow-lg transition-all"
-                >
-                  <div className="w-11 h-11 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-base font-bold text-slate-900 mb-1.5">
-                    {g.title}
-                  </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    {g.desc}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Bottom Consultation Form Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <ServiceConsultationForm />
-        </div>
-      </section>
     </main>
   );
 }

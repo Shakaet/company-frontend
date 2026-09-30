@@ -3,20 +3,34 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
-const aboutSubmenu = [
+interface SubmenuItem {
+  href: string;
+  label: string;
+  desc?: string;
+  icon?: string;
+}
+
+interface NavLink {
+  href: string;
+  label: string;
+  submenu?: SubmenuItem[];
+  isMega?: boolean;
+}
+
+const aboutSubmenu: SubmenuItem[] = [
   { href: "/about/our-company",     label: "Our Company" },
   { href: "/about/our-team",        label: "Our Team" },
   { href: "/about/founder-message", label: "Founder Message" },
 ];
 
-const servicesSubmenu = [
+const servicesSubmenu: SubmenuItem[] = [
   { href: "/services/web",      label: "Web Development",   desc: "Modern and scalable web applications.", icon: "💻" },
   { href: "/services/mobile",   label: "Mobile Apps",       desc: "Native and cross-platform apps.",       icon: "📱" },
   { href: "/services/design",   label: "UI/UX Design",      desc: "Intuitive and engaging interfaces.",    icon: "🎨" },
   { href: "/services/marketing",label: "Digital Marketing", desc: "SEO, SMM and growth hacking.",          icon: "📈" },
 ];
 
-const links = [
+const links: NavLink[] = [
   { href: "/",          label: "Home" },
   { href: "/about",     label: "About",    submenu: aboutSubmenu },
   { href: "/services",  label: "Services", submenu: servicesSubmenu, isMega: true },
@@ -272,10 +286,10 @@ export default function Navbar() {
                               : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"
                           }`}
                         >
-                          {l.isMega && <span className="text-lg mt-0.5">{sub.icon}</span>}
+                          {l.isMega && sub.icon && <span className="text-lg mt-0.5">{sub.icon}</span>}
                           <div>
                             <span className="text-sm font-medium">{sub.label}</span>
-                            {l.isMega && <p className="text-xs text-gray-500 mt-0.5">{sub.desc}</p>}
+                            {l.isMega && sub.desc && <p className="text-xs text-gray-500 mt-0.5">{sub.desc}</p>}
                           </div>
                         </Link>
                       </li>
