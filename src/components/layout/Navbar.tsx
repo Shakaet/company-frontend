@@ -21,10 +21,11 @@ const links = [
 
 export default function Navbar() {
   const pathname   = usePathname();
-  const [open, setOpen]           = useState(false); // mobile drawer
-  const [aboutOpen, setAboutOpen] = useState(false); // mobile about accordion
-  const [hovered, setHovered]     = useState(false); // desktop dropdown
-  const dropdownRef = useRef<HTMLLIElement>(null);
+  const [open, setOpen]           = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [hovered, setHovered]     = useState(false);
+  const dropdownRef  = useRef<HTMLLIElement>(null);
+  const leaveTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 
   // Auto-close drawer on scroll (>10px threshold)
@@ -67,8 +68,13 @@ export default function Navbar() {
                   key={l.href}
                   className="relative"
                   ref={dropdownRef}
-                  onMouseEnter={() => setHovered(true)}
-                  onMouseLeave={() => setHovered(false)}
+                  onMouseEnter={() => {
+                    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+                    setHovered(true);
+                  }}
+                  onMouseLeave={() => {
+                    leaveTimer.current = setTimeout(() => setHovered(false), 150);
+                  }}
                 >
                   <button
                     className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 ${
@@ -84,9 +90,12 @@ export default function Navbar() {
                     </svg>
                   </button>
 
+                  {/* Invisible bridge — fills gap so cursor doesn't leave li */}
+                  <div className="absolute top-full left-0 w-full h-4" />
+
                   {/* Dropdown panel */}
                   <div
-                    className={`absolute top-full left-1/2 -translate-x-1/2 mt-3 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-200 origin-top ${
+                    className={`absolute top-full left-1/2 -translate-x-1/2 translate-y-4 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-200 origin-top ${
                       hovered
                         ? "opacity-100 scale-100 pointer-events-auto"
                         : "opacity-0 scale-95 pointer-events-none"
