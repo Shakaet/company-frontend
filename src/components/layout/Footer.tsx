@@ -5,9 +5,11 @@ export default function Footer() {
     <footer className="bg-gray-900 text-gray-300 pt-16 pb-6 mt-20">
       <div className="container-x grid md:grid-cols-3 gap-10">
         <div>
-          <h3 className="text-white font-extrabold text-lg mb-3">
-            IT<span className="text-blue-500">Startup</span>
-          </h3>
+          <Link href="/">
+            <h3 className="text-white font-extrabold text-lg mb-3 hover:text-blue-400 transition-colors">
+              IT<span className="text-blue-500">Startup</span>
+            </h3>
+          </Link>
           <p className="text-sm text-gray-400">Building digital products that matter.</p>
         </div>
         <div>
