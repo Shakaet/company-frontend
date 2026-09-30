@@ -18,7 +18,6 @@ import {
   Code, 
   Layers, 
   Zap, 
-  HelpCircle, 
   Mail, 
   ArrowRight 
 } from "lucide-react";
@@ -280,31 +279,6 @@ export default async function ServiceDetailPage({
                           {step.desc}
                         </p>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* FAQs */}
-            {service.faqs && service.faqs.length > 0 && (
-              <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-9 shadow-xs">
-                <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2.5">
-                  <HelpCircle className="w-5 h-5 text-blue-600" />
-                  <span>Frequently Asked Questions</span>
-                </h2>
-                <div className="space-y-4">
-                  {service.faqs.map((faq, idx) => (
-                    <div
-                      key={idx}
-                      className="p-5 rounded-2xl bg-slate-50/60 border border-slate-200/70"
-                    >
-                      <h4 className="font-bold text-slate-900 text-sm sm:text-base mb-2">
-                        {faq.q}
-                      </h4>
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                        {faq.a}
-                      </p>
                     </div>
                   ))}
                 </div>
