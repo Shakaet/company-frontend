@@ -42,16 +42,20 @@ export default function Hero() {
 
   const slides = [
     {
-      src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=85",
-      alt: "IT company team collaborating on software project",
+      src: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1920&h=1080&fit=crop&crop=center&q=90",
+      alt: "AI and software development team collaborating",
     },
     {
-      src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1920&q=85",
-      alt: "Developer coding on modern workspace",
+      src: "https://images.unsplash.com/photo-1603969072881-b0fc7f3d77d7?w=1920&h=1080&fit=crop&crop=center&q=90",
+      alt: "Modern IT office with developers working",
     },
     {
-      src: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1920&q=85",
-      alt: "Tech startup team meeting and planning",
+      src: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1920&h=1080&fit=crop&crop=center&q=90",
+      alt: "Tech startup team in modern workspace",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&h=1080&fit=crop&crop=center&q=90",
+      alt: "Circuit board and technology infrastructure",
     },
   ];
 
@@ -183,7 +187,8 @@ export default function Hero() {
 
       {/* ── Hero Image Slider ── */}
       <div
-        className="relative w-full overflow-hidden h-[80vh] cursor-grab active:cursor-grabbing select-none"
+        className="relative w-full select-none cursor-grab active:cursor-grabbing"
+        style={{ height: "85vh", minHeight: "520px", maxHeight: "960px" }}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onMouseMove={onMouseMove}
@@ -191,29 +196,53 @@ export default function Hero() {
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        {/* Slides */}
+        {/* Slides wrapper — full width flex strip */}
         <div
-          className="flex h-full transition-transform duration-700 ease-in-out"
+          className="flex h-full w-full transition-transform duration-700 ease-in-out"
           style={{ transform: `translateX(-${current * 100}%)` }}
         >
           {slides.map((slide, index) => (
-            <div key={slide.src} className="relative h-full w-full shrink-0 pointer-events-none">
+            <div
+              key={slide.src}
+              className="relative shrink-0 pointer-events-none overflow-hidden"
+              style={{ width: "100vw", height: "100%" }}
+            >
               <Image
                 src={slide.src}
                 alt={slide.alt}
                 fill
                 priority={index === 0}
                 sizes="100vw"
-                className="object-cover"
+                className="object-cover object-center"
+                style={{ userSelect: "none" }}
                 draggable={false}
+                unoptimized={false}
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-slate-950/20 to-transparent" />
+              {/* Gradient overlay — left-to-right darkening for text readability */}
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-900/30 to-slate-950/10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent" />
             </div>
           ))}
         </div>
 
-        {/* Dot indicators */}
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+        {/* ── Left / Right Arrow Buttons ── */}
+        <button
+          onClick={() => goTo(current - 1)}
+          aria-label="Previous slide"
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/40 transition-all duration-200 shadow-lg"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+        </button>
+        <button
+          onClick={() => goTo(current + 1)}
+          aria-label="Next slide"
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/40 transition-all duration-200 shadow-lg"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+        </button>
+
+        {/* ── Dot indicators ── */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2 items-center">
           {slides.map((_, i) => (
             <button
               key={i}
@@ -221,11 +250,16 @@ export default function Hero() {
               aria-label={`Go to slide ${i + 1}`}
               className={`rounded-full transition-all duration-300 ${
                 i === current
-                  ? "w-7 h-2.5 bg-white"
+                  ? "w-8 h-2.5 bg-white shadow-md"
                   : "w-2.5 h-2.5 bg-white/50 hover:bg-white/80"
               }`}
             />
           ))}
+        </div>
+
+        {/* ── Slide counter ── */}
+        <div className="absolute top-5 right-5 z-20 text-white/70 text-sm font-medium bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10">
+          {current + 1} / {slides.length}
         </div>
       </div>
 
