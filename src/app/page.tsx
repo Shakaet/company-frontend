@@ -5,7 +5,7 @@ import ProjectsPreview from "@/components/home/ProjectsPreview";
 import Clients from "@/components/home/Clients";
 import Testimonials from "@/components/home/Testimonials";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
-import BlogPreview from "@/components/home/BlogPreview";
+import PricingPreview from "@/components/home/PricingPreview";
 
 export default function HomePage() {
   return (
@@ -17,7 +17,7 @@ export default function HomePage() {
       <Clients />
       <Testimonials />
       <WhyChooseUs />
-      <BlogPreview />
+      <PricingPreview />
     </>
   );
 }

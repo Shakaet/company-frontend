@@ -45,12 +45,12 @@ export default function CareerHero({ totalJobs }: { totalJobs: number }) {
             <span>Explore Open Roles</span>
             <ArrowDown className="w-4 h-4" />
           </a>
-          <a
-            href="#perks"
+          <Link
+            href="/about/our-company"
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-semibold text-sm sm:text-base hover:bg-slate-50 hover:text-blue-600 hover:border-blue-200 shadow-xs hover:-translate-y-0.5 transition-all duration-200"
           >
-            <span>Why Join Us</span>
-          </a>
+            <span>About Our Company</span>
+          </Link>
         </div>
 
         {/* Stat Highlights Cards */}

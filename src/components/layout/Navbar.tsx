@@ -21,7 +21,7 @@ const links = [
   { href: "/about",     label: "About",    submenu: aboutSubmenu },
   { href: "/services",  label: "Services", submenu: servicesSubmenu, isMega: true },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/blog",      label: "Blog" },
+  { href: "/pricing",   label: "Pricing" },
   { href: "/career",    label: "Career" },
   { href: "/contact",   label: "Contact" },
 ];

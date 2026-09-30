@@ -1,4 +1,4 @@
-import { Service, Project, BlogPost, Job, Testimonial } from "./types";
+import { Service, Project, BlogPost, Job, Testimonial, PricingPlan } from "./types";
 
 export const services: Service[] = [
   {
@@ -214,13 +214,126 @@ export const services: Service[] = [
 ];
 
 export const projects: Project[] = [
-  { id: "p1", title: "E-commerce Platform", category: "web", image: "/images/project1.jpg", client: "ShopEase", description: "A modern storefront with cart & checkout.", tags: ["Next.js", "Stripe"] },
-  { id: "p2", title: "Food Delivery App", category: "app", image: "/images/project2.jpg", client: "FoodieHub", description: "Cross-platform delivery app.", tags: ["React Native"] },
-  { id: "p3", title: "SaaS Dashboard", category: "web", image: "/images/project3.jpg", client: "CloudMetrics", description: "Analytics dashboard with charts.", tags: ["Next.js", "Charts"] },
-  { id: "p4", title: "Brand Campaign", category: "marketing", image: "/images/project4.jpg", client: "NovaBrand", description: "Full-funnel ad campaign.", tags: ["SEO", "Ads"] },
-  { id: "p5", title: "Banking UI Kit", category: "uiux", image: "/images/project5.jpg", client: "FinTrust", description: "Design system for a fintech product.", tags: ["Figma"] },
-  { id: "p6", title: "Portfolio Website", category: "web", image: "/images/project6.jpg", client: "Ayesha K.", description: "Personal portfolio site.", tags: ["Next.js"] },
+  {
+    id: "p1",
+    title: "ShopEase Global Storefront",
+    slug: "shopease-ecommerce",
+    category: "web",
+    categoryLabel: "Web Platform",
+    client: "ShopEase Retail Inc.",
+    year: "2024",
+    image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=1200&q=80",
+    description: "A high-performance headless e-commerce storefront with instantaneous search, dynamic carts, and multi-currency Stripe checkout.",
+    tags: ["Next.js", "Stripe", "Tailwind CSS", "TypeScript", "Algolia"],
+    metrics: { value: "+140%", label: "Checkout Conversion" },
+    featured: true,
+  },
+  {
+    id: "p2",
+    title: "FoodieHub Delivery App",
+    slug: "foodiehub-delivery",
+    category: "app",
+    categoryLabel: "Mobile App",
+    client: "FoodieHub Networks",
+    year: "2024",
+    image: "https://images.unsplash.com/photo-1526367790999-0150786686a2?w=1200&q=80",
+    description: "Cross-platform iOS and Android food delivery ecosystem featuring real-time driver GPS tracking and instant in-app payments.",
+    tags: ["React Native", "Node.js", "WebSockets", "Google Maps", "Redux"],
+    metrics: { value: "500k+", label: "Active Mobile Downloads" },
+    featured: true,
+  },
+  {
+    id: "p3",
+    title: "CloudMetrics Analytics SaaS",
+    slug: "cloudmetrics-saas",
+    category: "web",
+    categoryLabel: "SaaS Dashboard",
+    client: "CloudMetrics Technologies",
+    year: "2024",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+    description: "Multi-tenant cloud analytics dashboard rendering millions of real-time telemetry events with sub-100ms querying.",
+    tags: ["Next.js", "PostgreSQL", "Tailwind CSS", "Prisma", "Docker"],
+    metrics: { value: "99.99%", label: "Uptime Availability" },
+    featured: true,
+  },
+  {
+    id: "p4",
+    title: "FinTrust Digital Banking Design",
+    slug: "fintrust-banking-design",
+    category: "uiux",
+    categoryLabel: "UI/UX Design",
+    client: "FinTrust Financial",
+    year: "2024",
+    image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=1200&q=80",
+    description: "Comprehensive Figma design system with 200+ reusable atomic tokens for a next-generation mobile banking experience.",
+    tags: ["Figma", "Design System", "WCAG 2.1", "Prototyping"],
+    metrics: { value: "4.9 / 5.0", label: "App Store User Rating" },
+    featured: false,
+  },
+  {
+    id: "p5",
+    title: "NovaBrand Global Acquisition",
+    slug: "novabrand-growth-campaign",
+    category: "marketing",
+    categoryLabel: "Growth & SEO",
+    client: "NovaBrand Consumer Group",
+    year: "2023",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80",
+    description: "Full-funnel digital growth strategy blending programmatic SEO keyword ranking with high-ROAS paid Meta and Google campaigns.",
+    tags: ["Technical SEO", "Google Ads", "Meta Ads", "GA4 Analytics"],
+    metrics: { value: "3.8x", label: "Return on Ad Spend" },
+    featured: false,
+  },
+  {
+    id: "p6",
+    title: "MediConnect Telehealth Suite",
+    slug: "mediconnect-telehealth",
+    category: "web",
+    categoryLabel: "Web Platform",
+    client: "MediConnect Health",
+    year: "2024",
+    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80",
+    description: "HIPAA-compliant telemedicine web portal enabling encrypted WebRTC video visits, digital prescription management, and appointment sync.",
+    tags: ["Next.js", "WebRTC", "HIPAA", "Tailwind CSS", "Node.js"],
+    metrics: { value: "45k+", label: "Patient Consultations" },
+    featured: false,
+  },
+  {
+    id: "p7",
+    title: "FitPulse AI Mobile Coach",
+    slug: "fitpulse-mobile-coach",
+    category: "app",
+    categoryLabel: "Mobile App",
+    client: "FitPulse Wellness Corp",
+    year: "2024",
+    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=1200&q=80",
+    description: "AI-powered fitness training app featuring computer vision posture analysis, real-time audio guidance, and personalized workout routines.",
+    tags: ["React Native", "TensorFlow Lite", "FastAPI", "iOS & Android"],
+    metrics: { value: "350k+", label: "Active Mobile Users" },
+    featured: true,
+  },
+  {
+    id: "p8",
+    title: "Lumina Smart Ecosystem Design",
+    slug: "lumina-smart-ecosystem",
+    category: "uiux",
+    categoryLabel: "UI/UX & IoT",
+    client: "Lumina Smart Devices",
+    year: "2024",
+    image: "https://images.unsplash.com/photo-1558002038-1055907df827?w=1200&q=80",
+    description: "Intuitive touch dashboard and mobile companion interface designed for smart home automation, climate control, and real-time energy telemetry.",
+    tags: ["Figma", "Design Tokens", "Interaction Design", "Dark Mode"],
+    metrics: { value: "98.7%", label: "Task Completion Rate" },
+    featured: false,
+  },
 ];
+
+export async function getProjects(): Promise<Project[]> {
+  // In the future:
+  // const res = await fetch(`${process.env.API_URL}/projects`, { next: { revalidate: 60 } });
+  // return res.json();
+  return projects;
+}
 
 export const blogs: BlogPost[] = [
   {
@@ -569,11 +682,116 @@ export async function getServiceBySlug(slug: string): Promise<Service | undefine
   );
 }
 
-export async function getRelatedServices(currentSlug: string): Promise<Service[]> {
-  const current = await getServiceBySlug(currentSlug);
-  return services
-    .filter((s) => s.slug !== current?.slug)
-    .slice(0, 3);
+export async function getRelatedServices(currentSlug: string, category?: string): Promise<Service[]> {
+  const normalized = currentSlug.toLowerCase();
+  const currentService = services.find(
+    (s) => s.slug === normalized || s.aliases?.some((a) => a.toLowerCase() === normalized)
+  );
+  const targetCategory = category || currentService?.category;
+
+  // First try to find other services in the same category
+  const sameCategory = services.filter(
+    (s) => s.slug !== normalized && targetCategory && s.category === targetCategory
+  );
+
+  if (sameCategory.length >= 2) {
+    return sameCategory.slice(0, 3);
+  }
+
+  // Otherwise, return other services excluding the current one
+  return services.filter((s) => s.slug !== normalized).slice(0, 3);
+}
+
+export const pricingPlans: PricingPlan[] = [
+  {
+    id: "mvp-starter",
+    name: "MVP & Prototype",
+    badge: "Fast Launch",
+    popular: false,
+    priceMonthly: "$2,499",
+    priceQuarterly: "$2,199",
+    period: "per month",
+    tagline: "Ideal for early-stage founders seeking a rapid, production-ready MVP.",
+    description: "A dedicated senior engineer and UI/UX designer delivering bi-weekly working sprints.",
+    idealFor: "Early startups, MVPs & product validation",
+    features: [
+      "1 Dedicated Senior Fullstack Engineer",
+      "Part-time UI/UX Designer & Prototyping",
+      "Next.js App Router, React 19 & Tailwind CSS",
+      "Node.js, PostgreSQL or Supabase backend",
+      "Bi-weekly sprint demos & staging previews",
+      "Direct Slack / WhatsApp channel communication",
+      "100% Code & Intellectual Property ownership",
+      "Basic SEO, analytics & performance setup",
+      "30-day post-launch bug warranty",
+    ],
+    notIncluded: [
+      "Dedicated 24/7 DevOps on-call",
+      "Custom SOC2 / HIPAA compliance audits",
+    ],
+    ctaText: "Start MVP Sprint",
+    ctaHref: "/contact",
+  },
+  {
+    id: "growth-squad",
+    name: "Growth Squad",
+    badge: "Most Popular",
+    popular: true,
+    priceMonthly: "$4,999",
+    priceQuarterly: "$4,499",
+    period: "per month",
+    tagline: "Our flagship engineering pod for scaling products and active roadmaps.",
+    description: "A full cross-functional team shipping features continuously with guaranteed sprint velocity.",
+    idealFor: "Funded startups, scale-ups & active products",
+    features: [
+      "2 Dedicated Senior Fullstack Engineers",
+      "1 Dedicated UI/UX & Design Systems Lead",
+      "1 Dedicated QA & Automation Engineer",
+      "Web, iOS & Android (React Native / Flutter)",
+      "Automated CI/CD pipelines & Docker orchestration",
+      "Daily asynchronous standups & weekly sprint demos",
+      "99.9% Uptime SLA & continuous monitoring",
+      "Direct CTO / Principal Architect advisory",
+      "Unlimited design & code revisions within sprint",
+      "60-day post-launch priority support",
+    ],
+    notIncluded: [],
+    ctaText: "Deploy Growth Squad",
+    ctaHref: "/contact",
+  },
+  {
+    id: "enterprise-custom",
+    name: "Dedicated Pod",
+    badge: "Enterprise Scale",
+    popular: false,
+    priceMonthly: "$8,999",
+    priceQuarterly: "$7,999",
+    period: "per month",
+    tagline: "Autonomous multi-disciplinary team tailored for mission-critical software.",
+    description: "High-throughput engineering pods with custom cloud architecture, compliance, and 24/7 monitoring.",
+    idealFor: "Enterprises, complex platforms & fintech/healthtech",
+    features: [
+      "4+ Senior Fullstack & Cloud Engineers",
+      "Lead Solutions Architect & Scrum Master",
+      "Senior Product Designer & Research Lead",
+      "Multi-cloud infrastructure (AWS / GCP / Kubernetes)",
+      "Strict 99.99% Uptime SLA with 24/7 on-call",
+      "SOC2, ISO 27001 & OWASP security audits",
+      "Custom third-party enterprise integrations",
+      "Dedicated Account Executive & monthly roadmap reviews",
+      "Guaranteed 30-min emergency response SLA",
+    ],
+    notIncluded: [],
+    ctaText: "Talk to Solutions Architect",
+    ctaHref: "/contact",
+  },
+];
+
+export async function getPricingPlans(): Promise<PricingPlan[]> {
+  // In the future:
+  // const res = await fetch(`${process.env.API_URL}/pricing`, { next: { revalidate: 60 } });
+  // return res.json();
+  return pricingPlans;
 }
 
 export const clients = ["Google", "Microsoft", "Stripe", "Vercel", "Shopify"];

@@ -21,11 +21,17 @@ export type Service = {
 export type Project = {
   id: string;
   title: string;
+  slug?: string;
   category: "web" | "app" | "marketing" | "uiux";
+  categoryLabel?: string;
   image: string;
   client: string;
+  year?: string;
   description: string;
+  liveUrl?: string;
   tags: string[];
+  metrics?: { value: string; label: string };
+  featured?: boolean;
 };
 
 export type BlogPost = {
@@ -37,6 +43,23 @@ export type BlogPost = {
   author: string;
   date: string;
   category: string;
+};
+
+export type PricingPlan = {
+  id: string;
+  name: string;
+  badge?: string;
+  popular?: boolean;
+  priceMonthly: string;
+  priceQuarterly?: string;
+  period: string;
+  tagline: string;
+  description: string;
+  idealFor: string;
+  features: string[];
+  notIncluded?: string[];
+  ctaText: string;
+  ctaHref: string;
 };
 
 export type Job = {

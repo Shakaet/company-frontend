@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/contact/ContactForm";
 import { 
-  Mail, 
-  Phone, 
   MapPin, 
   Clock, 
   Sparkles, 
   ShieldCheck, 
   Calendar, 
   ArrowRight, 
-  CheckCircle2, 
-  HelpCircle 
+  CheckCircle2 
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -23,60 +20,6 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  const contactChannels = [
-    {
-      icon: Mail,
-      title: "Email Us",
-      value: "hello@itstartup.com",
-      desc: "For general inquiries, RFPs, and estimates.",
-      href: "mailto:hello@itstartup.com",
-      actionText: "Send an email",
-    },
-    {
-      icon: Phone,
-      title: "Call or WhatsApp",
-      value: "+880 1700-000000",
-      desc: "Instant chat and direct phone consultation.",
-      href: "https://wa.me/8801700000000",
-      actionText: "Chat on WhatsApp",
-    },
-    {
-      icon: MapPin,
-      title: "Headquarters",
-      value: "Dhaka, Bangladesh",
-      desc: "Gulshan-2, Dhaka 1212. Collaborative hub.",
-      href: "#map",
-      actionText: "See map location",
-    },
-    {
-      icon: Clock,
-      title: "Office Hours",
-      value: "9:00 AM – 7:00 PM",
-      desc: "Monday to Friday (GMT+6). On-call for clients.",
-      href: "#contact-form",
-      actionText: "Leave a message",
-    },
-  ];
-
-  const faqs = [
-    {
-      q: "How quickly will I receive a response after submitting?",
-      a: "Our team reviews incoming project inquiries and responds within 2 business hours with initial feedback and discovery call scheduling options.",
-    },
-    {
-      q: "Can you sign a Non-Disclosure Agreement (NDA) before we discuss details?",
-      a: "Yes, absolutely. Check the 'Request an NDA' box in the contact form or email your standard NDA to hello@itstartup.com and we'll sign it before reviewing your proprietary specifications.",
-    },
-    {
-      q: "Do you work with international clients across different time zones?",
-      a: "Yes! Over 70% of our clients are based in the United States, Europe, Australia, and the Middle East. We maintain 4 to 6 overlapping working hours with your local time zone.",
-    },
-    {
-      q: "What engagement models do you offer?",
-      a: "We offer both fixed-price milestone delivery (for well-defined scopes) and dedicated monthly agile teams (for continuous product scaling).",
-    },
-  ];
-
   return (
     <main className="min-h-screen bg-slate-50/30 pb-24">
       {/* Hero Header */}
@@ -104,46 +47,8 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* 4 Contact Channels Cards */}
-      <section className="py-12 -mt-10 relative z-20">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {contactChannels.map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <a
-                  key={idx}
-                  href={item.href}
-                  className="group bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs hover:shadow-xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
-                      {item.title}
-                    </div>
-                    <div className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                      {item.value}
-                    </div>
-                    <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
-
-                  <div className="mt-5 pt-4 border-t border-slate-100 flex items-center gap-1.5 text-xs font-bold text-blue-600 group-hover:text-blue-700">
-                    <span>{item.actionText}</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </a>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       {/* Main 2-Column Contact & Location Section */}
-      <section id="contact-form" className="py-12 scroll-mt-24">
+      <section id="contact-form" className="py-16 sm:py-20 scroll-mt-24">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid lg:grid-cols-12 gap-8 items-start">
             
@@ -243,40 +148,6 @@ export default function ContactPage() {
               </div>
             </div>
 
-          </div>
-        </div>
-      </section>
-
-      {/* FAQs Section */}
-      <section className="py-16 bg-white border-t border-slate-100">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold mb-2">
-              <HelpCircle className="w-3.5 h-3.5" />
-              <span>Common Questions</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Frequently Asked Questions
-            </h2>
-            <p className="mt-2 text-sm text-slate-500">
-              Everything you need to know about starting a project with us.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {faqs.map((faq, idx) => (
-              <div
-                key={idx}
-                className="bg-slate-50/70 rounded-3xl p-6 sm:p-7 border border-slate-200/70"
-              >
-                <h3 className="font-bold text-slate-900 text-base mb-2">
-                  {faq.q}
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  {faq.a}
-                </p>
-              </div>
-            ))}
           </div>
         </div>
       </section>

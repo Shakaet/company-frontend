@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import { getJobs } from "@/lib/data";
 import CareerHero from "@/components/career/CareerHero";
 import CareerJobList from "@/components/career/CareerJobList";
-import PerksSection from "@/components/career/PerksSection";
-import HiringProcessSection from "@/components/career/HiringProcessSection";
-import TalentPoolCard from "@/components/career/TalentPoolCard";
 
 export const metadata: Metadata = {
   title: "Careers & Open Positions | ITStartup",
@@ -20,7 +17,7 @@ export default async function CareerPage() {
   const jobs = await getJobs();
 
   return (
-    <main className="min-h-screen bg-slate-50/30">
+    <main className="min-h-screen bg-slate-50/30 pb-20">
       {/* Hero Section */}
       <CareerHero totalJobs={jobs.length} />
 
@@ -43,15 +40,6 @@ export default async function CareerPage() {
           <CareerJobList jobs={jobs} />
         </div>
       </section>
-
-      {/* Why Join Us / Perks Section */}
-      <PerksSection />
-
-      {/* 4-Step Hiring Process Section */}
-      <HiringProcessSection />
-
-      {/* Spontaneous / Talent Pool Banner */}
-      <TalentPoolCard />
     </main>
   );
 }
