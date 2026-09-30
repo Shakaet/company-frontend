@@ -1,28 +1,298 @@
+"use client";
+import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 export default function Hero() {
+  const partners = [
+    { name: "TechCorp", emoji: "🏢" },
+    { name: "InnovateX", emoji: "💡" },
+    { name: "CloudSync", emoji: "☁️" },
+    { name: "NextGen", emoji: "⚡" },
+    { name: "DataFlow", emoji: "📊" },
+    { name: "AppWorks", emoji: "📱" },
+    { name: "CodeBase", emoji: "💻" },
+    { name: "PixelForge", emoji: "🎨" },
+    { name: "SwiftLab", emoji: "🚀" },
+  ];
+
+  const techStack = [
+    { name: "React", color: "#61DAFB", bg: "#0a1929", icon: "⚛️" },
+    { name: "Next.js", color: "#ffffff", bg: "#000000", icon: "▲" },
+    { name: "TypeScript", color: "#3178C6", bg: "#1a2a3a", icon: "TS" },
+    { name: "Node.js", color: "#68A063", bg: "#0f2010", icon: "🟩" },
+    { name: "MongoDB", color: "#47A248", bg: "#0d1f0d", icon: "🍃" },
+    { name: "AWS", color: "#FF9900", bg: "#1a1200", icon: "☁️" },
+    { name: "Docker", color: "#2496ED", bg: "#071929", icon: "🐳" },
+    { name: "Figma", color: "#F24E1E", bg: "#2a0d08", icon: "🎨" },
+    { name: "GraphQL", color: "#E535AB", bg: "#1a0014", icon: "◈" },
+    { name: "Tailwind", color: "#38BDF8", bg: "#071523", icon: "🌊" },
+  ];
+
+  const stats = [
+    { label: "Projects Delivered", value: "250+", icon: "🎯" },
+    { label: "Happy Clients", value: "120+", icon: "😊" },
+    { label: "Years of Experience", value: "8+", icon: "📅" },
+    { label: "Team Members", value: "35+", icon: "👥" },
+    { label: "Countries Served", value: "18+", icon: "🌍" },
+    { label: "Lines of Code", value: "2M+", icon: "💻" },
+    { label: "5-Star Reviews", value: "98%", icon: "⭐" },
+    { label: "Uptime SLA", value: "99.9%", icon: "🔒" },
+  ];
+
+  const slides = [
+    {
+      src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=85",
+      alt: "IT company team collaborating on software project",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1920&q=85",
+      alt: "Developer coding on modern workspace",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1920&q=85",
+      alt: "Tech startup team meeting and planning",
+    },
+  ];
+
+  const [current, setCurrent] = useState(0);
+  const dragStartX = useRef<number | null>(null);
+  const isDragging = useRef(false);
+  const autoSlideRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const startAutoSlide = () => {
+    if (autoSlideRef.current) clearInterval(autoSlideRef.current);
+    autoSlideRef.current = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 5000);
+  };
+
+  // Auto-slide
+  useEffect(() => {
+    startAutoSlide();
+    return () => { if (autoSlideRef.current) clearInterval(autoSlideRef.current); };
+  }, [slides.length]);
+
+  const goTo = (index: number) => {
+    setCurrent((index + slides.length) % slides.length);
+    startAutoSlide(); // reset timer on manual nav
+  };
+
+  // ── Drag / Swipe handlers ──
+  const onDragStart = (clientX: number) => {
+    dragStartX.current = clientX;
+    isDragging.current = false;
+  };
+
+  const onDragEnd = (clientX: number) => {
+    if (dragStartX.current === null) return;
+    const delta = dragStartX.current - clientX;
+    if (Math.abs(delta) > 50) {
+      goTo(delta > 0 ? current + 1 : current - 1);
+    }
+    dragStartX.current = null;
+  };
+
+  // Mouse events
+  const onMouseDown = (e: React.MouseEvent) => onDragStart(e.clientX);
+  const onMouseUp   = (e: React.MouseEvent) => onDragEnd(e.clientX);
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (dragStartX.current !== null) isDragging.current = true;
+    void e;
+  };
+
+  // Touch events
+  const onTouchStart = (e: React.TouchEvent) => onDragStart(e.touches[0].clientX);
+  const onTouchEnd   = (e: React.TouchEvent) => onDragEnd(e.changedTouches[0].clientX);
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      {/* Keyframe Animations */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        /* Row 1 — forward slide */
+        @keyframes marquee-forward {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .marquee-forward {
+          animation: marquee-forward 35s linear infinite;
+        }
+        .marquee-forward:hover { animation-play-state: paused; }
+
+        /* Row 2 — reverse slide */
+        @keyframes marquee-reverse {
+          0%   { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
+        }
+        .marquee-reverse {
+          animation: marquee-reverse 28s linear infinite;
+        }
+        .marquee-reverse:hover { animation-play-state: paused; }
+
+        /* Row 3 — stats ticker (faster) */
+        @keyframes marquee-fast {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .marquee-fast {
+          animation: marquee-fast 18s linear infinite;
+        }
+
+        /* Floating pulse on tech badges */
+        @keyframes float-up-down {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-6px); }
+        }
+        .float-badge {
+          animation: float-up-down 3s ease-in-out infinite;
+        }
+        .float-badge:nth-child(2n)   { animation-delay: 0.4s; }
+        .float-badge:nth-child(3n)   { animation-delay: 0.8s; }
+        .float-badge:nth-child(4n)   { animation-delay: 1.2s; }
+        .float-badge:nth-child(5n)   { animation-delay: 1.6s; }
+
+        /* Glow pulse on stat cards */
+        @keyframes glow-pulse {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,0); }
+          50%       { box-shadow: 0 0 18px 4px rgba(99,102,241,0.25); }
+        }
+        .stat-card {
+          animation: glow-pulse 2.5s ease-in-out infinite;
+        }
+        .stat-card:nth-child(2n) { animation-delay: 0.6s; }
+        .stat-card:nth-child(3n) { animation-delay: 1.2s; }
+
+        /* Shimmer on partner names */
+        @keyframes shimmer-text {
+          0%   { background-position: -200% center; }
+          100% { background-position:  200% center; }
+        }
+        .partner-name:hover {
+          background: linear-gradient(90deg, #94a3b8, #6366f1, #3b82f6, #94a3b8);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: shimmer-text 1.5s linear infinite;
+        }
+      `}} />
+
       <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full blur-3xl opacity-30" />
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-200 rounded-full blur-3xl opacity-30" />
 
-      <div className="relative container-x py-28 text-center">
-        <span className="inline-block px-4 py-1.5 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-6">
-          🚀 Trusted by 120+ startups
-        </span>
-        <h1 className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
-          We Build{" "}
-          <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            Digital Products
-          </span>{" "}
-          That Scale
-        </h1>
-        <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
-          From web apps to mobile experiences — we help startups ship faster.
-        </p>
-        <div className="mt-10 flex gap-4 justify-center flex-wrap">
-          <Link href="/contact" className="btn-primary">Get Started</Link>
-          <Link href="/portfolio" className="btn-outline">View Work</Link>
+      {/* ── Hero Image Slider ── */}
+      <div
+        className="relative w-full overflow-hidden h-[80vh] cursor-grab active:cursor-grabbing select-none"
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        onMouseMove={onMouseMove}
+        onMouseLeave={() => { dragStartX.current = null; }}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
+        {/* Slides */}
+        <div
+          className="flex h-full transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(-${current * 100}%)` }}
+        >
+          {slides.map((slide, index) => (
+            <div key={slide.src} className="relative h-full w-full shrink-0 pointer-events-none">
+              <Image
+                src={slide.src}
+                alt={slide.alt}
+                fill
+                priority={index === 0}
+                sizes="100vw"
+                className="object-cover"
+                draggable={false}
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-slate-950/20 to-transparent" />
+            </div>
+          ))}
+        </div>
+
+        {/* Dot indicators */}
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`rounded-full transition-all duration-300 ${
+                i === current
+                  ? "w-7 h-2.5 bg-white"
+                  : "w-2.5 h-2.5 bg-white/50 hover:bg-white/80"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* ─────────────────────────────────────────────────
+          BANNER ROW 1 — Partner / Client Names (Forward)
+      ───────────────────────────────────────────────── */}
+      <div className="relative w-full overflow-hidden bg-white/50 border-t border-white/70 py-5">
+        {/* Fade edges */}
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-white/80 to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white/80 to-transparent z-10" />
+
+        <div className="flex w-max marquee-forward">
+          {[...partners, ...partners].map((p, i) => (
+            <div key={i} className="flex items-center gap-2 mx-10 cursor-default select-none">
+              <span className="text-xl">{p.emoji}</span>
+              <span className="partner-name text-xl md:text-2xl font-extrabold text-slate-300 tracking-widest uppercase transition-all duration-300">
+                {p.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ─────────────────────────────────────────────────
+          BANNER ROW 2 — Tech Stack Badges (Reverse + Float)
+      ───────────────────────────────────────────────── */}
+      <div className="relative w-full overflow-hidden bg-white border-t border-slate-100 py-6">
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-white to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white to-transparent z-10" />
+
+        <div className="flex w-max marquee-reverse">
+          {[...techStack, ...techStack].map((tech, i) => (
+            <div
+              key={i}
+              className="float-badge flex items-center gap-2 mx-4 px-4 py-2 rounded-xl border bg-white cursor-default select-none transition-transform duration-300 hover:scale-110"
+              style={{
+                borderColor: tech.color + "60",
+                boxShadow: `0 2px 12px ${tech.color}18`,
+              }}
+            >
+              <span className="text-lg leading-none">{tech.icon}</span>
+              <span className="text-sm font-bold tracking-wide" style={{ color: tech.color }}>
+                {tech.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ─────────────────────────────────────────────────
+          BANNER ROW 3 — Animated Stats Ticker (Fast + Glow)
+      ───────────────────────────────────────────────── */}
+      <div className="relative w-full overflow-hidden bg-white border-t border-slate-100 py-5">
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-20 bg-gradient-to-r from-white to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-white to-transparent z-10" />
+
+        <div className="flex w-max marquee-fast">
+          {[...stats, ...stats].map((s, i) => (
+            <div
+              key={i}
+              className="stat-card flex items-center gap-3 mx-8 px-5 py-2 rounded-full bg-slate-50 border border-slate-100 cursor-default select-none"
+            >
+              <span className="text-xl">{s.icon}</span>
+              <span className="text-indigo-600 font-extrabold text-lg leading-none">{s.value}</span>
+              <span className="text-slate-500 text-sm font-medium">{s.label}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
