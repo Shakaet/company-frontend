@@ -2,36 +2,214 @@ import { Service, Project, BlogPost, Job, Testimonial } from "./types";
 
 export const services: Service[] = [
   {
+    id: "s-web",
     slug: "web-development",
-    title: "Web Development",
-    shortDesc: "Modern, fast & scalable web applications.",
+    aliases: ["web"],
+    title: "Web Application Development",
+    category: "Development",
+    badge: "Most Popular",
     icon: "Code",
-    description: "We build production-grade web applications using Next.js, React and Node.js.",
-    features: ["Next.js & React", "Node.js APIs", "Headless CMS", "Performance optimization"],
+    heroHeadline: "High-Performance Web Platforms Built for Scale & Speed",
+    shortDesc: "Custom, enterprise-grade web applications built with Next.js, React, TypeScript, and robust backend APIs.",
+    description: "We architect, build, and deploy production-grade web applications designed for lightning-fast performance, rock-solid security, and effortless scaling. From SaaS platforms to customer portals, we turn complex technical challenges into frictionless user experiences.",
+    features: [
+      "Next.js App Router & Server Components",
+      "High-performance REST & GraphQL APIs",
+      "Headless CMS & Database architecture",
+      "Sub-second load times & 100/100 Lighthouse score",
+    ],
+    deliverables: [
+      "Production-ready Next.js / React application codebase",
+      "Fully documented RESTful or GraphQL API endpoints",
+      "Responsive UI tested across 20+ mobile & desktop screen sizes",
+      "Automated CI/CD deployment pipelines on Vercel or AWS",
+      "Comprehensive unit, integration, and e2e test suite",
+      "30 days post-launch hypercare & bug-fixing warranty",
+    ],
+    benefits: [
+      { title: "Lightning Fast Performance", desc: "Edge rendering and intelligent caching ensure sub-second page loads." },
+      { title: "SEO & Core Web Vitals Ready", desc: "Structured semantic HTML and metadata optimization for maximum search rankings." },
+      { title: "Full Code Ownership", desc: "100% intellectual property transfer with clean, well-commented repository code." },
+      { title: "Scalable Architecture", desc: "Built to gracefully handle spikes from hundreds to millions of concurrent users." },
+    ],
+    techStack: ["Next.js", "React", "TypeScript", "Node.js", "PostgreSQL", "Tailwind CSS", "Prisma", "Docker"],
+    process: [
+      { step: "01", title: "Technical Discovery", desc: "We map out user flows, database architecture, third-party APIs, and security requirements." },
+      { step: "02", title: "System Blueprint", desc: "Setting up repository, CI/CD, design tokens, and reusable component libraries." },
+      { step: "03", title: "Agile Sprints", desc: "Two-week sprints with staging previews, continuous feedback, and live demo sessions." },
+      { step: "04", title: "Testing & Launch", desc: "Stress testing, security audits, SEO checks, and production deployment with zero downtime." },
+    ],
+    faqs: [
+      { q: "How long does a custom web development project typically take?", a: "Most projects take between 4 to 10 weeks depending on complexity, third-party integrations, and scope." },
+      { q: "Do you provide maintenance and ongoing updates after launch?", a: "Yes, every build includes 30 days of warranty support, and we offer dedicated monthly SLA maintenance packages." },
+      { q: "Will I have full access to the source code?", a: "Absolutely. You own 100% of the repository, assets, and deployment credentials from day one." },
+    ],
+    pricingStartingAt: "$2,500",
   },
   {
+    id: "s-mobile",
     slug: "app-development",
-    title: "App Development",
-    shortDesc: "Cross-platform mobile apps that users love.",
+    aliases: ["mobile"],
+    title: "Mobile App Development",
+    category: "Development",
+    badge: "Cross-Platform",
     icon: "Smartphone",
-    description: "Native-feeling mobile apps built with React Native and Flutter.",
-    features: ["React Native", "Flutter", "iOS & Android", "App Store deployment"],
+    heroHeadline: "Fluid, Native-Quality iOS & Android Apps Users Adore",
+    shortDesc: "Cross-platform mobile applications engineered with React Native and Flutter for seamless mobile experiences.",
+    description: "We develop high-performing iOS and Android applications that feel fluid, responsive, and native. By leveraging React Native and Flutter, we save up to 40% on engineering costs while shipping simultaneous 5-star experiences to both app stores.",
+    features: [
+      "Cross-platform iOS & Android from a single codebase",
+      "Offline-first data sync & real-time push notifications",
+      "Biometric authentication & secure in-app payments",
+      "Smooth 60fps native animations and intuitive gestures",
+    ],
+    deliverables: [
+      "Signed iOS (IPA) and Android (AAB/APK) application binaries",
+      "Complete App Store and Google Play Store submission handling",
+      "Firebase / Supabase backend setup with Push Notification triggers",
+      "In-app purchase (Stripe / Apple Pay / Google Pay) integrations",
+      "Crashlytics & analytics dashboard integration",
+    ],
+    benefits: [
+      { title: "One Codebase, Two Platforms", desc: "Reduce development cost and feature parity turnaround by up to 50%." },
+      { title: "Offline Capabilities", desc: "Local SQLite/WatermelonDB storage allows full app usability without an active connection." },
+      { title: "App Store Approval Guarantee", desc: "We guide your application through Apple and Google compliance reviews until live." },
+    ],
+    techStack: ["React Native", "Flutter", "TypeScript", "Firebase", "SQLite", "GraphQL", "Redux Toolkit"],
+    process: [
+      { step: "01", title: "App Wireframing", desc: "Defining mobile-first tap targets, gestures, navigation bars, and offline states." },
+      { step: "02", title: "Native Prototype", desc: "Validating performance, native device bridges (camera, GPS, biometrics)." },
+      { step: "03", title: "Sprint Engineering", desc: "Building UI components, state management, and real-time backend sync." },
+      { step: "04", title: "App Store Publishing", desc: "Beta testing via TestFlight & Google Play Console, followed by full store release." },
+    ],
+    faqs: [
+      { q: "Do you handle App Store and Google Play submissions?", a: "Yes, our team handles the entire preparation, asset generation, compliance forms, and submission process." },
+      { q: "Can the app work offline?", a: "Yes, we architect offline-first caching and sync mechanisms so users can continue work seamlessly." },
+    ],
+    pricingStartingAt: "$3,200",
   },
   {
-    slug: "digital-marketing",
-    title: "Digital Marketing",
-    shortDesc: "Grow your brand with data-driven marketing.",
-    icon: "Megaphone",
-    description: "SEO, paid ads and social campaigns that convert.",
-    features: ["SEO", "Google Ads", "Meta Ads", "Analytics & reporting"],
-  },
-  {
+    id: "s-design",
     slug: "ui-ux-design",
-    title: "UI/UX Design",
-    shortDesc: "Clean interfaces with delightful experiences.",
+    aliases: ["design"],
+    title: "UI/UX & Product Design",
+    category: "Design",
+    badge: "Human-Centric",
     icon: "Palette",
-    description: "Design systems, wireframes and prototypes built with user research.",
-    features: ["User research", "Wireframes", "Design systems", "Prototyping"],
+    heroHeadline: "Captivating Interfaces Rooted in Research, Designed to Convert",
+    shortDesc: "User research, scalable design systems, interactive prototypes, and conversion-optimized interfaces built in Figma.",
+    description: "Great design is not just aesthetics — it is your most powerful sales driver. We craft human-centered digital experiences that guide users effortlessly from onboarding to checkout, reducing churn and boosting engagement.",
+    features: [
+      "In-depth user research & journey mapping",
+      "Atomic Figma design systems with interactive variables",
+      "High-fidelity clickable prototypes for validation",
+      "Full WCAG 2.1 AA accessibility compliance",
+    ],
+    deliverables: [
+      "Comprehensive Figma design system (components, tokens, auto-layout)",
+      "Interactive click-through prototype ready for developer handoff",
+      "User journey maps, wireframes, and persona documentation",
+      "Ready-to-use vector iconography, typography scales, and illustration assets",
+    ],
+    benefits: [
+      { title: "Higher Conversion Rates", desc: "Data-backed UX patterns that remove friction and maximize customer retention." },
+      { title: "Seamless Dev Handoff", desc: "Engineers receive pixel-accurate specs, spacing tokens, and component states." },
+      { title: "Consistent Brand Identity", desc: "A unified visual language that scales effortlessly across web and mobile products." },
+    ],
+    techStack: ["Figma", "Design Systems", "Prototyping", "FigJam", "User Testing", "Lottie"],
+    process: [
+      { step: "01", title: "User Research", desc: "Analyzing competitor gaps, user pain points, and product objectives." },
+      { step: "02", title: "Low-Fi Wireframes", desc: "Architecting information hierarchy and screen navigation flow." },
+      { step: "03", title: "Visual Design System", desc: "Crafting color palettes, typography, components, and responsive layouts." },
+      { step: "04", title: "Handoff & Support", desc: "Interactive prototyping, dev-mode specs, and design QA during engineering." },
+    ],
+    faqs: [
+      { q: "What design tool do you use?", a: "We primarily work in Figma so you have real-time collaborative access to leave comments and review iterations." },
+      { q: "Do you design responsive layouts for tablets and phones?", a: "Yes, every screen is designed with responsive mobile, tablet, and widescreen desktop breakpoints." },
+    ],
+    pricingStartingAt: "$1,800",
+  },
+  {
+    id: "s-marketing",
+    slug: "digital-marketing",
+    aliases: ["marketing"],
+    title: "Digital Marketing & Growth",
+    category: "Growth",
+    badge: "ROI-Focused",
+    icon: "Megaphone",
+    heroHeadline: "Data-Driven Acquisition Funnels That Generate Qualified Inbound Leads",
+    shortDesc: "Full-funnel digital marketing, technical SEO, performance advertising, and content strategy that converts visitors into customers.",
+    description: "Building a great product is only half the battle. We create predictable customer acquisition engines using algorithmic search optimization, high-converting paid ad campaigns, and data-backed marketing funnels.",
+    features: [
+      "Technical SEO audits & topical authority ranking",
+      "High-ROI Google, Meta & LinkedIn paid ad campaigns",
+      "Landing page A/B testing & CRO (Conversion Rate Optimization)",
+      "Automated email marketing sequences & CRM onboarding",
+    ],
+    deliverables: [
+      "Comprehensive keyword research & competitor gap analysis report",
+      "Configured Google Analytics 4, Tag Manager, and Conversion Tracking",
+      "Ad creative variations (copy, graphics, video hooks)",
+      "Bi-weekly live performance KPI reports and strategy reviews",
+    ],
+    benefits: [
+      { title: "Predictable CAC & ROAS", desc: "Stop guessing your ad spend with structured attribution and conversion tracking." },
+      { title: "Long-Term Organic Traffic", desc: "SEO-optimized topical clusters that rank on Google page 1 for high-intent keywords." },
+      { title: "Transparent Reporting", desc: "Live dashboard tracking leads, conversion rates, and revenue impact in real time." },
+    ],
+    techStack: ["Google Ads", "Meta Ads", "Google Analytics 4", "SEMrush", "Ahrefs", "HubSpot"],
+    process: [
+      { step: "01", title: "Funnel Audit", desc: "Auditing your current traffic sources, bounce points, and tracking setup." },
+      { step: "02", title: "Strategy & Creative", desc: "Crafting ad angles, high-intent keyword targets, and conversion landing pages." },
+      { step: "03", title: "Campaign Launch", desc: "Deploying targeted campaigns with automated bid optimization." },
+      { step: "04", title: "Scale & Optimize", desc: "Doubling down on winning segments while eliminating ad spend waste." },
+    ],
+    faqs: [
+      { q: "How soon can we expect results from paid ads versus SEO?", a: "Paid campaigns begin generating leads within 48-72 hours of launch, while organic SEO builds compounding gains over 3 to 6 months." },
+      { q: "Do you supply ad creatives and copywriting?", a: "Yes, our team handles copywriting, visual design, and landing page optimization end-to-end." },
+    ],
+    pricingStartingAt: "$1,200 / mo",
+  },
+  {
+    id: "s-cloud",
+    slug: "cloud-devops",
+    aliases: ["cloud"],
+    title: "Cloud & DevOps Engineering",
+    category: "Cloud",
+    badge: "Enterprise Grade",
+    icon: "Cloud",
+    heroHeadline: "Resilient Cloud Infrastructure, Automated CI/CD & 99.9% Uptime",
+    shortDesc: "AWS & Docker cloud architecture, automated deployment pipelines, infrastructure as code, and 24/7 reliability monitoring.",
+    description: "Scale with absolute confidence. We design fault-tolerant, automated cloud environments that withstand traffic spikes, protect sensitive data, and empower your development team to ship code 10x faster.",
+    features: [
+      "AWS, GCP & Vercel multi-region cloud architecture",
+      "Docker containerization & Kubernetes cluster orchestration",
+      "Automated GitHub Actions CI/CD pipelines",
+      "Automated database backups & disaster recovery protocols",
+    ],
+    deliverables: [
+      "Terraform Infrastructure as Code (IaC) configuration",
+      "Fully automated testing & deployment CI/CD pipelines",
+      "SSL, Web Application Firewall (WAF), and DDoS protection",
+      "Datadog / Prometheus uptime monitoring & Slack alert webhooks",
+    ],
+    benefits: [
+      { title: "99.9% Uptime Guarantee", desc: "Auto-scaling groups and multi-AZ deployments prevent costly downtime." },
+      { title: "Reduced Cloud Bills", desc: "We audit and right-size compute resources to cut unneeded infrastructure waste." },
+      { title: "Instant Rollbacks", desc: "If a deployment contains an error, automated rollbacks restore stability in seconds." },
+    ],
+    techStack: ["AWS", "Docker", "Kubernetes", "Terraform", "GitHub Actions", "PostgreSQL", "Redis"],
+    process: [
+      { step: "01", title: "Infrastructure Audit", desc: "Analyzing current architecture for security vulnerabilities and bottlenecks." },
+      { step: "02", title: "Containerization", desc: "Packaging apps with Docker for consistency between local and production." },
+      { step: "03", title: "CI/CD Automation", desc: "Configuring automated test runners and deployment pipelines." },
+      { step: "04", title: "Monitoring & Handover", desc: "Setting up telemetry, alerting thresholds, and runbook documentation." },
+    ],
+    faqs: [
+      { q: "Which cloud providers do you support?", a: "We specialize in AWS, Google Cloud, DigitalOcean, and serverless platforms like Vercel and Supabase." },
+      { q: "Can you help optimize our monthly AWS cloud bill?", a: "Yes, our cloud cost audit typically reduces infrastructure costs by 20% to 45%." },
+    ],
+    pricingStartingAt: "$1,500",
   },
 ];
 
@@ -75,20 +253,327 @@ export const testimonials: Testimonial[] = [
 export const jobs: Job[] = [
   {
     id: "frontend-dev",
-    title: "Frontend Developer",
+    title: "Senior Frontend Engineer",
+    department: "Engineering",
     type: "Full-time",
-    location: "Dhaka, BD",
-    description: "Build pixel-perfect UIs with Next.js and Tailwind.",
-    requirements: ["2+ years React", "TypeScript", "Tailwind CSS"],
+    workplaceType: "Hybrid",
+    location: "Dhaka, Bangladesh",
+    experience: "3+ Years",
+    salary: "$1,200 - $2,000 / month",
+    deadline: "May 15, 2025",
+    postedDate: "3 days ago",
+    featured: true,
+    urgent: true,
+    description: "Lead the frontend architecture of high-performance web applications using Next.js 15, React 19, TypeScript, and modern CSS frameworks.",
+    aboutRole: "As a Senior Frontend Engineer at ITStartup, you will lead the creation of responsive, ultra-smooth web applications. You will collaborate closely with UI/UX designers and backend engineers to craft intuitive user experiences that scale to hundreds of thousands of users.",
+    responsibilities: [
+      "Architect and build reusable, performant React & Next.js components",
+      "Optimize web applications for maximum speed, SEO, and accessibility (Core Web Vitals)",
+      "Collaborate with backend engineers to integrate RESTful and GraphQL APIs seamlessly",
+      "Participate in code reviews, mentor junior frontend developers, and establish code quality standards",
+      "Translate Figma design systems into pixel-perfect, responsive components",
+    ],
+    requirements: [
+      "3+ years of professional experience with React, Next.js, and TypeScript",
+      "Deep understanding of Tailwind CSS, modern CSS layouts, and micro-interactions",
+      "Proven track record with state management, caching, and server components",
+      "Strong debugging, profiling, and performance optimization skills",
+      "Experience with Git workflows, CI/CD pipelines, and automated testing",
+    ],
+    niceToHave: [
+      "Experience with Framer Motion, GSAP, or canvas animations",
+      "Familiarity with Docker and edge deployment platforms like Vercel or AWS",
+      "Contributions to open-source libraries or tech blogs",
+    ],
+    benefits: [
+      "Competitive monthly salary with twice-a-year performance reviews",
+      "Hybrid work policy (2 days work-from-home per week)",
+      "Health & medical allowance for you and immediate family",
+      "Latest M-series MacBook Pro and workstation setup allowance",
+      "Annual sponsored retreats and bi-monthly team dinners",
+    ],
+    techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "REST API", "Git", "Figma"],
   },
   {
     id: "backend-dev",
-    title: "Backend Developer",
-    type: "Remote",
+    title: "Backend / Cloud Engineer",
+    department: "Engineering",
+    type: "Full-time",
+    workplaceType: "Remote",
+    location: "Remote (Global)",
+    experience: "4+ Years",
+    salary: "$1,500 - $2,400 / month",
+    deadline: "May 25, 2025",
+    postedDate: "1 week ago",
+    featured: true,
+    urgent: false,
+    description: "Design high-throughput distributed microservices, APIs, and robust database architectures using Node.js, Go, PostgreSQL, and AWS.",
+    aboutRole: "We are seeking a talented Backend Engineer to power our core client platforms. You will handle database architecture, API security, queue systems, and multi-tenant SaaS backends with guaranteed 99.9% uptime.",
+    responsibilities: [
+      "Design, implement, and maintain scalable APIs using Node.js / TypeScript / Go",
+      "Architect relational and NoSQL databases (PostgreSQL, Redis, MongoDB) with optimized indexing",
+      "Implement authentication, authorization (OAuth2, JWT), and security compliance standards",
+      "Containerize services using Docker and orchestrate deployments with AWS / Kubernetes",
+      "Monitor application performance and uptime using Datadog, Prometheus, and Grafana",
+    ],
+    requirements: [
+      "4+ years of backend development experience with Node.js / Express / NestJS or Go",
+      "Deep knowledge of relational database design, query optimization, and transaction management",
+      "Hands-on experience with cloud infrastructure (AWS EC2, S3, RDS, Lambda)",
+      "Solid understanding of REST, GraphQL, WebSockets, and Message Queues (RabbitMQ/Kafka)",
+      "Self-driven mindset with experience working in asynchronous remote teams",
+    ],
+    niceToHave: [
+      "Familiarity with Terraform / Infrastructure as Code",
+      "Experience scaling applications to 100k+ daily active users",
+      "Knowledge of microservices communication patterns and gRPC",
+    ],
+    benefits: [
+      "100% remote flexibility from anywhere in the world",
+      "Home office setup reimbursement ($600 USD)",
+      "Annual learning and certification stipend ($500 USD)",
+      "Paid annual leaves + regional public holidays",
+      "Profit-sharing bonus based on annual company milestones",
+    ],
+    techStack: ["Node.js", "TypeScript", "PostgreSQL", "Redis", "Docker", "AWS", "GraphQL"],
+  },
+  {
+    id: "uiux-designer",
+    title: "Lead UI/UX Product Designer",
+    department: "Design",
+    type: "Full-time",
+    workplaceType: "Hybrid",
+    location: "Dhaka, Bangladesh",
+    experience: "3+ Years",
+    salary: "$1,000 - $1,800 / month",
+    deadline: "May 20, 2025",
+    postedDate: "5 days ago",
+    featured: false,
+    urgent: true,
+    description: "Craft modern, delightful, and human-centric user experiences, comprehensive design systems, and prototypes for global tech startups.",
+    aboutRole: "As our Lead UI/UX Product Designer, you will turn complex user journeys into elegant, intuitive interfaces. You'll work side-by-side with product managers and engineers to build designs that captivate and convert.",
+    responsibilities: [
+      "Conduct user research, persona creation, user journey mapping, and wireframing",
+      "Build and maintain a scalable Figma design system with components and tokens",
+      "Create high-fidelity interactive prototypes for stakeholder testing and validation",
+      "Collaborate with frontend engineers to guarantee design integrity during development",
+      "Analyze user metrics and feedback to iterate and improve existing UI workflows",
+    ],
+    requirements: [
+      "3+ years of UI/UX design experience for SaaS, web apps, or mobile applications",
+      "World-class portfolio demonstrating clean visual design and strong typography",
+      "Mastery of Figma, auto-layout, interactive components, and token variables",
+      "Deep understanding of design thinking, user-centric methodologies, and accessibility (WCAG)",
+      "Excellent communication and presentation skills in English",
+    ],
+    niceToHave: [
+      "Basic understanding of HTML/CSS capabilities and frontend constraints",
+      "Experience with motion design using tools like Rive, Lottie, or After Effects",
+      "Experience designing complex B2B dashboards or fintech interfaces",
+    ],
+    benefits: [
+      "State-of-the-art Apple workstation with secondary 4K display",
+      "Figma Enterprise subscription and premium asset library access",
+      "Annual design conference ticket sponsorship",
+      "Flexible working hours and hybrid arrangement",
+      "Festival bonuses and wellness package",
+    ],
+    techStack: ["Figma", "Design Systems", "Prototyping", "User Research", "Wireframing"],
+  },
+  {
+    id: "fullstack-engineer",
+    title: "Full Stack Next.js & Node Developer",
+    department: "Engineering",
+    type: "Full-time",
+    workplaceType: "Remote",
     location: "Remote",
-    description: "Design APIs and scalable services.",
-    requirements: ["Node.js", "PostgreSQL", "REST/GraphQL"],
+    experience: "2+ Years",
+    salary: "$1,100 - $1,700 / month",
+    deadline: "June 05, 2025",
+    postedDate: "2 weeks ago",
+    featured: false,
+    urgent: false,
+    description: "Build end-to-end client applications leveraging the latest Next.js App Router, Prisma ORM, PostgreSQL, and modern cloud deployment stacks.",
+    aboutRole: "We are seeking a versatile Full Stack Developer who loves building complete features from database schema design to responsive client UI. You will ship features quickly while ensuring clean architecture and maintainability.",
+    responsibilities: [
+      "Develop full-stack web applications using Next.js App Router, Server Actions, and Node.js",
+      "Design database models using Prisma / Drizzle with PostgreSQL",
+      "Implement secure authentication with NextAuth / Supabase / Clerk",
+      "Build responsive, modern UI components with Tailwind CSS",
+      "Participate in daily standups and sprint planning sessions",
+    ],
+    requirements: [
+      "2+ years of full-stack JavaScript / TypeScript development experience",
+      "Hands-on experience with Next.js (App Router), React, and Node.js",
+      "Good knowledge of SQL, ORMs (Prisma / Drizzle), and relational database concepts",
+      "Understanding of RESTful API design, state management, and async patterns",
+      "Familiarity with version control using Git and GitHub",
+    ],
+    niceToHave: [
+      "Experience with Supabase, Firebase, or Serverless edge functions",
+      "Familiarity with Tailwind v4 and modern CSS tooling",
+      "Prior experience in an agile agency or product startup setting",
+    ],
+    benefits: [
+      "100% remote freedom with async communication culture",
+      "Internet and co-working space stipend",
+      "Annual salary review and project milestone incentives",
+      "Generous paid vacation and sick leave policy",
+    ],
+    techStack: ["Next.js", "React", "TypeScript", "Node.js", "Prisma", "PostgreSQL", "Tailwind CSS"],
+  },
+  {
+    id: "digital-marketing-specialist",
+    title: "Growth & Digital Marketing Strategist",
+    department: "Marketing",
+    type: "Full-time",
+    workplaceType: "On-site",
+    location: "Dhaka, Bangladesh",
+    experience: "2+ Years",
+    salary: "$800 - $1,300 / month",
+    deadline: "May 30, 2025",
+    postedDate: "4 days ago",
+    featured: false,
+    urgent: false,
+    description: "Drive organic and paid growth, execute high-converting digital campaigns, and scale inbound leads for international tech clients.",
+    aboutRole: "Join our fast-growing growth team to develop and execute multi-channel digital marketing campaigns. You will oversee SEO, content strategy, paid ad performance, and analytics tracking.",
+    responsibilities: [
+      "Plan and execute data-driven campaigns across Google Ads, Meta Ads, and LinkedIn Ads",
+      "Conduct in-depth keyword research, technical SEO audits, and content optimization",
+      "Manage social media presence and craft engaging tech-focused copywriting",
+      "Track, analyze, and report on key campaign KPIs using Google Analytics 4 & Search Console",
+      "A/B test landing pages, ad creatives, and lead funnels to maximize conversion rates",
+    ],
+    requirements: [
+      "2+ years of hands-on digital marketing or performance marketing experience",
+      "Proven track record managing paid campaigns with measurable ROI",
+      "Strong proficiency with Google Ads, Meta Business Suite, GA4, and SEO tools (Ahrefs / SEMrush)",
+      "Excellent written English communication and copywriting skills",
+      "Data-driven mindset with analytical problem-solving abilities",
+    ],
+    niceToHave: [
+      "Experience marketing B2B SaaS products or agency services",
+      "Knowledge of basic HTML/CSS or CMS platforms like WordPress/Webflow",
+      "Certifications in Google Ads / HubSpot / Meta Blueprint",
+    ],
+    benefits: [
+      "Attractive performance-linked bonuses on campaign targets",
+      "Continuous marketing education and training certifications",
+      "Vibrant creative office environment with snacks and coffee",
+      "Bi-annual appraisals and clear leadership promotion track",
+    ],
+    techStack: ["Google Ads", "Meta Ads", "SEO", "Google Analytics 4", "SEMrush", "Content Strategy"],
   },
 ];
+
+export const companyPerks = [
+  {
+    icon: "Laptop",
+    title: "Latest Apple Workstations",
+    description: "Every full-time teammate receives the latest M-series MacBook Pro and high-res display for seamless productivity.",
+  },
+  {
+    icon: "Heart",
+    title: "Comprehensive Health & Wellness",
+    description: "Medical coverage for you and your family, mental health support, and annual wellness allowances.",
+  },
+  {
+    icon: "Globe",
+    title: "Flexible & Hybrid Culture",
+    description: "Work from our modern collaborative Dhaka hub or work remotely with core collaborative hours.",
+  },
+  {
+    icon: "GraduationCap",
+    title: "Learning & Growth Stipend",
+    description: "Annual budget for books, online courses, technical certifications, and international tech conferences.",
+  },
+  {
+    icon: "TrendingUp",
+    title: "Performance & Festival Bonuses",
+    description: "Twice-a-year festival bonuses, annual performance appraisals, and attractive project milestone rewards.",
+  },
+  {
+    icon: "Sun",
+    title: "Generous Paid Time Off",
+    description: "20+ days of paid time off, parental leave, bereavement leave, and all national public holidays.",
+  },
+  {
+    icon: "Coffee",
+    title: "Vibrant Hub & Team Hangouts",
+    description: "Unlimited premium coffee, catered lunches, PlayStation arena, and memorable bi-annual company retreats.",
+  },
+  {
+    icon: "Users",
+    title: "Mentorship & Flat Hierarchy",
+    description: "Collaborate directly with founders, principal architects, and senior peers with zero unnecessary red tape.",
+  },
+];
+
+export const hiringSteps = [
+  {
+    step: "01",
+    title: "Online Application",
+    duration: "10 mins",
+    desc: "Submit your resume, portfolio link, and a brief note about why you want to build with us.",
+  },
+  {
+    step: "02",
+    title: "Introductory Chat",
+    duration: "30 mins",
+    desc: "A friendly 30-minute conversation with our talent team to discuss your goals and mutual culture fit.",
+  },
+  {
+    step: "03",
+    title: "Technical Review / Task",
+    duration: "2 - 3 days",
+    desc: "A hands-on practical assignment or system architecture walkthrough tailored to your discipline.",
+  },
+  {
+    step: "04",
+    title: "Offer & Welcome",
+    duration: "Within 48h",
+    desc: "We discuss compensation, perks, and onboarding date to welcome you to the ITStartup family!",
+  },
+];
+
+// Helper functions for dynamic fetching (API / Database ready)
+export async function getJobs(): Promise<Job[]> {
+  // In the future, this can be replaced with:
+  // const res = await fetch(`${process.env.API_URL}/jobs`, { next: { revalidate: 60 } });
+  // return res.json();
+  return jobs;
+}
+
+export async function getJobById(id: string): Promise<Job | undefined> {
+  return jobs.find((j) => j.id === id);
+}
+
+export async function getRelatedJobs(currentId: string, department?: string): Promise<Job[]> {
+  return jobs
+    .filter((j) => j.id !== currentId && (department ? j.department === department : true))
+    .slice(0, 2);
+}
+
+// Service helper functions for dynamic fetching (API / Database ready)
+export async function getServices(): Promise<Service[]> {
+  // In the future, this can be replaced with:
+  // const res = await fetch(`${process.env.API_URL}/services`, { next: { revalidate: 60 } });
+  // return res.json();
+  return services;
+}
+
+export async function getServiceBySlug(slug: string): Promise<Service | undefined> {
+  const normalized = slug.toLowerCase();
+  return services.find(
+    (s) => s.slug === normalized || s.aliases?.some((a) => a.toLowerCase() === normalized)
+  );
+}
+
+export async function getRelatedServices(currentSlug: string): Promise<Service[]> {
+  const current = await getServiceBySlug(currentSlug);
+  return services
+    .filter((s) => s.slug !== current?.slug)
+    .slice(0, 3);
+}
 
 export const clients = ["Google", "Microsoft", "Stripe", "Vercel", "Shopify"];
