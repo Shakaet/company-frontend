@@ -5,9 +5,8 @@ import {
   Palette, 
   Megaphone, 
   Cloud, 
-  ArrowRight, 
   CheckCircle2, 
-  Sparkles,
+  Sparkles, 
   LucideIcon
 } from "lucide-react";
 import { Service } from "@/lib/types";
@@ -106,7 +105,7 @@ export default function ServiceCard({ service, featured }: ServiceCardProps) {
         )}
       </div>
 
-      {/* Bottom Row: Starting price + CTA */}
+      {/* Bottom Row: Starting price */}
       <div className="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between relative z-10">
         <div>
           {service.pricingStartingAt ? (
@@ -118,11 +117,6 @@ export default function ServiceCard({ service, featured }: ServiceCardProps) {
             <span className="text-xs text-slate-500 font-medium">Custom Scope</span>
           )}
         </div>
-
-        <span className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 group-hover:text-blue-700 group-hover:translate-x-1 transition-all">
-          <span>Details</span>
-          <ArrowRight className="w-4 h-4" />
-        </span>
       </div>
     </div>
   );

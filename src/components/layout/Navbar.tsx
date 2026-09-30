@@ -101,7 +101,7 @@ export default function Navbar() {
                   }}
                 >
                   <button
-                    className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 ${
+                    className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 cursor-pointer ${
                       isActive ? "text-blue-600" : "text-gray-700 hover:text-blue-600"
                     }`}
                   >
@@ -197,7 +197,7 @@ export default function Navbar() {
 
           {/* Hamburger */}
           <button
-            className="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-1.5 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+            className="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-1.5 rounded-lg hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
             onClick={() => setOpen(!open)}
             aria-label={open ? "Close menu" : "Open menu"}
           >
@@ -232,7 +232,7 @@ export default function Navbar() {
           <button
             onClick={() => setOpen(false)}
             aria-label="Close menu"
-            className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100 transition-colors cursor-pointer"
           >✕</button>
         </div>
 
@@ -256,7 +256,7 @@ export default function Navbar() {
                 {/* Accordion toggle */}
                 <button
                   onClick={toggleMenu}
-                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer ${
                     isActive ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
                   }`}
                 >
@@ -317,17 +317,6 @@ export default function Navbar() {
             );
           })}
         </ul>
-
-        {/* Drawer footer */}
-        <div className="px-6 py-5 border-t border-gray-100">
-          <Link
-            href="/contact"
-            onClick={() => setOpen(false)}
-            className="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-colors duration-200"
-          >
-            Get Started
-          </Link>
-        </div>
       </div>
     </>
   );

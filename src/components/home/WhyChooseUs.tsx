@@ -1,14 +1,9 @@
-import Link from "next/link";
 import { 
   Zap, 
   Users, 
-  ShieldCheck, 
   Layers, 
   Sparkles, 
   CheckCircle2, 
-  ArrowRight,
-  Clock,
-  Code2,
   Lock
 } from "lucide-react";
 
@@ -106,43 +101,6 @@ export default function WhyChooseUs() {
               </div>
             );
           })}
-        </div>
-
-        {/* Bottom Trust Assurance Strip */}
-        <div className="mt-12 sm:mt-16 bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex flex-wrap items-center gap-6 sm:gap-10 text-xs sm:text-sm text-slate-700">
-            <div className="flex items-center gap-2.5">
-              <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0" />
-              <div>
-                <div className="font-bold text-slate-900">NDA Protected</div>
-                <div className="text-[11px] text-slate-400">Strict IP Confidentiality</div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2.5">
-              <Clock className="w-5 h-5 text-blue-600 shrink-0" />
-              <div>
-                <div className="font-bold text-slate-900">Guaranteed SLAs</div>
-                <div className="text-[11px] text-slate-400">On-Time Sprint Milestones</div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2.5">
-              <Code2 className="w-5 h-5 text-blue-600 shrink-0" />
-              <div>
-                <div className="font-bold text-slate-900">30-Day Hypercare</div>
-                <div className="text-[11px] text-slate-400">Included Bug Warranty</div>
-              </div>
-            </div>
-          </div>
-
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm shadow-md hover:shadow-lg shadow-blue-600/20 hover:-translate-y-0.5 transition-all self-stretch sm:self-auto justify-center"
-          >
-            <span>Start a Risk-Free Sprint</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
         </div>
       </div>
     </section>

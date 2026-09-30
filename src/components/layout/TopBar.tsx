@@ -3,10 +3,10 @@ import Link from "next/link";
 export default function TopBar() {
   return (
     <div className="w-full bg-blue-600 py-2 px-4">
-      <div className="container mx-auto flex items-center justify-between gap-4 flex-wrap">
+      <div className="container mx-auto flex items-center justify-between gap-4">
 
         {/* Left — contact info */}
-        <div className="flex items-center gap-5 text-xs text-blue-100">
+        <div className="flex items-center justify-center sm:justify-start gap-4 sm:gap-5 text-xs text-blue-100 w-full sm:w-auto">
           <a
             href="mailto:hello@itstartup.com"
             className="flex items-center gap-1.5 hover:text-white transition-colors duration-200"
@@ -27,8 +27,8 @@ export default function TopBar() {
           </a>
         </div>
 
-        {/* Right — social icons */}
-        <div className="flex items-center gap-3">
+        {/* Right — social icons (hidden on mobile devices) */}
+        <div className="hidden md:flex items-center gap-3">
 
           {/* LinkedIn */}
           <Link
