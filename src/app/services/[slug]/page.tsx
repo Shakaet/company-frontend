@@ -12,7 +12,6 @@ import {
   ChevronRight, 
   CheckCircle2, 
   Sparkles, 
-  Clock, 
   DollarSign, 
   ShieldCheck, 
   Code, 
@@ -250,36 +249,6 @@ export default async function ServiceDetailPage({
                     >
                       {tech}
                     </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Service-Specific Process Breakdown */}
-            {service.process && service.process.length > 0 && (
-              <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-9 shadow-xs">
-                <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2.5">
-                  <Clock className="w-5 h-5 text-blue-600" />
-                  <span>Project Execution Workflow</span>
-                </h2>
-                <div className="space-y-4">
-                  {service.process.map((step) => (
-                    <div
-                      key={step.step}
-                      className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50/70 border border-slate-200/60"
-                    >
-                      <span className="text-xl font-black text-blue-600 shrink-0 mt-0.5">
-                        {step.step}
-                      </span>
-                      <div>
-                        <h4 className="font-bold text-slate-900 text-sm sm:text-base">
-                          {step.title}
-                        </h4>
-                        <p className="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
-                          {step.desc}
-                        </p>
-                      </div>
-                    </div>
                   ))}
                 </div>
               </div>
