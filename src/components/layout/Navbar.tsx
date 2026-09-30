@@ -9,10 +9,17 @@ const aboutSubmenu = [
   { href: "/about/founder-message", label: "Founder Message" },
 ];
 
+const servicesSubmenu = [
+  { href: "/services/web",      label: "Web Development",   desc: "Modern and scalable web applications.", icon: "💻" },
+  { href: "/services/mobile",   label: "Mobile Apps",       desc: "Native and cross-platform apps.",       icon: "📱" },
+  { href: "/services/design",   label: "UI/UX Design",      desc: "Intuitive and engaging interfaces.",    icon: "🎨" },
+  { href: "/services/marketing",label: "Digital Marketing", desc: "SEO, SMM and growth hacking.",          icon: "📈" },
+];
+
 const links = [
   { href: "/",          label: "Home" },
-  { href: "/about",     label: "About", submenu: aboutSubmenu },
-  { href: "/services",  label: "Services" },
+  { href: "/about",     label: "About",    submenu: aboutSubmenu },
+  { href: "/services",  label: "Services", submenu: servicesSubmenu, isMega: true },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/blog",      label: "Blog" },
   { href: "/career",    label: "Career" },
@@ -23,7 +30,8 @@ export default function Navbar() {
   const pathname   = usePathname();
   const [open, setOpen]           = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
-  const [hovered, setHovered]     = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const dropdownRef  = useRef<HTMLLIElement>(null);
   const leaveTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -61,65 +69,100 @@ export default function Navbar() {
 
           {/* ── Desktop links ── */}
           <ul className="hidden md:flex items-center gap-6">
-            {links.map((l) =>
-              l.submenu ? (
-                /* About — with dropdown */
+            {links.map((l) => {
+              const isActive = pathname.startsWith(l.href) && l.href !== "/";
+              const isHovered = hoveredMenu === l.label;
+
+              return l.submenu ? (
+                /* Menu with dropdown */
                 <li
                   key={l.href}
                   className="relative"
-                  ref={dropdownRef}
                   onMouseEnter={() => {
                     if (leaveTimer.current) clearTimeout(leaveTimer.current);
-                    setHovered(true);
+                    setHoveredMenu(l.label);
                   }}
                   onMouseLeave={() => {
-                    leaveTimer.current = setTimeout(() => setHovered(false), 150);
+                    leaveTimer.current = setTimeout(() => setHoveredMenu(null), 150);
                   }}
                 >
                   <button
                     className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 ${
-                      isAboutActive ? "text-blue-600" : "text-gray-700 hover:text-blue-600"
+                      isActive ? "text-blue-600" : "text-gray-700 hover:text-blue-600"
                     }`}
                   >
                     {l.label}
                     <svg
-                      className={`w-3.5 h-3.5 transition-transform duration-200 ${hovered ? "rotate-180" : ""}`}
+                      className={`w-3.5 h-3.5 transition-transform duration-200 ${isHovered ? "rotate-180" : ""}`}
                       fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
 
-                  {/* Invisible bridge — fills gap so cursor doesn't leave li */}
+                  {/* Invisible bridge */}
                   <div className="absolute top-full left-0 w-full h-4" />
 
                   {/* Dropdown panel */}
                   <div
-                    className={`absolute top-full left-1/2 -translate-x-1/2 translate-y-4 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-200 origin-top ${
-                      hovered
+                    className={`absolute top-full left-1/2 -translate-x-1/2 translate-y-4 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 origin-top ${
+                      isHovered
                         ? "opacity-100 scale-100 pointer-events-auto"
                         : "opacity-0 scale-95 pointer-events-none"
-                    }`}
+                    } ${l.isMega ? "w-[400px]" : "w-52"}`}
                   >
                     {/* Small arrow caret */}
                     <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-l border-t border-gray-100 rotate-45" />
-                    <ul className="py-2">
-                      {l.submenu.map((sub) => (
-                        <li key={sub.href}>
+                    
+                    {l.isMega ? (
+                      /* Mega Menu (Cards) */
+                      <div className="grid grid-cols-2 gap-2 p-3">
+                        {l.submenu.map((sub, i) => (
                           <Link
+                            key={sub.href}
                             href={sub.href}
-                            onClick={() => setHovered(false)}
-                            className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors duration-150 ${
-                              pathname === sub.href
-                                ? "bg-blue-50 text-blue-600"
-                                : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
-                            }`}
+                            onClick={() => setHoveredMenu(null)}
+                            className="group flex flex-col gap-2 p-4 rounded-xl hover:bg-blue-50 transition-colors duration-200"
+                            style={{
+                              transform: isHovered ? "translateY(0)" : "translateY(10px)",
+                              opacity: isHovered ? 1 : 0,
+                              transition: `all 300ms ease-out ${i * 50}ms`
+                            }}
                           >
-                            {sub.label}
+                            <span className="text-2xl bg-white w-10 h-10 rounded-lg flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
+                              {sub.icon}
+                            </span>
+                            <div>
+                              <h4 className="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                {sub.label}
+                              </h4>
+                              <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">
+                                {sub.desc}
+                              </p>
+                            </div>
                           </Link>
-                        </li>
-                      ))}
-                    </ul>
+                        ))}
+                      </div>
+                    ) : (
+                      /* Normal Dropdown */
+                      <ul className="py-2">
+                        {l.submenu.map((sub) => (
+                          <li key={sub.href}>
+                            <Link
+                              href={sub.href}
+                              onClick={() => setHoveredMenu(null)}
+                              className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors duration-150 ${
+                                pathname === sub.href
+                                  ? "bg-blue-50 text-blue-600"
+                                  : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+                              }`}
+                            >
+                              {sub.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </li>
               ) : (
@@ -134,8 +177,8 @@ export default function Navbar() {
                     {l.label}
                   </Link>
                 </li>
-              )
-            )}
+              );
+            })}
           </ul>
 
           {/* Hamburger */}
@@ -181,9 +224,16 @@ export default function Navbar() {
 
         {/* Nav links */}
         <ul className="flex flex-col gap-1 px-4 py-6 flex-1 overflow-y-auto">
-          {links.map((l, i) =>
-            l.submenu ? (
-              /* About — accordion in mobile */
+          {links.map((l, i) => {
+            const isActive = pathname.startsWith(l.href) && l.href !== "/";
+            const isMenuOpen = l.label === "About" ? aboutOpen : l.label === "Services" ? servicesOpen : false;
+            const toggleMenu = () => {
+              if (l.label === "About") setAboutOpen(!aboutOpen);
+              if (l.label === "Services") setServicesOpen(!servicesOpen);
+            };
+
+            return l.submenu ? (
+              /* Accordion in mobile */
               <li
                 key={l.href}
                 style={{ transitionDelay: open ? `${i * 40}ms` : "0ms" }}
@@ -191,14 +241,14 @@ export default function Navbar() {
               >
                 {/* Accordion toggle */}
                 <button
-                  onClick={() => setAboutOpen((v) => !v)}
+                  onClick={toggleMenu}
                   className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                    isAboutActive ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+                    isActive ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
                   }`}
                 >
                   <span>{l.label}</span>
                   <svg
-                    className={`w-4 h-4 transition-transform duration-200 ${aboutOpen ? "rotate-180" : ""}`}
+                    className={`w-4 h-4 transition-transform duration-200 ${isMenuOpen ? "rotate-180" : ""}`}
                     fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -208,21 +258,25 @@ export default function Navbar() {
                 {/* Accordion submenu */}
                 <div
                   className="overflow-hidden transition-all duration-300 ease-in-out"
-                  style={{ maxHeight: aboutOpen ? "200px" : "0px" }}
+                  style={{ maxHeight: isMenuOpen ? (l.isMega ? "400px" : "200px") : "0px" }}
                 >
-                  <ul className="pl-4 py-1 flex flex-col gap-0.5">
+                  <ul className="pl-4 py-1 flex flex-col gap-1">
                     {l.submenu.map((sub) => (
                       <li key={sub.href}>
                         <Link
                           href={sub.href}
                           onClick={() => setOpen(false)}
-                          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                          className={`flex items-start gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 ${
                             pathname === sub.href
                               ? "bg-blue-50 text-blue-600"
                               : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"
                           }`}
                         >
-                          {sub.label}
+                          {l.isMega && <span className="text-lg mt-0.5">{sub.icon}</span>}
+                          <div>
+                            <span className="text-sm font-medium">{sub.label}</span>
+                            {l.isMega && <p className="text-xs text-gray-500 mt-0.5">{sub.desc}</p>}
+                          </div>
                         </Link>
                       </li>
                     ))}
@@ -246,8 +300,8 @@ export default function Navbar() {
                   {l.label}
                 </Link>
               </li>
-            )
-          )}
+            );
+          })}
         </ul>
 
         {/* Drawer footer */}
