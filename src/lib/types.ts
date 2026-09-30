@@ -88,6 +88,26 @@ export type Testimonial = {
   id: string;
   name: string;
   role: string;
+  company?: string;
   message: string;
   avatar: string;
+  rating?: number;
+  highlightMetric?: { value: string; label: string };
+  projectTag?: string;
+};
+
+export type TeamMember = {
+  id: string;
+  name: string;
+  role: string;
+  department: string;
+  image: string;
+  bio: string;
+  expertise: string[];
+  socials?: {
+    linkedin?: string;
+    github?: string;
+    twitter?: string;
+    email?: string;
+  };
 };

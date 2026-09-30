@@ -5,7 +5,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 
 export default function PricingPreview() {
   return (
-    <section className="py-20 bg-slate-50/50 border-t border-slate-100">
+    <section className="py-20 sm:py-28 bg-white border-t border-slate-100">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>

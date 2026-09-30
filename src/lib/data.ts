@@ -1,4 +1,4 @@
-import { Service, Project, BlogPost, Job, Testimonial, PricingPlan } from "./types";
+import { Service, Project, BlogPost, Job, Testimonial, PricingPlan, TeamMember } from "./types";
 
 export const services: Service[] = [
   {
@@ -359,9 +359,56 @@ export const blogs: BlogPost[] = [
 ];
 
 export const testimonials: Testimonial[] = [
-  { id: "t1", name: "Sadia R.", role: "CEO, ShopEase", message: "Their team delivered beyond expectations.", avatar: "/images/u1.jpg" },
-  { id: "t2", name: "Imran H.", role: "Founder, FoodieHub", message: "Fast, reliable and creative partner.", avatar: "/images/u2.jpg" },
+  {
+    id: "t1",
+    name: "Sadia Rahman",
+    role: "CEO & Co-Founder",
+    company: "ShopEase Retail Inc.",
+    message: "ITStartup engineered our headless e-commerce store with Next.js and Stripe. Our site speed improved by 300% and checkout conversions increased by 140%. Their code architecture and speed of delivery are simply phenomenal.",
+    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
+    rating: 5,
+    projectTag: "Headless E-Commerce",
+    highlightMetric: { value: "+140%", label: "Conversion Lift" },
+  },
+  {
+    id: "t2",
+    name: "Imran Hossain",
+    role: "Founder & Product Lead",
+    company: "FoodieHub Networks",
+    message: "We hired their dedicated mobile pod to build our iOS and Android delivery apps with React Native. They delivered ahead of schedule with zero critical bugs. Their asynchronous communication made collaboration effortless.",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+    rating: 5,
+    projectTag: "Mobile Engineering",
+    highlightMetric: { value: "500k+", label: "App Downloads" },
+  },
+  {
+    id: "t3",
+    name: "Marcus Vance",
+    role: "VP of Engineering",
+    company: "CloudMetrics SaaS",
+    message: "The SaaS dashboard they built processes millions of telemetry events with sub-100ms response times. Their mastery over PostgreSQL indexing, Next.js server components, and Docker is world-class.",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80",
+    rating: 5,
+    projectTag: "Cloud Analytics SaaS",
+    highlightMetric: { value: "99.99%", label: "Uptime SLA" },
+  },
+  {
+    id: "t4",
+    name: "Elena Rostova",
+    role: "Head of Product Design",
+    company: "FinTrust Financial",
+    message: "Translating a 200+ component banking design system into accessible, pixel-perfect React components was executed flawlessly by ITStartup. They don't just write code; they care deeply about user experience.",
+    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
+    rating: 5,
+    projectTag: "Design Systems & UI/UX",
+    highlightMetric: { value: "4.9 / 5.0", label: "UX Rating" },
+  },
 ];
+
+export async function getTestimonials(): Promise<Testimonial[]> {
+  // Dynamic fetching prepared for future backend/CMS integration
+  return testimonials;
+}
 
 export const jobs: Job[] = [
   {
@@ -795,3 +842,90 @@ export async function getPricingPlans(): Promise<PricingPlan[]> {
 }
 
 export const clients = ["Google", "Microsoft", "Stripe", "Vercel", "Shopify"];
+
+export const teamMembers: TeamMember[] = [
+  {
+    id: "rahim-uddin",
+    name: "Rahim Uddin",
+    role: "Founder & Chief Executive Officer",
+    department: "Executive & Strategy",
+    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=80",
+    bio: "10+ years architecting enterprise software, scaling startups, and leading high-velocity engineering pods across North America and Europe.",
+    expertise: ["Product Strategy", "System Architecture", "Venture Scale"],
+    socials: {
+      linkedin: "https://linkedin.com",
+      github: "https://github.com",
+      twitter: "https://twitter.com",
+    },
+  },
+  {
+    id: "karim-ahmed",
+    name: "Karim Ahmed",
+    role: "Chief Technology Officer",
+    department: "Engineering Leadership",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80",
+    bio: "Distributed systems and cloud architecture specialist with deep mastery in Next.js Server Components, PostgreSQL, and scalable microservices.",
+    expertise: ["Distributed Systems", "Next.js", "Docker & Kubernetes"],
+    socials: {
+      linkedin: "https://linkedin.com",
+      github: "https://github.com",
+      twitter: "https://twitter.com",
+    },
+  },
+  {
+    id: "sadia-rahman",
+    name: "Sadia Rahman",
+    role: "Head of Product Design & UI/UX",
+    department: "Design & Research",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
+    bio: "Human-centered design leader crafting intuitive design systems, conversion-driven SaaS dashboards, and delightful mobile experiences.",
+    expertise: ["Design Systems", "Figma", "User Research"],
+    socials: {
+      linkedin: "https://linkedin.com",
+      twitter: "https://twitter.com",
+    },
+  },
+  {
+    id: "marcus-vance",
+    name: "Marcus Vance",
+    role: "VP of Mobile Engineering",
+    department: "Mobile Development",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=80",
+    bio: "Pioneering cross-platform mobile apps on React Native and Flutter with real-time WebSockets, offline sync, and sub-second rendering.",
+    expertise: ["React Native", "iOS & Android", "Real-Time Sync"],
+    socials: {
+      linkedin: "https://linkedin.com",
+      github: "https://github.com",
+    },
+  },
+  {
+    id: "elena-rostova",
+    name: "Elena Rostova",
+    role: "Principal DevOps & Cloud Architect",
+    department: "Cloud & DevOps",
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800&q=80",
+    bio: "Infrastructure-as-code evangelist designing resilient multi-region AWS environments, automated CI/CD pipelines, and 99.99% uptime SLAs.",
+    expertise: ["AWS Multi-Region", "Terraform", "Automated CI/CD"],
+    socials: {
+      linkedin: "https://linkedin.com",
+      github: "https://github.com",
+    },
+  },
+  {
+    id: "tanvir-hasan",
+    name: "Tanvir Hasan",
+    role: "Lead Growth & Performance Strategist",
+    department: "Marketing & Growth",
+    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&q=80",
+    bio: "Data-driven growth hacker specializing in technical SEO topical clusters, paid Meta & Google ad funnels, and programmatic CAC reduction.",
+    expertise: ["Technical SEO", "Full-Funnel CRO", "Paid Acquisition"],
+    socials: {
+      linkedin: "https://linkedin.com",
+      twitter: "https://twitter.com",
+    },
+  },
+];
+
+export async function getTeamMembers(): Promise<TeamMember[]> {
+  return teamMembers;
+}

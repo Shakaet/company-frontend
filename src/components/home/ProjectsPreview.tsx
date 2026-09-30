@@ -7,7 +7,7 @@ export default function ProjectsPreview() {
   const featured = projects.filter((p) => p.featured).slice(0, 3);
 
   return (
-    <section className="py-20 sm:py-28 bg-slate-50/50 relative overflow-hidden border-t border-slate-100">
+    <section className="py-20 sm:py-28 bg-white relative overflow-hidden border-t border-slate-100">
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
           <div>
