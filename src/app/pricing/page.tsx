@@ -1,29 +1,20 @@
-import type { Metadata } from "next";
-import { getPricingPlans } from "@/lib/data";
+// src/app/pricing/page.tsx
 import PricingHero from "@/components/pricing/PricingHero";
 import PricingSection from "@/components/pricing/PricingSection";
-
-export const metadata: Metadata = {
-  title: "Pricing Plans & Engagement Models | ITStartup",
-  description: "Transparent, flexible pricing for dedicated engineering teams and agile software sprints. No hidden fees.",
-  openGraph: {
-    title: "ITStartup Pricing & Plans",
-    description: "Deploy senior engineering pods with predictable monthly sprint pricing.",
-  },
-};
+import GuaranteesSection from "@/components/pricing/GuaranteesSection";
+import { getPricingPlans, getGuarantees } from "@/lib/data";
 
 export default async function PricingPage() {
-  const plans = await getPricingPlans();
+  const [plans, guarantees] = await Promise.all([
+    getPricingPlans(),
+    getGuarantees(),
+  ]);
 
   return (
-    <main className="min-h-screen bg-slate-50/30 pb-20">
-      {/* Hero Header */}
+    <main>
       <PricingHero />
-
-      {/* Main Pricing Cards & Billing Toggle */}
-      <div className="container mx-auto px-4 max-w-6xl">
-        <PricingSection plans={plans} />
-      </div>
+      <PricingSection plans={plans} />
+      <GuaranteesSection guarantees={guarantees} />
     </main>
   );
 }

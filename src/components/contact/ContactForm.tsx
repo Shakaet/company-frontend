@@ -1,19 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { 
-  Send, 
-  CheckCircle2, 
-  Sparkles, 
-  User, 
-  Mail, 
-  Phone, 
-  Building2, 
-  DollarSign, 
-  Clock, 
+import {
+  Send,
+  CheckCircle2,
+  Sparkles,
+  User,
+  Mail,
+  Phone,
+  Building2,
+  DollarSign,
+  Clock,
   ArrowRight,
-  AlertCircle
+  AlertCircle,
 } from "lucide-react";
+import { submitContact } from "@/lib/api/contact";
+import type { ContactPayload } from "@/lib/types";
 
 export default function ContactForm() {
   const [inquiryType, setInquiryType] = useState("New Project");
@@ -73,31 +75,34 @@ export default function ContactForm() {
     setIsSubmitting(true);
 
     try {
-      // Future API call:
-      // await fetch('/api/contact', { method: 'POST', body: JSON.stringify({ ...formData, inquiryType }) });
+      const payload: ContactPayload = {
+        inquiryType,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        service: formData.service,
+        budget: formData.budget,
+        timeline: formData.timeline,
+        message: formData.message,
+        requestNda: formData.requestNda ? 1 : 0,
+        status: "pending",
+      };
 
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      const result = await submitContact(payload);
 
-      const mailBody = encodeURIComponent(
-        `Inquiry Type: ${inquiryType}\n` +
-        `Client Name: ${formData.name}\n` +
-        `Work Email: ${formData.email}\n` +
-        `Phone/WhatsApp: ${formData.phone || "Not provided"}\n` +
-        `Company: ${formData.company || "Not provided"}\n` +
-        `Service Interested: ${formData.service}\n` +
-        `Estimated Budget: ${formData.budget}\n` +
-        `Target Timeline: ${formData.timeline}\n` +
-        `NDA Requested: ${formData.requestNda ? "YES" : "No"}\n\n` +
-        `Message & Project Scope:\n` +
-        `----------------------------------------\n` +
-        `${formData.message}`
-      );
-
-      window.location.href = `mailto:hello@itstartup.com?subject=Inquiry [${inquiryType}]: ${encodeURIComponent(formData.name)}&body=${mailBody}`;
-
-      setIsSubmitted(true);
+      if (result.ok) {
+        setIsSubmitted(true);
+      } else {
+        setErrorMessage(
+          result.error ||
+            "Something went wrong while sending. Please email hello@itstartup.com directly."
+        );
+      }
     } catch {
-      setErrorMessage("Something went wrong while sending. Please email hello@itstartup.com directly.");
+      setErrorMessage(
+        "Something went wrong while sending. Please email hello@itstartup.com directly."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -116,7 +121,9 @@ export default function ContactForm() {
           Thank You, {formData.name}!
         </h3>
         <p className="mt-3 text-slate-600 max-w-lg mx-auto text-sm sm:text-base leading-relaxed">
-          We've received your inquiry regarding <span className="font-semibold text-slate-900">{formData.service}</span>. Our team reviews all requests within 2 business hours.
+          We've received your inquiry regarding{" "}
+          <span className="font-semibold text-slate-900">{formData.service}</span>. Our team reviews
+          all requests within 2 business hours.
         </p>
 
         {/* Next Steps Box */}

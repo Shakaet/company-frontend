@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { getProjects } from "@/lib/data";
+import { getProjects, getHighlights, getCategories } from "@/lib/data";
 import PortfolioHero from "@/components/portfolio/PortfolioHero";
+import HighlightsSection from "@/components/portfolio/HighlightsSection";
 import ProjectGrid from "@/components/portfolio/ProjectGrid";
 
 export const metadata: Metadata = {
@@ -15,13 +16,26 @@ export const metadata: Metadata = {
 };
 
 export default async function PortfolioPage() {
-  // Dynamic fetching prepared for future backend/CMS integration
-  const projects = await getProjects();
+  // Fetch all three in parallel
+  const [projects, highlights, categories] = await Promise.all([
+    getProjects(),
+    getHighlights(),
+    getCategories(),
+  ]);
 
   return (
     <main className="min-h-screen bg-slate-50/40 pb-20">
       {/* Hero Section with Live Stats */}
       <PortfolioHero totalProjects={projects.length} />
+
+      {/* Highlights Stats Strip */}
+      {highlights.length > 0 && (
+        <section className="py-16 sm:py-20">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <HighlightsSection highlights={highlights} />
+          </div>
+        </section>
+      )}
 
       {/* Main Filterable Projects Directory */}
       <section id="projects-section" className="py-16 sm:py-24">
@@ -34,12 +48,12 @@ export default async function PortfolioPage() {
               Featured Work & Outcomes
             </h2>
             <p className="mt-3 text-slate-600 text-sm sm:text-base">
-              Every project is an obsession with code quality, lightning speed, intuitive aesthetics, and business impact.
+              Every project is an obsession with code quality, lightning speed,
+              intuitive aesthetics, and business impact.
             </p>
           </div>
 
-          {/* Interactive Dynamic Grid with Tabs, Keyword Search & Metric Badges */}
-          <ProjectGrid projects={projects} />
+          <ProjectGrid projects={projects} categories={categories} />
         </div>
       </section>
     </main>

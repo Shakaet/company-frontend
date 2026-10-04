@@ -1,35 +1,38 @@
 "use client";
 
 import { useState } from "react";
-import { 
-  Send, 
-  CheckCircle2, 
-  Sparkles, 
-  User, 
-  Mail, 
-  Phone, 
-  Building2, 
-  DollarSign, 
-  Clock, 
+import {
+  Send,
+  CheckCircle2,
+  Sparkles,
+  User,
+  Mail,
+  Phone,
+  Building2,
+  DollarSign,
+  Clock,
   ArrowRight,
-  AlertCircle 
+  AlertCircle,
+  MessageSquare,
 } from "lucide-react";
+import { submitConsultation } from "@/lib/api/services";
+import type { ConsultationPayload } from "@/lib/types";
 
 interface ServiceConsultationFormProps {
-  serviceTitle?: string;
-  serviceSlug?: string;
+  serviceTitle: string;
+  serviceSlug: string;
 }
 
-export default function ServiceConsultationForm({ 
-  serviceTitle = "General Project Inquiry",
-  serviceSlug
+export default function ServiceConsultationForm({
+  serviceTitle,
+  serviceSlug,
 }: ServiceConsultationFormProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     company: "",
-    budget: "$3k - $10k",
+    budget: "$3,000 - $10,000",
     timeline: "Within 1 month",
     projectDetails: "",
   });
@@ -37,54 +40,66 @@ export default function ServiceConsultationForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setFieldErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
+    setFieldErrors({});
 
     if (!formData.name || !formData.email || !formData.projectDetails) {
-      setErrorMessage("Please complete all required fields (Name, Email, and Project Details).");
+      setErrorMessage(
+        "Please fill in your Name, Email, and Project Details."
+      );
       return;
     }
 
     setIsSubmitting(true);
 
-    try {
-      // Future API call:
-      // await fetch('/api/services/inquire', { method: 'POST', body: JSON.stringify({ ...formData, serviceTitle, serviceSlug }) });
+    const payload: ConsultationPayload = {
+      serviceTitle,
+      serviceSlug,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      company: formData.company,
+      budget: formData.budget,
+      timeline: formData.timeline,
+      projectDetails: formData.projectDetails,
+      status: "pending",
+    };
 
-      await new Promise((resolve) => setTimeout(resolve, 800));
+    const result = await submitConsultation(payload);
+    setIsSubmitting(false);
 
-      const mailBody = encodeURIComponent(
-        `New Project Inquiry regarding: ${serviceTitle}\n\n` +
-        `Client Information:\n` +
-        `--------------------\n` +
-        `Name: ${formData.name}\n` +
-        `Email: ${formData.email}\n` +
-        `Phone: ${formData.phone || "Not provided"}\n` +
-        `Company: ${formData.company || "Not provided"}\n` +
-        `Estimated Budget: ${formData.budget}\n` +
-        `Timeline: ${formData.timeline}\n\n` +
-        `Project Scope & Details:\n` +
-        `--------------------\n` +
-        `${formData.projectDetails}`
-      );
-
-      window.location.href = `mailto:hello@itstartup.com?subject=Project Inquiry: ${encodeURIComponent(serviceTitle)} - ${encodeURIComponent(formData.name)}&body=${mailBody}`;
-
+    if (result.ok) {
       setIsSubmitted(true);
-    } catch {
-      setErrorMessage("Something went wrong. Please try again or reach out to hello@itstartup.com directly.");
-    } finally {
-      setIsSubmitting(false);
+      return;
     }
+
+    if (result.validationErrors.length > 0) {
+      const map: Record<string, string> = {};
+      result.validationErrors.forEach((err) => {
+        map[err.path] = err.message.replace(/^Path `.*?` /, "").trim();
+      });
+      setFieldErrors(map);
+    }
+    setErrorMessage(result.error || "Please fix the errors below and try again.");
   };
 
   if (isSubmitted) {
@@ -100,44 +115,43 @@ export default function ServiceConsultationForm({
           Thank You, {formData.name}!
         </h3>
         <p className="mt-3 text-slate-600 max-w-lg mx-auto text-sm sm:text-base leading-relaxed">
-          We've received your request regarding <span className="font-semibold text-slate-900">{serviceTitle}</span>. One of our lead technical architects will review your project details and respond within 24 hours.
+          We've received your consultation request for{" "}
+          <span className="font-semibold text-slate-900">{serviceTitle}</span>.
+          Our team will reach out within 2 business hours.
         </p>
-
-        <div className="mt-8 pt-6 border-t border-emerald-200 flex justify-center">
-          <button
-            onClick={() => {
-              setIsSubmitted(false);
-              setFormData({
-                name: "",
-                email: "",
-                phone: "",
-                company: "",
-                budget: "$3k - $10k",
-                timeline: "Within 1 month",
-                projectDetails: "",
-              });
-            }}
-            className="px-6 py-2.5 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-semibold hover:bg-emerald-700 transition"
-          >
-            Submit Another Request
-          </button>
-        </div>
+        <button
+          onClick={() => {
+            setIsSubmitted(false);
+            setFormData({
+              name: "",
+              email: "",
+              phone: "",
+              company: "",
+              budget: "$3,000 - $10,000",
+              timeline: "Within 1 month",
+              projectDetails: "",
+            });
+          }}
+          className="mt-8 px-6 py-2.5 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-semibold hover:bg-emerald-700 transition"
+        >
+          Send Another Request
+        </button>
       </div>
     );
   }
 
   return (
-    <div id="request-quote" className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-9 shadow-sm scroll-mt-24">
+    <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-9 shadow-sm">
       <div className="mb-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold mb-2">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Tailored Architecture & Estimate</span>
+          <span>Free 30-Minute Consultation</span>
         </div>
         <h3 className="text-2xl font-bold text-slate-900">
-          Request a Free Consultation for {serviceTitle}
+          Request a Consultation
         </h3>
         <p className="mt-1 text-sm text-slate-500">
-          Tell us about your product goals and our senior engineering team will get back to you with a roadmap and estimate.
+          Tell us about your project. We'll respond within 2 business hours.
         </p>
       </div>
 
@@ -152,7 +166,7 @@ export default function ServiceConsultationForm({
         <div className="grid sm:grid-cols-2 gap-5">
           <div>
             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-              Your Name <span className="text-rose-500">*</span>
+              Full Name <span className="text-rose-500">*</span>
             </label>
             <div className="relative">
               <User className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -162,15 +176,21 @@ export default function ServiceConsultationForm({
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="e.g. Sarah Jenkins"
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-100 transition"
+                placeholder="e.g. Michael Vance"
+                className={`w-full pl-10 pr-4 py-3 rounded-xl border bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:bg-white focus:ring-3 transition ${fieldErrors.name
+                    ? "border-rose-300 focus:border-rose-500 focus:ring-rose-100"
+                    : "border-slate-200 focus:border-blue-600 focus:ring-blue-100"
+                  }`}
               />
             </div>
+            {fieldErrors.name && (
+              <p className="mt-1.5 text-xs text-rose-600">{fieldErrors.name}</p>
+            )}
           </div>
 
           <div>
             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-              Work Email <span className="text-rose-500">*</span>
+              Email <span className="text-rose-500">*</span>
             </label>
             <div className="relative">
               <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -180,17 +200,23 @@ export default function ServiceConsultationForm({
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="sarah@company.com"
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-100 transition"
+                placeholder="you@company.com"
+                className={`w-full pl-10 pr-4 py-3 rounded-xl border bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:bg-white focus:ring-3 transition ${fieldErrors.email
+                    ? "border-rose-300 focus:border-rose-500 focus:ring-rose-100"
+                    : "border-slate-200 focus:border-blue-600 focus:ring-blue-100"
+                  }`}
               />
             </div>
+            {fieldErrors.email && (
+              <p className="mt-1.5 text-xs text-rose-600">{fieldErrors.email}</p>
+            )}
           </div>
         </div>
 
         <div className="grid sm:grid-cols-2 gap-5">
           <div>
             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-              Phone / WhatsApp
+              Phone
             </label>
             <div className="relative">
               <Phone className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -199,7 +225,7 @@ export default function ServiceConsultationForm({
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="+1 (555) 000-0000"
+                placeholder="+880 1XXXXXXXXX"
                 className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-100 transition"
               />
             </div>
@@ -207,7 +233,7 @@ export default function ServiceConsultationForm({
 
           <div>
             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-              Company Name / Website
+              Company
             </label>
             <div className="relative">
               <Building2 className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -216,7 +242,7 @@ export default function ServiceConsultationForm({
                 name="company"
                 value={formData.company}
                 onChange={handleChange}
-                placeholder="Acme Corp (acme.com)"
+                placeholder="Acme Inc"
                 className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-100 transition"
               />
             </div>
@@ -226,7 +252,7 @@ export default function ServiceConsultationForm({
         <div className="grid sm:grid-cols-2 gap-5">
           <div>
             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-              Estimated Budget Range
+              Estimated Budget
             </label>
             <div className="relative">
               <DollarSign className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
@@ -234,19 +260,20 @@ export default function ServiceConsultationForm({
                 name="budget"
                 value={formData.budget}
                 onChange={handleChange}
-                className="w-full pl-10 pr-8 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm font-medium focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-100 transition cursor-pointer appearance-none"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm font-medium focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-100 transition cursor-pointer appearance-none"
               >
                 <option value="< $3,000">Less than $3,000</option>
-                <option value="$3k - $10k">$3,000 - $10,000</option>
-                <option value="$10k - $25k">$10,000 - $25,000</option>
-                <option value="$25k+">$25,000+</option>
+                <option value="$3,000 - $10,000">$3,000 - $10,000</option>
+                <option value="$10,000 - $25,000">$10,000 - $25,000</option>
+                <option value="$25,000+">$25,000+</option>
+                <option value="Not Sure / Flexible">Not Sure / Need Guidance</option>
               </select>
             </div>
           </div>
 
           <div>
             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-              Target Launch Timeline
+              Timeline
             </label>
             <div className="relative">
               <Clock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
@@ -254,12 +281,12 @@ export default function ServiceConsultationForm({
                 name="timeline"
                 value={formData.timeline}
                 onChange={handleChange}
-                className="w-full pl-10 pr-8 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm font-medium focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-100 transition cursor-pointer appearance-none"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm font-medium focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-100 transition cursor-pointer appearance-none"
               >
-                <option value="Immediately">Immediately (ASAP)</option>
+                <option value="Immediately">Immediately</option>
                 <option value="Within 1 month">Within 1 Month</option>
                 <option value="1 - 3 months">1 - 3 Months</option>
-                <option value="Exploring & Scoping">Just Exploring / Need Guidance</option>
+                <option value="Exploring & Planning">Just Planning</option>
               </select>
             </div>
           </div>
@@ -267,17 +294,28 @@ export default function ServiceConsultationForm({
 
         <div>
           <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-            Project Overview & Goals <span className="text-rose-500">*</span>
+            Project Details <span className="text-rose-500">*</span>
           </label>
-          <textarea
-            required
-            rows={4}
-            name="projectDetails"
-            value={formData.projectDetails}
-            onChange={handleChange}
-            placeholder="Tell us what you're building, key features required, existing tech stack, and what success looks like..."
-            className="w-full p-4 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-100 transition leading-relaxed"
-          />
+          <div className="relative">
+            <MessageSquare className="w-4 h-4 absolute left-3.5 top-4 text-slate-400" />
+            <textarea
+              required
+              rows={4}
+              name="projectDetails"
+              value={formData.projectDetails}
+              onChange={handleChange}
+              placeholder="Describe your project, requirements, and goals..."
+              className={`w-full pl-10 pr-4 py-3 rounded-xl border bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:bg-white focus:ring-3 transition leading-relaxed ${fieldErrors.projectDetails
+                  ? "border-rose-300 focus:border-rose-500 focus:ring-rose-100"
+                  : "border-slate-200 focus:border-blue-600 focus:ring-blue-100"
+                }`}
+            />
+          </div>
+          {fieldErrors.projectDetails && (
+            <p className="mt-1.5 text-xs text-rose-600">
+              {fieldErrors.projectDetails}
+            </p>
+          )}
         </div>
 
         <button
@@ -288,12 +326,12 @@ export default function ServiceConsultationForm({
           {isSubmitting ? (
             <>
               <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              <span>Sending Inquiry...</span>
+              <span>Sending Request...</span>
             </>
           ) : (
             <>
               <Send className="w-4 h-4" />
-              <span>Submit Project Inquiry</span>
+              <span>Request Consultation</span>
               <ArrowRight className="w-4 h-4" />
             </>
           )}

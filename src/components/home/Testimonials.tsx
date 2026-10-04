@@ -1,12 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Star, Sparkles, TrendingUp, CheckCircle2, ArrowRight, Quote } from "lucide-react";
-import { testimonials } from "@/lib/data";
+import { Star, Sparkles, TrendingUp, ArrowRight, Quote } from "lucide-react";
+import { getTestimonials } from "@/lib/data";
 
-export default function Testimonials() {
+export default async function Testimonials() {
+  const testimonials = await getTestimonials();
+
+  if (testimonials.length === 0) return null;
+
   return (
     <section className="py-20 sm:py-28 bg-white relative overflow-hidden border-b border-slate-100">
-      {/* Background ambient lighting */}
       <div className="pointer-events-none absolute top-1/4 right-0 w-96 h-96 bg-blue-50/60 rounded-full blur-3xl -z-10" />
       <div className="pointer-events-none absolute bottom-10 left-0 w-80 h-80 bg-indigo-50/50 rounded-full blur-3xl -z-10" />
 
@@ -26,7 +29,6 @@ export default function Testimonials() {
             </p>
           </div>
 
-          {/* Social Proof Badge */}
           <div className="flex items-center gap-3 bg-slate-50 border border-slate-200/80 rounded-2xl px-4 py-2.5 self-start md:self-auto shadow-2xs">
             <div className="flex text-amber-400">
               {[...Array(5)].map((_, i) => (
@@ -39,18 +41,16 @@ export default function Testimonials() {
           </div>
         </div>
 
-        {/* Testimonials 2x2 Grid */}
+        {/* Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {testimonials.map((t) => (
             <div
               key={t.id}
               className="group bg-white rounded-3xl p-7 sm:p-8 border border-slate-200/80 shadow-xs hover:shadow-xl hover:border-blue-300 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between relative"
             >
-              {/* Decorative Quote Icon Watermark */}
               <Quote className="absolute top-6 right-6 w-12 h-12 text-slate-100 group-hover:text-blue-50 transition-colors pointer-events-none" />
 
               <div>
-                {/* Rating Stars & Project Category Pill */}
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-5">
                   <div className="flex text-amber-400">
                     {[...Array(t.rating || 5)].map((_, i) => (
@@ -65,36 +65,45 @@ export default function Testimonials() {
                   )}
                 </div>
 
-                {/* Review Quote Text */}
                 <p className="text-slate-700 text-sm sm:text-base leading-relaxed italic mb-8 relative z-10">
                   "{t.message}"
                 </p>
               </div>
 
-              {/* Bottom Author Row & Metric Badge */}
               <div className="pt-5 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-3.5">
-                  {/* Avatar */}
+                  {/* Avatar with initial fallback */}
                   <div className="relative w-12 h-12 rounded-full overflow-hidden bg-slate-100 border border-slate-200 shrink-0">
-                    <Image
-                      src={t.avatar}
-                      alt={t.name}
-                      fill
-                      sizes="48px"
-                      className="object-cover"
-                    />
+                    {t.avatar ? (
+                      <Image
+                        src={t.avatar}
+                        alt={t.name}
+                        fill
+                        sizes="48px"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-blue-100 text-blue-700 font-bold text-base">
+                        {t.name.charAt(0).toUpperCase()}
+                      </div>
+                    )}
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                       {t.name}
                     </h4>
                     <p className="text-xs text-slate-500 font-medium">
-                      {t.role} · <span className="text-slate-700">{t.company}</span>
+                      {t.role}
+                      {t.company && (
+                        <>
+                          {" · "}
+                          <span className="text-slate-700">{t.company}</span>
+                        </>
+                      )}
                     </p>
                   </div>
                 </div>
 
-                {/* Highlight Metric Pill */}
                 {t.highlightMetric && (
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60 text-xs font-bold self-start sm:self-auto shrink-0">
                     <TrendingUp className="w-3.5 h-3.5" />
@@ -109,7 +118,6 @@ export default function Testimonials() {
           ))}
         </div>
 
-        {/* Bottom Portfolio Link */}
         <div className="mt-12 sm:mt-16 text-center">
           <Link
             href="/portfolio"

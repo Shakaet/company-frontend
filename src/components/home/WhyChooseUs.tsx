@@ -1,43 +1,35 @@
-import { 
-  Zap, 
-  Users, 
-  Layers, 
-  Sparkles, 
-  CheckCircle2, 
-  Lock
+import {
+  Zap,
+  Users,
+  Layers,
+  Sparkles,
+  CheckCircle2,
+  Lock,
+  Shield,
+  Star,
+  Target,
+  Rocket,
+  type LucideIcon,
 } from "lucide-react";
+import { getWhyChooseUs } from "@/lib/data";
 
-export default function WhyChooseUs() {
-  const advantages = [
-    {
-      icon: Zap,
-      badge: "High Velocity",
-      title: "Rapid Sprint Delivery",
-      desc: "We ship working code in 2-week agile sprints. You receive clickable staging demos every cycle with zero guesswork.",
-      perks: ["Bi-weekly working releases", "Daily async standup updates"],
-    },
-    {
-      icon: Users,
-      badge: "Senior Pods",
-      title: "Senior-Only Engineers",
-      desc: "Work directly with top-tier fullstack engineers and product designers. No junior handovers, no layers of red tape.",
-      perks: ["Direct Slack / WhatsApp channel", "Direct CTO & architect advisory"],
-    },
-    {
-      icon: Lock,
-      badge: "Zero Lock-In",
-      title: "100% IP & Code Ownership",
-      desc: "All source code, Docker configs, and design tokens belong to you from day one under clear intellectual property transfer.",
-      perks: ["Full GitHub / GitLab repository", "Clean, documented TypeScript"],
-    },
-    {
-      icon: Layers,
-      badge: "Production Ready",
-      title: "Scalable Architecture",
-      desc: "Built to effortlessly handle surges from hundreds to millions of users with 99.9% uptime and automated CI/CD.",
-      perks: ["Automated testing & linting", "30-day post-launch warranty"],
-    },
-  ];
+/** Map API icon names → Lucide components */
+const iconMap: Record<string, LucideIcon> = {
+  Zap,
+  Users,
+  Layers,
+  Lock,
+  Shield,
+  Star,
+  Target,
+  Rocket,
+  Sparkles,
+};
+
+export default async function WhyChooseUs() {
+  const advantages = await getWhyChooseUs();
+
+  if (advantages.length === 0) return null;
 
   return (
     <section className="py-20 sm:py-28 bg-slate-50/60 relative overflow-hidden border-b border-slate-100">
@@ -62,11 +54,11 @@ export default function WhyChooseUs() {
 
         {/* 4 Feature Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          {advantages.map((item, idx) => {
-            const Icon = item.icon;
+          {advantages.map((item) => {
+            const Icon = iconMap[item.icon] || Shield;
             return (
               <div
-                key={idx}
+                key={item.id}
                 className="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-xs hover:shadow-xl hover:border-blue-300 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
@@ -75,9 +67,11 @@ export default function WhyChooseUs() {
                     <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-2xs">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 group-hover:bg-blue-50 group-hover:text-blue-700 transition-colors">
-                      {item.badge}
-                    </span>
+                    {item.badge && (
+                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 group-hover:bg-blue-50 group-hover:text-blue-700 transition-colors">
+                        {item.badge}
+                      </span>
+                    )}
                   </div>
 
                   <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
@@ -90,14 +84,19 @@ export default function WhyChooseUs() {
                 </div>
 
                 {/* Micro Perks List */}
-                <div className="mt-6 pt-5 border-t border-slate-100 space-y-2">
-                  {item.perks.map((perk, pIdx) => (
-                    <div key={pIdx} className="flex items-center gap-2 text-xs font-medium text-slate-700">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-                      <span>{perk}</span>
-                    </div>
-                  ))}
-                </div>
+                {item.perks.length > 0 && (
+                  <div className="mt-6 pt-5 border-t border-slate-100 space-y-2">
+                    {item.perks.map((perk, pIdx) => (
+                      <div
+                        key={pIdx}
+                        className="flex items-center gap-2 text-xs font-medium text-slate-700"
+                      >
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                        <span>{perk}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             );
           })}

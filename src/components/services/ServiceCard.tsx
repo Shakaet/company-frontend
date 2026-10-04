@@ -1,13 +1,14 @@
 import Link from "next/link";
-import { 
-  Code, 
-  Smartphone, 
-  Palette, 
-  Megaphone, 
-  Cloud, 
-  CheckCircle2, 
-  Sparkles, 
-  LucideIcon
+import Image from "next/image";
+import {
+  Code,
+  Smartphone,
+  Palette,
+  Megaphone,
+  Cloud,
+  CheckCircle2,
+  Sparkles,
+  LucideIcon,
 } from "lucide-react";
 import { Service } from "@/lib/types";
 
@@ -25,7 +26,11 @@ interface ServiceCardProps {
 }
 
 export default function ServiceCard({ service, featured }: ServiceCardProps) {
-  const IconComponent = iconMap[service.icon] || Code;
+  // If API sends a URL (Cloudinary), render an image.
+  // Otherwise, use the Lucide icon map with a fallback.
+  const isImageIcon =
+    typeof service.icon === "string" && service.icon.startsWith("http");
+  const IconComponent = !isImageIcon ? iconMap[service.icon] || Code : null;
 
   return (
     <div
@@ -38,8 +43,20 @@ export default function ServiceCard({ service, featured }: ServiceCardProps) {
       <div>
         {/* Top Badges & Icon */}
         <div className="flex items-center justify-between gap-3 mb-6">
-          <div className="w-13 h-13 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white group-hover:scale-105 transition-all duration-300 shadow-xs">
-            <IconComponent className="w-6 h-6" />
+          <div className="w-13 h-13 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white group-hover:scale-105 transition-all duration-300 shadow-xs overflow-hidden p-2">
+            {isImageIcon ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={service.icon}
+                alt={service.title}
+                className="w-full h-full object-contain"
+                loading="lazy"
+              />
+            ) : IconComponent ? (
+              <IconComponent className="w-6 h-6" />
+            ) : (
+              <Code className="w-6 h-6" />
+            )}
           </div>
 
           <div className="flex items-center gap-2">
@@ -77,7 +94,10 @@ export default function ServiceCard({ service, featured }: ServiceCardProps) {
               Key Capabilities:
             </div>
             {service.features.slice(0, 3).map((feat, idx) => (
-              <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
+              <div
+                key={idx}
+                className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700"
+              >
                 <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
                 <span className="leading-snug">{feat}</span>
               </div>
@@ -110,8 +130,12 @@ export default function ServiceCard({ service, featured }: ServiceCardProps) {
         <div>
           {service.pricingStartingAt ? (
             <div>
-              <span className="text-[11px] text-slate-400 font-medium block">Starting from</span>
-              <span className="text-base font-extrabold text-slate-900">{service.pricingStartingAt}</span>
+              <span className="text-[11px] text-slate-400 font-medium block">
+                Starting from
+              </span>
+              <span className="text-base font-extrabold text-slate-900">
+                {service.pricingStartingAt}
+              </span>
             </div>
           ) : (
             <span className="text-xs text-slate-500 font-medium">Custom Scope</span>

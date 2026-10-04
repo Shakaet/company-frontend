@@ -1,21 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { 
-  Send, 
-  CheckCircle2, 
-  FileText, 
-  User, 
-  Mail, 
-  Phone, 
-  Globe, 
-  Briefcase, 
-  DollarSign, 
+import {
+  Send,
+  CheckCircle2,
+  FileText,
+  User,
+  Mail,
+  Phone,
+  Globe,
+  Briefcase,
+  DollarSign,
   Calendar,
   Sparkles,
   ArrowRight,
-  AlertCircle
+  AlertCircle,
 } from "lucide-react";
+import { submitApplication } from "@/lib/api/career";
+import type { ApplicationPayload } from "@/lib/types";
 
 interface ApplyFormProps {
   jobTitle: string;
@@ -40,6 +42,7 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -51,56 +54,81 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
+    // clear this field's error as the user types
+    setFieldErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
+    setFieldErrors({});
 
     if (!formData.fullName || !formData.email || !formData.resumeLink) {
-      setErrorMessage("Please fill in all required fields (Name, Email, and Resume link).");
+      setErrorMessage(
+        "Please fill in all required fields (Name, Email, and Resume link)."
+      );
+      return;
+    }
+
+    if (!formData.agreeConsent) {
+      setErrorMessage("Please agree to the consent statement to continue.");
       return;
     }
 
     setIsSubmitting(true);
 
-    try {
-      // Future API endpoint:
-      // await fetch('/api/career/apply', { method: 'POST', body: JSON.stringify({ ...formData, jobTitle, jobId }) });
-      
-      // Simulate smooth network latency
-      await new Promise((resolve) => setTimeout(resolve, 800));
+    // Build payload — only the fields the API accepts
+    const payload: ApplicationPayload = {
+      fullName: formData.fullName,
+      email: formData.email,
+      experience: formData.experience,
+      noticePeriod: formData.noticePeriod,
+      resumeLink: formData.resumeLink,
+      agreeConsent: formData.agreeConsent,
+      jobTitle,
+      status: "pending",
+    };
 
-      // Compose mailto payload as reliable client-side backup
-      const mailBody = encodeURIComponent(
-        `Job Application for: ${jobTitle} (ID: ${jobId || "N/A"})\n` +
-        `Department: ${department || "N/A"}\n\n` +
-        `Candidate Details:\n` +
-        `------------------------\n` +
-        `Full Name: ${formData.fullName}\n` +
-        `Email: ${formData.email}\n` +
-        `Phone: ${formData.phone || "Not provided"}\n` +
-        `Portfolio/LinkedIn/GitHub: ${formData.portfolioUrl || "Not provided"}\n` +
-        `Experience: ${formData.experience}\n` +
-        `Expected Salary: ${formData.expectedSalary || "Negotiable"}\n` +
-        `Notice Period: ${formData.noticePeriod}\n` +
-        `Resume Link: ${formData.resumeLink}\n\n` +
-        `Cover Letter:\n` +
-        `------------------------\n` +
-        `${formData.coverLetter || "No cover letter provided."}`
-      );
+    const result = await submitApplication(payload);
+    setIsSubmitting(false);
 
-      // Open mail client as backup
-      window.location.href = `mailto:careers@itstartup.com?subject=Job Application: ${encodeURIComponent(
-        jobTitle
-      )} - ${encodeURIComponent(formData.fullName)}&body=${mailBody}`;
-
+    if (result.ok) {
       setIsSubmitted(true);
-    } catch {
-      setErrorMessage("Something went wrong. Please try again or email careers@itstartup.com directly.");
-    } finally {
-      setIsSubmitting(false);
+      return;
     }
+
+    // Map backend validation errors → per-field messages
+    if (result.validationErrors.length > 0) {
+      const map: Record<string, string> = {};
+      result.validationErrors.forEach((err) => {
+        // backend uses `path` like "email", "resumeLink"
+        map[err.path] = err.message.replace(/^Path `.*?` /, "").trim();
+      });
+      setFieldErrors(map);
+    }
+    setErrorMessage(result.error || "Please fix the errors below and try again.");
+  };
+
+  const resetForm = () => {
+    setFormData({
+      fullName: "",
+      email: "",
+      phone: "",
+      portfolioUrl: "",
+      experience: "3-5 years",
+      expectedSalary: "",
+      noticePeriod: "Immediate",
+      resumeLink: "",
+      coverLetter: "",
+      agreeConsent: true,
+    });
+    setErrorMessage("");
+    setFieldErrors({});
   };
 
   if (isSubmitted) {
@@ -116,25 +144,17 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
           Thank You, {formData.fullName}!
         </h3>
         <p className="mt-3 text-slate-600 max-w-lg mx-auto text-sm sm:text-base leading-relaxed">
-          Your application for <span className="font-semibold text-slate-900">{jobTitle}</span> has been successfully submitted. Our talent acquisition team will review your profile and reach out within 48 hours.
+          Your application for{" "}
+          <span className="font-semibold text-slate-900">{jobTitle}</span> has been
+          successfully submitted. Our talent acquisition team will review your
+          profile and reach out within 48 hours.
         </p>
 
         <div className="mt-8 pt-6 border-t border-emerald-200/60 flex flex-wrap items-center justify-center gap-4">
           <button
             onClick={() => {
               setIsSubmitted(false);
-              setFormData({
-                fullName: "",
-                email: "",
-                phone: "",
-                portfolioUrl: "",
-                experience: "3-5 years",
-                expectedSalary: "",
-                noticePeriod: "Immediate",
-                resumeLink: "",
-                coverLetter: "",
-                agreeConsent: true,
-              });
+              resetForm();
             }}
             className="px-6 py-2.5 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-semibold hover:bg-emerald-700 transition"
           >
@@ -156,7 +176,8 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
           Apply for this Position
         </h3>
         <p className="mt-1 text-sm text-slate-500">
-          Fill out the details below. Our team reviews all applications within 48 hours.
+          Fill out the details below. Our team reviews all applications within 48
+          hours.
         </p>
       </div>
 
@@ -183,9 +204,16 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
                 value={formData.fullName}
                 onChange={handleChange}
                 placeholder="e.g. John Doe"
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-100 transition"
+                className={`w-full pl-10 pr-4 py-3 rounded-xl border bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:bg-white focus:ring-3 transition ${
+                  fieldErrors.fullName
+                    ? "border-rose-300 focus:border-rose-500 focus:ring-rose-100"
+                    : "border-slate-200 focus:border-blue-600 focus:ring-blue-100"
+                }`}
               />
             </div>
+            {fieldErrors.fullName && (
+              <p className="mt-1.5 text-xs text-rose-600">{fieldErrors.fullName}</p>
+            )}
           </div>
 
           <div>
@@ -201,9 +229,16 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="you@domain.com"
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-100 transition"
+                className={`w-full pl-10 pr-4 py-3 rounded-xl border bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:bg-white focus:ring-3 transition ${
+                  fieldErrors.email
+                    ? "border-rose-300 focus:border-rose-500 focus:ring-rose-100"
+                    : "border-slate-200 focus:border-blue-600 focus:ring-blue-100"
+                }`}
               />
             </div>
+            {fieldErrors.email && (
+              <p className="mt-1.5 text-xs text-rose-600">{fieldErrors.email}</p>
+            )}
           </div>
         </div>
 
@@ -256,7 +291,11 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
                 name="experience"
                 value={formData.experience}
                 onChange={handleChange}
-                className="w-full pl-10 pr-8 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm font-medium focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-100 transition cursor-pointer appearance-none"
+                className={`w-full pl-10 pr-8 py-3 rounded-xl border bg-slate-50/50 text-slate-900 text-sm font-medium focus:outline-none focus:bg-white focus:ring-3 transition cursor-pointer appearance-none ${
+                  fieldErrors.experience
+                    ? "border-rose-300 focus:border-rose-500 focus:ring-rose-100"
+                    : "border-slate-200 focus:border-blue-600 focus:ring-blue-100"
+                }`}
               >
                 <option value="1-2 years">1 - 2 Years</option>
                 <option value="3-5 years">3 - 5 Years</option>
@@ -264,6 +303,9 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
                 <option value="8+ years">8+ Years (Lead / Principal)</option>
               </select>
             </div>
+            {fieldErrors.experience && (
+              <p className="mt-1.5 text-xs text-rose-600">{fieldErrors.experience}</p>
+            )}
           </div>
 
           <div>
@@ -276,7 +318,11 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
                 name="noticePeriod"
                 value={formData.noticePeriod}
                 onChange={handleChange}
-                className="w-full pl-10 pr-8 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm font-medium focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-100 transition cursor-pointer appearance-none"
+                className={`w-full pl-10 pr-8 py-3 rounded-xl border bg-slate-50/50 text-slate-900 text-sm font-medium focus:outline-none focus:bg-white focus:ring-3 transition cursor-pointer appearance-none ${
+                  fieldErrors.noticePeriod
+                    ? "border-rose-300 focus:border-rose-500 focus:ring-rose-100"
+                    : "border-slate-200 focus:border-blue-600 focus:ring-blue-100"
+                }`}
               >
                 <option value="Immediate">Immediate Joining</option>
                 <option value="2 Weeks">2 Weeks Notice</option>
@@ -284,6 +330,9 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
                 <option value="2 Months">2 Months Notice</option>
               </select>
             </div>
+            {fieldErrors.noticePeriod && (
+              <p className="mt-1.5 text-xs text-rose-600">{fieldErrors.noticePeriod}</p>
+            )}
           </div>
 
           <div>
@@ -307,7 +356,8 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
         {/* Resume Link */}
         <div>
           <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-            Resume / CV Link (Google Drive / Dropbox / PDF URL) <span className="text-rose-500">*</span>
+            Resume / CV Link (Google Drive / Dropbox / PDF URL){" "}
+            <span className="text-rose-500">*</span>
           </label>
           <div className="relative">
             <FileText className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -318,12 +368,20 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
               value={formData.resumeLink}
               onChange={handleChange}
               placeholder="https://drive.google.com/file/d/... (Make sure link is viewable)"
-              className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-100 transition"
+              className={`w-full pl-10 pr-4 py-3 rounded-xl border bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:bg-white focus:ring-3 transition ${
+                fieldErrors.resumeLink
+                  ? "border-rose-300 focus:border-rose-500 focus:ring-rose-100"
+                  : "border-slate-200 focus:border-blue-600 focus:ring-blue-100"
+              }`}
             />
           </div>
-          <p className="mt-1.5 text-xs text-slate-500">
-            Tip: Please ensure link access is set to "Anyone with the link can view".
-          </p>
+          {fieldErrors.resumeLink ? (
+            <p className="mt-1.5 text-xs text-rose-600">{fieldErrors.resumeLink}</p>
+          ) : (
+            <p className="mt-1.5 text-xs text-slate-500">
+              Tip: Please ensure link access is set to "Anyone with the link can view".
+            </p>
+          )}
         </div>
 
         {/* Cover Letter */}
@@ -352,7 +410,8 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
             className="mt-1 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
           />
           <label htmlFor="agreeConsent" className="text-xs text-slate-500 leading-normal">
-            I agree to the processing of my submitted information for recruitment and talent evaluation at ITStartup.
+            I agree to the processing of my submitted information for recruitment
+            and talent evaluation at ITStartup.
           </label>
         </div>
 

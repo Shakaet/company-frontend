@@ -1,28 +1,31 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { 
-  getJobs, 
-  getJobById, 
-  getRelatedJobs 
+import {
+  getJobs,
+  getJobById,
+  getRelatedJobs
 } from "@/lib/data";
 import ApplyForm from "@/components/career/ApplyForm";
 import ShareJobButton from "@/components/career/ShareJobButton";
-import { 
-  ArrowLeft, 
-  MapPin, 
-  Briefcase, 
-  DollarSign, 
-  Calendar, 
-  CheckCircle2, 
-  Sparkles, 
-  Zap, 
-  Mail, 
-  ChevronRight, 
-  ArrowRight, 
-  ShieldCheck, 
-  Code 
+import {
+  ArrowLeft,
+  MapPin,
+  Briefcase,
+  DollarSign,
+  Calendar,
+  CheckCircle2,
+  Sparkles,
+  Zap,
+  Mail,
+  ChevronRight,
+  ArrowRight,
+  ShieldCheck,
+  Code
 } from "lucide-react";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function generateStaticParams() {
   const allJobs = await getJobs();
@@ -187,7 +190,7 @@ export default async function JobPage({
       {/* Main Content & Sticky Sidebar */}
       <div className="container mx-auto px-4 max-w-6xl mt-10">
         <div className="grid lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* Left Column: Job Details & Application Form */}
           <div className="lg:col-span-8 space-y-10">
             {/* About the Role */}
@@ -201,7 +204,7 @@ export default async function JobPage({
                   {job.aboutRole || job.description}
                 </p>
                 <p>
-                  At ITStartup, you will work with modern architectures, automated testing, and CI/CD workflows. 
+                  At ITStartup, you will work with modern architectures, automated testing, and CI/CD workflows.
                   We believe in continuous feedback, pragmatic code design, and maintaining high performance benchmarks.
                 </p>
               </div>
@@ -214,14 +217,16 @@ export default async function JobPage({
                 <span>Key Responsibilities</span>
               </h2>
               <ul className="space-y-3.5">
-                {job.responsibilities?.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-slate-700 text-base leading-relaxed">
-                    <span className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                )) || (
+                {job.responsibilities && job.responsibilities.length > 0 ? (
+                  job.responsibilities.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-slate-700 text-base leading-relaxed">
+                      <span className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))
+                ) : (
                   <li className="text-slate-600">Collaborate with the cross-functional team to ship impactful features.</li>
                 )}
               </ul>
@@ -234,14 +239,18 @@ export default async function JobPage({
                 <span>What We Look For (Requirements)</span>
               </h2>
               <ul className="space-y-3.5">
-                {job.requirements.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-slate-700 text-base leading-relaxed">
-                    <span className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
+                {job.requirements && job.requirements.length > 0 ? (
+                  job.requirements.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-slate-700 text-base leading-relaxed">
+                      <span className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))
+                ) : (
+                  <li className="text-slate-600">Strong fundamentals and a willingness to learn.</li>
+                )}
               </ul>
 
               {/* Nice to Have Section */}
@@ -310,10 +319,10 @@ export default async function JobPage({
 
             {/* Application Section */}
             <div id="apply" className="scroll-mt-24">
-              <ApplyForm 
-                jobTitle={job.title} 
-                jobId={job.id} 
-                department={job.department} 
+              <ApplyForm
+                jobTitle={job.title}
+                jobId={job.id}
+                department={job.department}
               />
             </div>
           </div>
