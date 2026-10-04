@@ -1,4 +1,5 @@
 import Hero from "@/components/home/Hero";
+import VideoSection from "@/components/home/VideoSection";
 import ServicesPreview from "@/components/home/ServicesPreview";
 import ProjectsPreview from "@/components/home/ProjectsPreview";
 import Clients from "@/components/home/Clients";
@@ -18,13 +19,8 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero
-        banners={banners}
-        partners={partners}
-        techStack={techStack}
-        stats={stats}
-      />
-      {/* <Counters /> */}
+      <Hero banners={banners} partners={partners} techStack={techStack} stats={stats} />
+      {/* comment */}
       <ServicesPreview />
       <ProjectsPreview />
       <Clients />
