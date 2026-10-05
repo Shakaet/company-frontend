@@ -99,34 +99,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Direct Technical Discovery Call Card */}
-              <div className="bg-gradient-to-br from-blue-50/80 to-indigo-50/70 rounded-3xl border border-blue-100 p-6 sm:p-7 shadow-xs">
-                <div className="flex items-center gap-3.5 mb-3">
-                  <div className="w-11 h-11 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-bold text-base shadow-sm">
-                    <Calendar className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-slate-900">
-                      Prefer a Direct 20-Min Video Call?
-                    </h4>
-                    <p className="text-xs text-slate-500">
-                      With our Solutions Architect
-                    </p>
-                  </div>
-                </div>
-
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5">
-                  Skip the emails and chat live on Google Meet or Zoom. We’ll discuss feasibility, rough timelines, and architectural choices.
-                </p>
-
-                <a
-                  href="mailto:hello@itstartup.com?subject=Schedule a Discovery Call"
-                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 text-white font-bold text-xs sm:text-sm hover:bg-blue-700 shadow-md shadow-blue-600/20 hover:-translate-y-0.5 transition-all"
-                >
-                  <span>Book a Discovery Session</span>
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-              </div>
+            
 
               {/* Enterprise Trust Badges */}
               <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-xs space-y-3.5">

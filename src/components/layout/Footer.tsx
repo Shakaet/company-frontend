@@ -9,7 +9,7 @@ interface FooterProps {
 
 export default function Footer({ settings }: FooterProps) {
   return (
-    <footer className="bg-gray-900 text-gray-300 pt-16 pb-6 mt-20">
+    <footer className="bg-blue-600 text-white pt-16 pb-6 mt-20">
       <div className="container-x grid md:grid-cols-3 gap-10">
         {/* Brand + tagline */}
         <div>
@@ -20,20 +20,20 @@ export default function Footer({ settings }: FooterProps) {
                 alt={settings.companyName}
                 width={40}
                 height={40}
-                className="w-10 h-10 object-contain"
+                className="w-20 h-20 object-contain"
               />
             ) : null}
-            <h3 className="text-white font-extrabold text-lg hover:text-blue-400 transition-colors">
-              {settings.companyName}
+            <h3 className="text-xl font-extrabold tracking-tight text-blue-900">
+              {/* {settings.companyName} */}
             </h3>
           </Link>
-          <p className="text-sm text-gray-400 mt-3">
+          <p className="text-sm text-white mt-3">
             {settings.footerTagline || settings.tagline}
           </p>
 
           {/* Address if present */}
           {settings.address && (
-            <p className="text-sm text-gray-400 mt-2 flex items-center gap-2">
+            <p className="text-sm text-white mt-2 flex items-center gap-2">
               <MapPin className="w-4 h-4" />
               {settings.address}
             </p>
@@ -48,7 +48,7 @@ export default function Footer({ settings }: FooterProps) {
               <li key={link.href + link.label}>
                 <Link
                   href={link.href}
-                  className="hover:text-blue-400 transition"
+                  className="text-white hover:text-blue-100 transition"
                 >
                   {link.label}
                 </Link>
@@ -65,7 +65,7 @@ export default function Footer({ settings }: FooterProps) {
               <li>
                 <a
                   href={`mailto:${settings.email}`}
-                  className="inline-flex items-center gap-2 hover:text-blue-400 transition"
+                  className="inline-flex items-center gap-2 text-white hover:text-blue-100 transition"
                 >
                   <Mail className="w-4 h-4" />
                   {settings.email}
@@ -76,7 +76,7 @@ export default function Footer({ settings }: FooterProps) {
               <li>
                 <a
                   href={`tel:${settings.phone}`}
-                  className="inline-flex items-center gap-2 hover:text-blue-400 transition"
+                  className="inline-flex items-center gap-2 text-white hover:text-blue-100 transition"
                 >
                   <Phone className="w-4 h-4" />
                   {settings.phone}
@@ -88,7 +88,7 @@ export default function Footer({ settings }: FooterProps) {
       </div>
 
       {/* Copyright */}
-      <div className="container-x border-t border-gray-800 mt-10 pt-6 text-center text-sm text-gray-500">
+      <div className="container-x border-t border-blue-400 mt-10 pt-6 text-center text-sm text-white">
         {settings.copyrightText ||
           `© ${new Date().getFullYear()} ${settings.companyName}. All rights reserved.`}
       </div>

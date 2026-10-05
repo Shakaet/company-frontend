@@ -79,27 +79,27 @@ export default function Navbar({ settings }: NavbarProps) {
   return (
     <>
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <nav className="container mx-auto flex items-center justify-between py-6 px-4">
+        <nav className="container mx-auto flex items-center justify-between py-4 px-4">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex h-14 items-center gap-2">
             {settings.logo ? (
               <Image
                 src={settings.logo}
                 alt={settings.companyName}
-                width={36}
-                height={36}
-                className="w-9 h-9 object-contain"
+                width={56}
+                height={56}
+                className="h-14 w-14 flex-shrink-0 object-contain"
                 priority
               />
             ) : null}
-            <span className="text-xl font-extrabold tracking-tight text-gray-900">
+            <span className="text-xl font-extrabold tracking-tight text-blue-900">
               {settings.companyName}
             </span>
           </Link>
 
           {/* ── Desktop links ── */}
-          <ul className="hidden md:flex items-center gap-6">
+          <ul className="hidden md:flex items-center gap-4">
             {links.map((l) => {
               const isActive = pathname.startsWith(l.href) && l.href !== "/";
               const isHovered = hoveredMenu === l.label;
@@ -108,7 +108,7 @@ export default function Navbar({ settings }: NavbarProps) {
                 /* Menu with dropdown */
                 <li
                   key={l.href}
-                  className="relative"
+                  className="relative flex h-10 items-center"
                   onMouseEnter={() => {
                     if (leaveTimer.current) clearTimeout(leaveTimer.current);
                     setHoveredMenu(l.label);
@@ -118,7 +118,7 @@ export default function Navbar({ settings }: NavbarProps) {
                   }}
                 >
                   <button
-                    className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 cursor-pointer ${
+                    className={`flex h-10 items-center gap-1 px-2 text-sm font-bold transition-colors duration-200 cursor-pointer ${
                       isActive ? "text-blue-600" : "text-gray-700 hover:text-blue-600"
                     }`}
                   >
@@ -201,7 +201,7 @@ export default function Navbar({ settings }: NavbarProps) {
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className={`text-sm font-medium transition-colors duration-200 ${
+                    className={`flex h-10 items-center px-2 text-sm font-bold transition-colors duration-200 ${
                       pathname === l.href ? "text-blue-600" : "text-gray-700 hover:text-blue-600"
                     }`}
                   >
@@ -252,9 +252,9 @@ export default function Navbar({ settings }: NavbarProps) {
               <Image
                 src={settings.logo}
                 alt={settings.companyName}
-                width={32}
-                height={32}
-                className="w-8 h-8 object-contain"
+                width={44}
+                height={44}
+                className="h-11 w-11 flex-shrink-0 object-contain"
               />
             ) : null}
             <span className="text-xl font-extrabold tracking-tight text-gray-900">
