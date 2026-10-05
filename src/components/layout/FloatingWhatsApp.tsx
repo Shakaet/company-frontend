@@ -1,9 +1,33 @@
 import Link from "next/link";
+import type { SiteSettings } from "@/lib/types";
 
-export default function FloatingWhatsApp() {
+interface FloatingWhatsAppProps {
+  settings: SiteSettings;
+}
+
+/** Normalize phone number into wa.me format (international, no +, no leading 0) */
+function toWaNumber(raw: string): string {
+  const digits = (raw || "").replace(/\D/g, "");
+  // Bangladesh local format: 01XXXXXXXXX → 8801XXXXXXXXX
+  if (digits.startsWith("0")) return `880${digits.slice(1)}`;
+  return digits;
+}
+
+export default function FloatingWhatsApp({ settings }: FloatingWhatsAppProps) {
+  // Prefer whatsappNumber; fall back to any whatsapp entry in socialLinks
+  const rawNumber =
+    settings.whatsappNumber ||
+    settings.socialLinks.find((s) => s.platform === "whatsapp")?.url ||
+    "";
+
+  const waNumber = toWaNumber(rawNumber);
+
+  // If no valid number, hide the button entirely
+  if (!waNumber) return null;
+
   return (
     <Link
-      href="https://wa.me/8801700000000"
+      href={`https://wa.me/${waNumber}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
@@ -16,9 +40,7 @@ export default function FloatingWhatsApp() {
 
       {/* Button */}
       <div className="relative flex items-center justify-center w-14 h-14">
-        {/* Pulse ring */}
         <span className="absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-40 animate-ping" />
-        {/* Icon circle */}
         <span className="relative flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] shadow-lg shadow-green-400/40 hover:scale-110 transition-transform duration-300">
           <svg
             className="w-7 h-7 text-white"

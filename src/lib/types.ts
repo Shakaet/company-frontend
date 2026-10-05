@@ -809,3 +809,41 @@ export type StatApiResponse = {
   message: string;
   data: StatApiItem[];
 };
+
+// ─────────────────────────────────────────────
+// Site Settings (GET /api/v1/site-setting)
+// ─────────────────────────────────────────────
+
+export type SocialLink = {
+  platform: string;   // "whatsapp" | "twitter" | "facebook" | "linkedin" | "github"
+  url: string;
+  isActive: boolean;
+};
+
+export type FooterLink = {
+  label: string;
+  href: string;
+};
+
+export type SiteSettings = {
+  companyName: string;
+  tagline: string;
+  logo: string;
+  email: string;
+  phone: string;
+  whatsappNumber: string;
+  address: string;
+  footerTagline: string;
+  footerQuickLinks: FooterLink[];
+  copyrightText: string;
+  metaTitle: string;
+  metaDescription: string;
+  socialLinks: SocialLink[];
+};
+
+export type SiteSettingsApiResponse = {
+  statusCode: number;
+  success: boolean;
+  message: string;
+  data: SiteSettings & { _id: string; __v: number };
+};

@@ -9,7 +9,7 @@ import {
 
 import { getPricingPlansFromApi, getGuaranteesFromApi } from "./api/pricing";
 
-import { Service, Project, BlogPost, Job, Testimonial, PricingPlan, TeamMember, Guarantee, Highlight, Category, CompanyDetails, FounderMessage, WhyChooseUsItem, Partner, TechStackItem, Stat } from "./types";
+import { Service, Project, BlogPost, Job, Testimonial, PricingPlan, TeamMember, Guarantee, Highlight, Category, CompanyDetails, FounderMessage, WhyChooseUsItem, Partner, TechStackItem, Stat, SiteSettings } from "./types";
 
 import { getHighlightsFromApi, getCategoriesFromApi, getProjectsFromApi } from "./api/portfolio";
 
@@ -31,6 +31,8 @@ import {
   getTechStackFromApi,
   getStatsFromApi,            // ← add
 } from "./api/homeElements";
+
+import { getSiteSettingsFromApi, FALLBACK_SETTINGS } from "./api/siteSettings";
 
 export const services: Service[] = [
   {
@@ -988,4 +990,38 @@ export async function getTechStack(): Promise<TechStackItem[]> {
 
 export async function getStats(): Promise<Stat[]> {
   return getStatsFromApi();
+}
+
+export async function getLatestServices(limit = 3): Promise<Service[]> {
+  const all = await getServices();
+  return all.slice(0, limit);
+}
+
+export async function getLatestProjects(limit = 3): Promise<Project[]> {
+  const all = await getProjects();
+  return all
+    .slice()
+    .sort((a, b) => {
+      const aTime = new Date((a as any).createdAt ?? 0).getTime();
+      const bTime = new Date((b as any).createdAt ?? 0).getTime();
+      return bTime - aTime;
+    })
+    .slice(0, limit);
+}
+
+export async function getLatestPricingPlans(limit = 3): Promise<PricingPlan[]> {
+  const all = await getPricingPlans();
+  return all
+    .slice()
+    .sort((a, b) => {
+      const aTime = new Date((a as any).createdAt ?? 0).getTime();
+      const bTime = new Date((b as any).createdAt ?? 0).getTime();
+      return bTime - aTime;
+    })
+    .slice(0, limit);
+}
+
+export async function getSiteSettings(): Promise<SiteSettings> {
+  const settings = await getSiteSettingsFromApi();
+  return settings ?? FALLBACK_SETTINGS;
 }

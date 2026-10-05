@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { services } from "@/lib/data";
+import { getLatestServices } from "@/lib/data";
 import ServiceCard from "@/components/services/ServiceCard";
 import { ArrowRight, Sparkles } from "lucide-react";
 
-export default function ServicesPreview() {
-  // Show top 3 or 4 services on homepage
-  const previewServices = services.slice(0, 3);
+export default async function ServicesPreview() {
+  // Show latest 3 services from API
+  const previewServices = await getLatestServices(3);
 
   return (
     <section className="py-20 bg-slate-50/50 border-b border-slate-100">
@@ -35,10 +35,10 @@ export default function ServicesPreview() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {previewServices.map((s) => (
-            <ServiceCard 
-              key={s.slug} 
-              service={s} 
-              featured={s.badge === "Most Popular"} 
+            <ServiceCard
+              key={s.slug}
+              service={s}
+              featured={s.badge === "Most Popular"}
             />
           ))}
         </div>

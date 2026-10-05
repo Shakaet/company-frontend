@@ -1,7 +1,9 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import type { SiteSettings } from "@/lib/types";
 
 interface SubmenuItem {
   href: string;
@@ -15,6 +17,10 @@ interface NavLink {
   label: string;
   submenu?: SubmenuItem[];
   isMega?: boolean;
+}
+
+interface NavbarProps {
+  settings: SiteSettings;
 }
 
 const aboutSubmenu: SubmenuItem[] = [
@@ -40,7 +46,7 @@ const links: NavLink[] = [
   { href: "/contact",   label: "Contact" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ settings }: NavbarProps) {
   const pathname   = usePathname();
   const [open, setOpen]           = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -48,7 +54,6 @@ export default function Navbar() {
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const dropdownRef  = useRef<HTMLLIElement>(null);
   const leaveTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
-
 
   // Auto-close drawer on scroll (>10px threshold)
   useEffect(() => {
@@ -77,8 +82,20 @@ export default function Navbar() {
         <nav className="container mx-auto flex items-center justify-between py-6 px-4">
 
           {/* Logo */}
-          <Link href="/" className="text-xl font-extrabold tracking-tight">
-            IT<span className="text-blue-600">Startup</span>
+          <Link href="/" className="flex items-center gap-2">
+            {settings.logo ? (
+              <Image
+                src={settings.logo}
+                alt={settings.companyName}
+                width={36}
+                height={36}
+                className="w-9 h-9 object-contain"
+                priority
+              />
+            ) : null}
+            <span className="text-xl font-extrabold tracking-tight text-gray-900">
+              {settings.companyName}
+            </span>
           </Link>
 
           {/* ── Desktop links ── */}
@@ -127,7 +144,7 @@ export default function Navbar() {
                   >
                     {/* Small arrow caret */}
                     <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-l border-t border-gray-100 rotate-45" />
-                    
+
                     {l.isMega ? (
                       /* Mega Menu (Cards) */
                       <div className="grid grid-cols-2 gap-2 p-3">
@@ -226,8 +243,23 @@ export default function Navbar() {
       >
         {/* Drawer header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-          <Link href="/" onClick={() => setOpen(false)} className="text-xl font-extrabold tracking-tight">
-            IT<span className="text-blue-600">Startup</span>
+          <Link
+            href="/"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2"
+          >
+            {settings.logo ? (
+              <Image
+                src={settings.logo}
+                alt={settings.companyName}
+                width={32}
+                height={32}
+                className="w-8 h-8 object-contain"
+              />
+            ) : null}
+            <span className="text-xl font-extrabold tracking-tight text-gray-900">
+              {settings.companyName}
+            </span>
           </Link>
           <button
             onClick={() => setOpen(false)}
@@ -253,7 +285,6 @@ export default function Navbar() {
                 style={{ transitionDelay: open ? `${i * 40}ms` : "0ms" }}
                 className={`transform transition-all duration-300 ${open ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"}`}
               >
-                {/* Accordion toggle */}
                 <button
                   onClick={toggleMenu}
                   className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer ${
@@ -269,7 +300,6 @@ export default function Navbar() {
                   </svg>
                 </button>
 
-                {/* Accordion submenu */}
                 <div
                   className="overflow-hidden transition-all duration-300 ease-in-out"
                   style={{ maxHeight: isMenuOpen ? (l.isMega ? "400px" : "200px") : "0px" }}

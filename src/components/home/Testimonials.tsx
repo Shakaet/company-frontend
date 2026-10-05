@@ -118,7 +118,7 @@ export default async function Testimonials() {
           ))}
         </div>
 
-        <div className="mt-12 sm:mt-16 text-center">
+        {/* <div className="mt-12 sm:mt-16 text-center">
           <Link
             href="/portfolio"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 hover:text-blue-600 text-sm font-semibold shadow-2xs hover:shadow-sm transition-all"
@@ -126,7 +126,7 @@ export default async function Testimonials() {
             <span>Explore Full Case Studies & Deliverables</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
-        </div>
+        </div> */}
       </div>
     </section>
   );

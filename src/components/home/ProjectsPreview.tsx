@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { projects } from "@/lib/data";
+import { getProjects, getLatestProjects } from "@/lib/data";
 import ProjectCard from "@/components/portfolio/ProjectCard";
 
-export default function ProjectsPreview() {
-  const featured = projects.filter((p) => p.featured).slice(0, 3);
+export default async function ProjectsPreview() {
+  const [latest, all] = await Promise.all([
+    getLatestProjects(3),
+    getProjects(),
+  ]);
 
   return (
     <section className="py-20 sm:py-28 bg-white relative overflow-hidden border-t border-slate-100">
@@ -27,14 +30,14 @@ export default function ProjectsPreview() {
             href="/portfolio"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-blue-600 hover:border-blue-300 font-semibold text-sm shadow-xs hover:shadow-md transition-all self-start md:self-auto shrink-0"
           >
-            <span>View All Works ({projects.length})</span>
+            <span>View All Works ({all.length})</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        {/* 3 Featured Project Cards Grid */}
+        {/* 3 Latest Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featured.map((p) => (
+          {latest.map((p) => (
             <ProjectCard key={p.id} project={p} />
           ))}
         </div>
