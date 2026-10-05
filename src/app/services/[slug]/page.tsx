@@ -99,7 +99,7 @@ export default async function ServiceDetailPage({
             </div>
 
             <a
-              href="#request-quote"
+              href="/contact"
               className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-blue-600 hover:text-blue-700 transition"
             >
               <span>Request Quote</span>
@@ -294,7 +294,7 @@ export default async function ServiceDetailPage({
 
               <div className="mt-6 pt-5 border-t border-slate-100">
                 <a
-                  href="#request-quote"
+                  href="/contact"
                   className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 text-white font-bold text-sm hover:bg-blue-700 shadow-md shadow-blue-600/20 hover:-translate-y-0.5 transition-all"
                 >
                   <span>Request Project Estimate</span>

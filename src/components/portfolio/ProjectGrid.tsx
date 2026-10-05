@@ -1,28 +1,30 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search, X, FolderX, Sparkles } from "lucide-react";
-import { Project } from "@/lib/types";
+import { Search, X, FolderX } from "lucide-react";
+import type { Project, Category } from "@/lib/types";
 import { projects as defaultProjects } from "@/lib/data";
 import ProjectCard from "./ProjectCard";
-import CategoryFilter, { Category } from "./CategoryFilter";
+import CategoryFilter, { type CategoryKey } from "./CategoryFilter";
 
 interface ProjectGridProps {
   projects?: Project[];
+  categories?: Category[];
 }
 
-export default function ProjectGrid({ projects = defaultProjects }: ProjectGridProps) {
-  const [activeCategory, setActiveCategory] = useState<Category>("all");
+export default function ProjectGrid({
+  projects = defaultProjects,
+  categories = [],
+}: ProjectGridProps) {
+  const [activeCategory, setActiveCategory] = useState<CategoryKey>("all");
   const [searchQuery, setSearchQuery] = useState("");
 
   // Filter projects by category and search keyword
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
-      // Category match
       const matchesCategory =
         activeCategory === "all" || project.category === activeCategory;
 
-      // Search match
       const query = searchQuery.trim().toLowerCase();
       if (!query) return matchesCategory;
 
@@ -31,13 +33,15 @@ export default function ProjectGrid({ projects = defaultProjects }: ProjectGridP
         project.client.toLowerCase().includes(query) ||
         project.description.toLowerCase().includes(query) ||
         project.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-        (project.categoryLabel && project.categoryLabel.toLowerCase().includes(query));
+        (project.categoryLabel &&
+          project.categoryLabel.toLowerCase().includes(query));
 
       return matchesCategory && matchesQuery;
     });
   }, [projects, activeCategory, searchQuery]);
 
-  const hasActiveFilters = activeCategory !== "all" || searchQuery.trim().length > 0;
+  const hasActiveFilters =
+    activeCategory !== "all" || searchQuery.trim().length > 0;
 
   const handleResetFilters = () => {
     setActiveCategory("all");
@@ -51,6 +55,7 @@ export default function ProjectGrid({ projects = defaultProjects }: ProjectGridP
         active={activeCategory}
         onChange={setActiveCategory}
         projects={projects}
+        categories={categories}
       />
 
       {/* Search Bar & Result Summary Bar */}
@@ -75,11 +80,15 @@ export default function ProjectGrid({ projects = defaultProjects }: ProjectGridP
           )}
         </div>
 
-        {/* Results summary and reset button */}
         <div className="flex items-center justify-between mt-3 px-2 text-xs text-slate-500">
           <div>
-            Showing <span className="font-semibold text-slate-800">{filteredProjects.length}</span> of{" "}
-            <span className="font-semibold text-slate-800">{projects.length}</span> case studies
+            Showing{" "}
+            <span className="font-semibold text-slate-800">
+              {filteredProjects.length}
+            </span>{" "}
+            of{" "}
+            <span className="font-semibold text-slate-800">{projects.length}</span>{" "}
+            case studies
           </div>
 
           {hasActiveFilters && (
@@ -101,7 +110,6 @@ export default function ProjectGrid({ projects = defaultProjects }: ProjectGridP
           ))}
         </div>
       ) : (
-        /* Empty State */
         <div className="text-center py-16 px-4 bg-white rounded-3xl border border-dashed border-slate-200 max-w-lg mx-auto shadow-xs">
           <div className="w-14 h-14 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-4">
             <FolderX className="w-7 h-7" />
@@ -110,7 +118,8 @@ export default function ProjectGrid({ projects = defaultProjects }: ProjectGridP
             No projects found
           </h3>
           <p className="text-sm text-slate-500 mb-6">
-            We couldn't find any case studies matching your criteria. Try adjusting your search keyword or switching category tabs.
+            We couldn't find any case studies matching your criteria. Try
+            adjusting your search keyword or switching category tabs.
           </p>
           <button
             onClick={handleResetFilters}

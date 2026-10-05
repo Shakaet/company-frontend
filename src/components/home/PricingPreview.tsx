@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { pricingPlans } from "@/lib/data";
+import { getLatestPricingPlans } from "@/lib/data";
 import PricingSection from "@/components/pricing/PricingSection";
 import { ArrowRight, Sparkles } from "lucide-react";
 
-export default function PricingPreview() {
+export default async function PricingPreview() {
+  const latestPlans = await getLatestPricingPlans(3);
+
   return (
     <section className="py-20 sm:py-28 bg-white border-t border-slate-100">
       <div className="container mx-auto px-4 max-w-6xl">
@@ -30,7 +32,7 @@ export default function PricingPreview() {
           </Link>
         </div>
 
-        <PricingSection plans={pricingPlans} />
+        <PricingSection plans={latestPlans} />
       </div>
     </section>
   );

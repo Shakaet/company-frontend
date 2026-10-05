@@ -1,35 +1,37 @@
 "use client";
 
-import { Project } from "@/lib/types";
+import type { Project, Category } from "@/lib/types";
 
-export type Category = "all" | "web" | "app" | "uiux" | "marketing";
+/** Special key for "all" + any dynamic category value from API */
+export type CategoryKey = "all" | string;
 
 interface CategoryFilterProps {
-  active: Category;
-  onChange: (c: Category) => void;
+  active: CategoryKey;
+  onChange: (c: CategoryKey) => void;
   projects: Project[];
+  categories: Category[];   // ← from API
 }
 
 export default function CategoryFilter({
   active,
   onChange,
   projects,
+  categories,
 }: CategoryFilterProps) {
-  const tabs: { key: Category; label: string }[] = [
+  // "All" + dynamic categories from API
+  const tabs: { key: CategoryKey; label: string }[] = [
     { key: "all", label: "All Works" },
-    { key: "web", label: "Web Platforms" },
-    { key: "app", label: "Mobile Apps" },
-    { key: "uiux", label: "UI/UX Design" },
-    { key: "marketing", label: "Growth & SEO" },
+    ...categories.map((c) => ({ key: c.value, label: c.name })),
   ];
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12">
       {tabs.map((tab) => {
         const isActive = active === tab.key;
-        const count = tab.key === "all"
-          ? projects.length
-          : projects.filter((p) => p.category === tab.key).length;
+        const count =
+          tab.key === "all"
+            ? projects.length
+            : projects.filter((p) => p.category === tab.key).length;
 
         return (
           <button

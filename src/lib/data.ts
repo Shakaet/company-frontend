@@ -1,4 +1,38 @@
-import { Service, Project, BlogPost, Job, Testimonial, PricingPlan, TeamMember } from "./types";
+// src/lib/data.ts
+// import { Service, Project, BlogPost, Job, Testimonial, PricingPlan, TeamMember } from "./types";
+import {
+  getJobsFromApi,
+  getJobByIdFromApi,
+  getRelatedJobsFromApi,
+} from "./api/jobs";
+// import { getPricingPlansFromApi } from "./api/pricing";
+
+import { getPricingPlansFromApi, getGuaranteesFromApi } from "./api/pricing";
+
+import { Service, Project, BlogPost, Job, Testimonial, PricingPlan, TeamMember, Guarantee, Highlight, Category, CompanyDetails, FounderMessage, WhyChooseUsItem, Partner, TechStackItem, Stat, SiteSettings } from "./types";
+
+import { getHighlightsFromApi, getCategoriesFromApi, getProjectsFromApi } from "./api/portfolio";
+
+import { getServicesFromApi, getServiceBySlugFromApi } from "./api/services";
+
+import { getCompanyFromApi, getTeamFromApi, getFounderMessageFromApi } from "./api/about";
+
+import { getTestimonialsFromApi } from "./api/testimonials";
+
+// import {
+//   getWhyChooseUsFromApi,
+//   getPartnersFromApi,
+//   getTechStackFromApi,        // ← add
+// } from "./api/homeElements";
+
+import {
+  getWhyChooseUsFromApi,
+  getPartnersFromApi,
+  getTechStackFromApi,
+  getStatsFromApi,            // ← add
+} from "./api/homeElements";
+
+import { getSiteSettingsFromApi, FALLBACK_SETTINGS } from "./api/siteSettings";
 
 export const services: Service[] = [
   {
@@ -329,10 +363,7 @@ export const projects: Project[] = [
 ];
 
 export async function getProjects(): Promise<Project[]> {
-  // In the future:
-  // const res = await fetch(`${process.env.API_URL}/projects`, { next: { revalidate: 60 } });
-  // return res.json();
-  return projects;
+  return getProjectsFromApi();
 }
 
 export const blogs: BlogPost[] = [
@@ -406,8 +437,7 @@ export const testimonials: Testimonial[] = [
 ];
 
 export async function getTestimonials(): Promise<Testimonial[]> {
-  // Dynamic fetching prepared for future backend/CMS integration
-  return testimonials;
+  return getTestimonialsFromApi();
 }
 
 export const jobs: Job[] = [
@@ -696,57 +726,56 @@ export const hiringSteps = [
   },
 ];
 
-// Helper functions for dynamic fetching (API / Database ready)
+// ─────────────────────────────────────────────
+// Job helpers — now wired to the live API
+// ─────────────────────────────────────────────
+
 export async function getJobs(): Promise<Job[]> {
-  // In the future, this can be replaced with:
-  // const res = await fetch(`${process.env.API_URL}/jobs`, { next: { revalidate: 60 } });
-  // return res.json();
-  return jobs;
+  return getJobsFromApi();
 }
 
 export async function getJobById(id: string): Promise<Job | undefined> {
-  return jobs.find((j) => j.id === id);
+  return getJobByIdFromApi(id);
 }
 
-export async function getRelatedJobs(currentId: string, department?: string): Promise<Job[]> {
-  return jobs
-    .filter((j) => j.id !== currentId && (department ? j.department === department : true))
-    .slice(0, 2);
+export async function getRelatedJobs(
+  currentId: string,
+  department?: string
+): Promise<Job[]> {
+  return getRelatedJobsFromApi(currentId, department);
 }
 
-// Service helper functions for dynamic fetching (API / Database ready)
+// ─────────────────────────────────────────────
+// Service helpers (still static — API later)
+// ─────────────────────────────────────────────
+
 export async function getServices(): Promise<Service[]> {
-  // In the future, this can be replaced with:
-  // const res = await fetch(`${process.env.API_URL}/services`, { next: { revalidate: 60 } });
-  // return res.json();
-  return services;
+  return getServicesFromApi();
 }
 
 export async function getServiceBySlug(slug: string): Promise<Service | undefined> {
-  const normalized = slug.toLowerCase();
-  return services.find(
-    (s) => s.slug === normalized || s.aliases?.some((a) => a.toLowerCase() === normalized)
-  );
+  return getServiceBySlugFromApi(slug);
 }
 
-export async function getRelatedServices(currentSlug: string, category?: string): Promise<Service[]> {
+export async function getRelatedServices(
+  currentSlug: string,
+  category?: string
+): Promise<Service[]> {
   const normalized = currentSlug.toLowerCase();
-  const currentService = services.find(
-    (s) => s.slug === normalized || s.aliases?.some((a) => a.toLowerCase() === normalized)
+  const all = await getServices();
+  const currentService = all.find(
+    (s) =>
+      s.slug === normalized ||
+      s.aliases?.some((a) => a.toLowerCase() === normalized)
   );
   const targetCategory = category || currentService?.category;
 
-  // First try to find other services in the same category
-  const sameCategory = services.filter(
+  const sameCategory = all.filter(
     (s) => s.slug !== normalized && targetCategory && s.category === targetCategory
   );
 
-  if (sameCategory.length >= 2) {
-    return sameCategory.slice(0, 3);
-  }
-
-  // Otherwise, return other services excluding the current one
-  return services.filter((s) => s.slug !== normalized).slice(0, 3);
+  if (sameCategory.length >= 2) return sameCategory.slice(0, 3);
+  return all.filter((s) => s.slug !== normalized).slice(0, 3);
 }
 
 export const pricingPlans: PricingPlan[] = [
@@ -835,10 +864,11 @@ export const pricingPlans: PricingPlan[] = [
 ];
 
 export async function getPricingPlans(): Promise<PricingPlan[]> {
-  // In the future:
-  // const res = await fetch(`${process.env.API_URL}/pricing`, { next: { revalidate: 60 } });
-  // return res.json();
-  return pricingPlans;
+  return getPricingPlansFromApi();
+}
+
+export async function getGuarantees(): Promise<Guarantee[]> {
+  return getGuaranteesFromApi();
 }
 
 export const clients = ["Google", "Microsoft", "Stripe", "Vercel", "Shopify"];
@@ -927,5 +957,71 @@ export const teamMembers: TeamMember[] = [
 ];
 
 export async function getTeamMembers(): Promise<TeamMember[]> {
-  return teamMembers;
+  return getTeamFromApi();
+}
+
+export async function getHighlights(): Promise<Highlight[]> {
+  return getHighlightsFromApi();
+}
+
+export async function getCategories(): Promise<Category[]> {
+  return getCategoriesFromApi();
+}
+
+export async function getCompany(): Promise<CompanyDetails | null> {
+  return getCompanyFromApi();
+}
+
+export async function getFounderMessage(): Promise<FounderMessage | null> {
+  return getFounderMessageFromApi();
+}
+
+export async function getWhyChooseUs(): Promise<WhyChooseUsItem[]> {
+  return getWhyChooseUsFromApi();
+}
+
+export async function getPartners(): Promise<Partner[]> {
+  return getPartnersFromApi();
+}
+
+export async function getTechStack(): Promise<TechStackItem[]> {
+  return getTechStackFromApi();
+}
+
+export async function getStats(): Promise<Stat[]> {
+  return getStatsFromApi();
+}
+
+export async function getLatestServices(limit = 3): Promise<Service[]> {
+  const all = await getServices();
+  return all.slice(0, limit);
+}
+
+export async function getLatestProjects(limit = 3): Promise<Project[]> {
+  const all = await getProjects();
+  return all
+    .slice()
+    .sort((a, b) => {
+      const aTime = new Date((a as any).createdAt ?? 0).getTime();
+      const bTime = new Date((b as any).createdAt ?? 0).getTime();
+      return bTime - aTime;
+    })
+    .slice(0, limit);
+}
+
+export async function getLatestPricingPlans(limit = 3): Promise<PricingPlan[]> {
+  const all = await getPricingPlans();
+  return all
+    .slice()
+    .sort((a, b) => {
+      const aTime = new Date((a as any).createdAt ?? 0).getTime();
+      const bTime = new Date((b as any).createdAt ?? 0).getTime();
+      return bTime - aTime;
+    })
+    .slice(0, limit);
+}
+
+export async function getSiteSettings(): Promise<SiteSettings> {
+  const settings = await getSiteSettingsFromApi();
+  return settings ?? FALLBACK_SETTINGS;
 }
