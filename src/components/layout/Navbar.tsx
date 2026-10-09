@@ -82,24 +82,24 @@ export default function Navbar({ settings }: NavbarProps) {
         <nav className="container mx-auto flex items-center justify-between py-4 px-4">
 
           {/* Logo */}
-          <Link href="/" className="flex h-14 items-center gap-2">
+          <Link href="/" className="flex h-14 lg:h-16 items-center gap-2 lg:gap-3">
             {settings.logo ? (
               <Image
                 src={settings.logo}
                 alt={settings.companyName}
-                width={56}
-                height={56}
-                className="h-14 w-14 flex-shrink-0 object-contain"
+                width={64}
+                height={64}
+                className="h-14 w-14 lg:h-16 lg:w-16 flex-shrink-0 object-contain"
                 priority
               />
             ) : null}
-            <span className="text-xl font-extrabold tracking-tight text-blue-900">
+            <span className="text-xl lg:text-2xl font-extrabold tracking-tight text-blue-900">
               {settings.companyName}
             </span>
           </Link>
 
           {/* ── Desktop links ── */}
-          <ul className="hidden md:flex items-center gap-4">
+          <ul className="hidden md:flex items-center gap-4 lg:gap-6">
             {links.map((l) => {
               const isActive = pathname.startsWith(l.href) && l.href !== "/";
               const isHovered = hoveredMenu === l.label;
@@ -118,7 +118,7 @@ export default function Navbar({ settings }: NavbarProps) {
                   }}
                 >
                   <button
-                    className={`flex h-10 items-center gap-1 px-2 text-sm font-bold transition-colors duration-200 cursor-pointer ${
+                    className={`flex h-10 items-center gap-1 px-2 text-sm lg:text-base font-bold transition-colors duration-200 cursor-pointer ${
                       isActive ? "text-blue-600" : "text-gray-700 hover:text-blue-600"
                     }`}
                   >
@@ -182,7 +182,7 @@ export default function Navbar({ settings }: NavbarProps) {
                             <Link
                               href={sub.href}
                               onClick={() => setHoveredMenu(null)}
-                              className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors duration-150 ${
+                              className={`flex items-center gap-3 px-4 py-2.5 text-sm lg:text-base font-medium transition-colors duration-150 ${
                                 pathname === sub.href
                                   ? "bg-blue-50 text-blue-600"
                                   : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
@@ -201,7 +201,7 @@ export default function Navbar({ settings }: NavbarProps) {
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className={`flex h-10 items-center px-2 text-sm font-bold transition-colors duration-200 ${
+                    className={`flex h-10 items-center px-2 text-sm lg:text-base font-bold transition-colors duration-200 ${
                       pathname === l.href ? "text-blue-600" : "text-gray-700 hover:text-blue-600"
                     }`}
                   >
