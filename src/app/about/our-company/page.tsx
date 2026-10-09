@@ -4,7 +4,7 @@ import { getCompany } from "@/lib/data";
 import { Star, Target, Eye, Gem, Handshake, Sparkles, type LucideIcon } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Our Company",
+  title: "About Us",
   description: "Learn about Our Company — our story, mission, vision and values.",
 };
 
