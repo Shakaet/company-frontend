@@ -4,6 +4,7 @@ import TopBar from "@/components/layout/TopBar";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FloatingWhatsApp from "@/components/layout/FloatingWhatsApp";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 import { getSiteSettings } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default async function RootLayout({
         <main>{children}</main>
         <Footer settings={settings} />
         <FloatingWhatsApp settings={settings} />
+        <ScrollToTop />
       </body>
     </html>
   );
