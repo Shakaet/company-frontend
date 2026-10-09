@@ -24,13 +24,7 @@ export default async function ServicesPreview() {
             </p>
           </div>
 
-          <Link
-            href="/services"
-            className="inline-flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-700 group transition shrink-0"
-          >
-            <span>View All Practices & Pricing</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
+          
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
