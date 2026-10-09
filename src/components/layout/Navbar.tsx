@@ -30,10 +30,10 @@ const aboutSubmenu: SubmenuItem[] = [
 ];
 
 const servicesSubmenu: SubmenuItem[] = [
-  { href: "/services/web",      label: "Web Development",   desc: "Modern and scalable web applications.", icon: "💻" },
-  { href: "/services/mobile",   label: "Mobile Apps",       desc: "Native and cross-platform apps.",       icon: "📱" },
-  { href: "/services/design",   label: "UI/UX Design",      desc: "Intuitive and engaging interfaces.",    icon: "🎨" },
-  { href: "/services/marketing",label: "Digital Marketing", desc: "SEO, SMM and growth hacking.",          icon: "📈" },
+  { href: "/services/web",      label: "Web Development",             desc: "Modern and scalable web applications.", icon: "💻" },
+  { href: "/services/mobile",   label: "Mobile Apps",                 desc: "Native and cross-platform apps.",       icon: "📱" },
+  { href: "/services/creative", label: "Creative & Digital Solutions",desc: "Design, branding & digital growth.",    icon: "🎨" },
+  { href: "/services/devops",   label: "DevOps & Cloud Solutions",    desc: "CI/CD, cloud infra & scalability.",     icon: "☁️" },
 ];
 
 const links: NavLink[] = [

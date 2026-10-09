@@ -1,6 +1,6 @@
 // src/lib/api/client.ts
-// const BASE_URL = "https://api.neutrinobyte.com";
-const BASE_URL: "http://localhost:5000" = "http://localhost:5000";
+const BASE_URL = "https://api.neutrinobyte.com";
+// const BASE_URL: "http://localhost:5000" = "http://localhost:5000";
 
 type FetchOptions = RequestInit & {
   next?: { revalidate?: number | false; tags?: string[] };
