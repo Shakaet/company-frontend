@@ -35,7 +35,7 @@ interface FooterProps {
 export default function Footer({ settings }: FooterProps) {
   return (
     <footer className="bg-blue-600 text-white pt-16 pb-6 mt-20">
-      <div className="container-x grid md:grid-cols-3 gap-10">
+      <div className="container-x grid md:grid-cols-4 gap-10">
         {/* Brand + tagline */}
         <div>
           <Link href="/" className="inline-flex items-center gap-2">
@@ -84,6 +84,33 @@ export default function Footer({ settings }: FooterProps) {
                 </Link>
               </li>
             ))}
+          </ul>
+        </div>
+
+        {/* Our Services */}
+        <div>
+          <h4 className="text-white font-semibold mb-4">Our Services</h4>
+          <ul className="space-y-2 text-sm">
+            <li>
+              <Link href="/services/web-development" className="inline-flex items-center gap-2 text-white hover:text-blue-100 transition">
+                <ChevronRight className="w-3.5 h-3.5" /> Web Development
+              </Link>
+            </li>
+            <li>
+              <Link href="/services/app-development" className="inline-flex items-center gap-2 text-white hover:text-blue-100 transition">
+                <ChevronRight className="w-3.5 h-3.5" /> Mobile Apps
+              </Link>
+            </li>
+            <li>
+              <Link href="/services/creative-digital-solutions" className="inline-flex items-center gap-2 text-white hover:text-blue-100 transition">
+                <ChevronRight className="w-3.5 h-3.5" /> Creative & Digital
+              </Link>
+            </li>
+            <li>
+              <Link href="/services/devops-cloud-solutions" className="inline-flex items-center gap-2 text-white hover:text-blue-100 transition">
+                <ChevronRight className="w-3.5 h-3.5" /> DevOps & Cloud
+              </Link>
+            </li>
           </ul>
         </div>
 
