@@ -1,7 +1,32 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Send, MessageCircle, ChevronRight, Home, Info, Briefcase, FolderOpen, DollarSign, Users, Star, FileText, Shield, Cloud, Palette, Cpu, Globe, BarChart2, Award, HelpCircle, Rocket } from "lucide-react";
+import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaLinkedin, FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
 import type { SiteSettings } from "@/lib/types";
+
+function getQuickLinkIcon(href: string, label: string) {
+  const key = (href + " " + label).toLowerCase();
+  
+  // Social media
+  if (key.includes("facebook") || key.includes("fb")) return <FaFacebook className="w-4 h-4 shrink-0" />;
+  if (key.includes("twitter") || key.includes(" x ") || key === "x" || href.includes("x.com")) return <FaTwitter className="w-4 h-4 shrink-0" />;
+  if (key.includes("instagram") || key.includes("insta")) return <FaInstagram className="w-4 h-4 shrink-0" />;
+  if (key.includes("youtube") || key.includes("yt")) return <FaYoutube className="w-4 h-4 shrink-0" />;
+  if (key.includes("linkedin")) return <FaLinkedin className="w-4 h-4 shrink-0" />;
+  if (key.includes("telegram")) return <FaTelegramPlane className="w-4 h-4 shrink-0" />;
+  if (key.includes("whatsapp") || key.includes("wa.me")) return <FaWhatsapp className="w-4 h-4 shrink-0" />;
+  
+  // Other links
+  if (key.includes("home") || key.trim() === "/" || key.trim() === "") return <Home className="w-4 h-4 shrink-0" />;
+  if (key.includes("about")) return <Info className="w-4 h-4 shrink-0" />;
+  if (key.includes("service")) return <Briefcase className="w-4 h-4 shrink-0" />;
+  if (key.includes("portfolio") || key.includes("work")) return <FolderOpen className="w-4 h-4 shrink-0" />;
+  if (key.includes("pric")) return <DollarSign className="w-4 h-4 shrink-0" />;
+  if (key.includes("team") || key.includes("career") || key.includes("job")) return <Users className="w-4 h-4 shrink-0" />;
+  if (key.includes("contact")) return <MessageCircle className="w-4 h-4 shrink-0" />;
+  
+  return <ChevronRight className="w-4 h-4 shrink-0" />;
+}
 
 interface FooterProps {
   settings: SiteSettings;
@@ -48,8 +73,13 @@ export default function Footer({ settings }: FooterProps) {
               <li key={link.href + link.label}>
                 <Link
                   href={link.href}
-                  className="text-white hover:text-blue-100 transition"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-white hover:text-blue-100 transition group"
                 >
+                  <span className="opacity-70 group-hover:opacity-100 transition">
+                    {getQuickLinkIcon(link.href, link.label)}
+                  </span>
                   {link.label}
                 </Link>
               </li>
