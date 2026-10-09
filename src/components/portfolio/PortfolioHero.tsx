@@ -7,8 +7,8 @@ interface PortfolioHeroProps {
 
 export default function PortfolioHero({ totalProjects }: PortfolioHeroProps) {
   const highlights = [
-    { icon: Layers, value: "150+", label: "Products Shipped" },
-    { icon: Globe, value: "18+ Countries", label: "Global Reach" },
+    { icon: Layers, value: "50+", label: "Products Shipped" },
+    { icon: Globe, value: "6+ Countries", label: "Global Reach" },
     { icon: Award, value: "99.4%", label: "Client Satisfaction" },
     { icon: TrendingUp, value: "10x", label: "Average Growth / ROI" },
   ];
@@ -36,7 +36,7 @@ export default function PortfolioHero({ totalProjects }: PortfolioHeroProps) {
 
         {/* Subtitle */}
         <p className="mt-6 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-          From high-velocity SaaS dashboards and scalable mobile ecosystems to enterprise cloud platforms—explore how we partner with ambitious teams to deliver measurable business outcomes.
+          From modern websites and mobile applications to AI-powered solutions and scalable software, we build digital products designed to solve real-world problems and drive business growth.
         </p>
 
         {/* Action Buttons */}

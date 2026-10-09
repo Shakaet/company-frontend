@@ -62,7 +62,7 @@ export default async function OurCompanyPage() {
           That Matter
         </h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Founded in 2017, ITStartup has helped over 120 businesses launch digital products.
+          Founded in 2026, NeutrinoByte has helped over 10+ businesses launch scalable digital products.
           We combine design, engineering and strategy under one roof.
         </p>
       </section>

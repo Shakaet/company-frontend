@@ -11,7 +11,7 @@ export default function AboutPage() {
     <div className="container mx-auto py-20 px-4 max-w-6xl">
       <SectionTitle title="About Our Company" subtitle="We are a team of passionate builders." />
       <p className="max-w-3xl mx-auto text-gray-600 text-center text-base sm:text-lg leading-relaxed">
-        Founded in 2017, ITStartup has helped over 120 businesses launch scalable digital products.
+        Founded in 2026, NeutrinoByte has helped over 10+ businesses launch scalable digital products.
         We combine user experience design, distributed cloud engineering, and growth strategy under one roof.
       </p>
 
