@@ -194,8 +194,7 @@ export default function Hero({ banners, partners, techStack, stats }: HeroProps)
 
       {/* ── Hero Image Slider ── */}
       <div
-        className="relative w-full select-none cursor-grab active:cursor-grabbing"
-        style={{ height: "85vh", minHeight: "520px", maxHeight: "960px" }}
+        className="relative w-full select-none cursor-grab active:cursor-grabbing h-[60vh] min-h-[400px] md:h-[85vh] md:min-h-[520px] max-h-[960px]"
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onMouseMove={onMouseMove}
