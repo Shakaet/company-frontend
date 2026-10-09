@@ -1,12 +1,6 @@
 // src/lib/api/client.ts
-const BASE_URL =
-  process.env.API_BASE_URL ?? process.env.NEXT_PUBLIC_API_BASE_URL;
-
-if (!BASE_URL) {
-  throw new Error(
-    "Missing API base URL. Add API_BASE_URL or NEXT_PUBLIC_API_BASE_URL to .env.local"
-  );
-}
+// const BASE_URL = "https://api.neutrinobyte.com";
+const BASE_URL: "http://localhost:5000" = "http://localhost:5000";
 
 type FetchOptions = RequestInit & {
   next?: { revalidate?: number | false; tags?: string[] };

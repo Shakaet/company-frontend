@@ -40,7 +40,7 @@ export const FALLBACK_SETTINGS: SiteSettings = {
   companyName: "ITStartup",
   tagline: "Building digital products that matter.",
   logo: "",
-  email: "hello@itstartup.com",
+  email: "support@neutrinobyte.com",
   phone: "+880 123 456 789",
   whatsappNumber: "8801234567890",
   address: "Dhaka, Bangladesh",

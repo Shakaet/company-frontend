@@ -96,12 +96,12 @@ export default function ContactForm() {
       } else {
         setErrorMessage(
           result.error ||
-            "Something went wrong while sending. Please email hello@itstartup.com directly."
+            "Something went wrong while sending. Please email support@neutrinobyte.com directly."
         );
       }
     } catch {
       setErrorMessage(
-        "Something went wrong while sending. Please email hello@itstartup.com directly."
+        "Something went wrong while sending. Please email support@neutrinobyte.com directly."
       );
     } finally {
       setIsSubmitting(false);

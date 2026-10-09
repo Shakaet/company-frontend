@@ -321,11 +321,11 @@ export default async function ServiceDetailPage({
                 Have specific database, cloud, or API integration requirements? Let's discuss directly:
               </p>
               <a
-                href={`mailto:hello@itstartup.com?subject=Technical Architecture Inquiry for ${encodeURIComponent(service.title)}`}
+                href={`mailto:support@neutrinobyte.com?subject=Technical Architecture Inquiry for ${encodeURIComponent(service.title)}`}
                 className="inline-flex items-center gap-2 text-xs font-bold text-blue-700 hover:text-blue-800 hover:underline"
               >
                 <Mail className="w-3.5 h-3.5" />
-                <span>hello@itstartup.com</span>
+                <span>support@neutrinobyte.com</span>
               </a>
             </div>
 
