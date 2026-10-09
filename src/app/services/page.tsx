@@ -5,10 +5,10 @@ import ServiceListFilter from "@/components/services/ServiceListFilter";
 import ServiceProcess from "@/components/services/ServiceProcess";
 
 export const metadata: Metadata = {
-  title: "Professional Digital Services & Engineering | ITStartup",
-  description: "Explore ITStartup's full suite of software development, mobile apps, UI/UX design, cloud devops, and digital growth services.",
+  title: "Professional Digital Services & Engineering",
+  description: "Explore Our Company's full suite of software development, mobile apps, UI/UX design, cloud devops, and digital growth services.",
   openGraph: {
-    title: "Digital Services & Engineering Practices | ITStartup",
+    title: "Digital Services & Engineering Practices",
     description: "Production-grade web apps, cross-platform mobile apps, design systems, and data-driven marketing.",
   },
 };

@@ -11,10 +11,10 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Contact Us | ITStartup",
-  description: "Get in touch with ITStartup. Let's discuss your next web, mobile, UI/UX, or cloud engineering project.",
+  title: "Contact Us",
+  description: "Get in touch with Our Company. Let's discuss your next web, mobile, UI/UX, or cloud engineering project.",
   openGraph: {
-    title: "Contact ITStartup | Let's Build Something Great",
+    title: "Contact Our Company | Let's Build Something Great",
     description: "Connect with our engineering and product leads. Quick response within 2 business hours.",
   },
 };
@@ -80,7 +80,7 @@ export default function ContactPage() {
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14606.071850117036!2d90.4072382!3d23.7922262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c70c15ea1de1%3A0xf62511d4fb771a00!2sGulshan%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd"
                     className="w-full h-full border-0"
                     loading="lazy"
-                    title="ITStartup Office Location"
+                    title="Our Company Office Location"
                     referrerPolicy="no-referrer-when-downgrade"
                   />
                 </div>

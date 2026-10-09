@@ -4,8 +4,8 @@ import { getCompany } from "@/lib/data";
 import { Star, Target, Eye, Gem, Handshake, Sparkles, type LucideIcon } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Our Company | ITStartup",
-  description: "Learn about ITStartup — our story, mission, vision and values.",
+  title: "Our Company",
+  description: "Learn about Our Company — our story, mission, vision and values.",
 };
 
 /** Map API icon names to Lucide components */
@@ -33,7 +33,7 @@ export default async function OurCompanyPage() {
     company?.story && company.story.length > 0
       ? company.story
       : [
-        "ITStartup was born out of a simple frustration — great ideas were failing because of poor execution.",
+        "Our Company was born out of a simple frustration — great ideas were failing because of poor execution.",
         "Today, we are proud to have delivered over 250 projects with a 99.9% uptime SLA.",
       ];
 

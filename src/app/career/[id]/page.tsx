@@ -42,15 +42,15 @@ export async function generateMetadata({
 
   if (!job) {
     return {
-      title: "Job Opening Not Found | ITStartup",
+      title: "Job Opening Not Found",
     };
   }
 
   return {
-    title: `${job.title} | Careers at ITStartup`,
+    title: `${job.title} | Careers`,
     description: job.description,
     openGraph: {
-      title: `${job.title} (${job.workplaceType}) | ITStartup Careers`,
+      title: `${job.title} (${job.workplaceType})`,
       description: job.description,
     },
   };
@@ -204,7 +204,7 @@ export default async function JobPage({
                   {job.aboutRole || job.description}
                 </p>
                 <p>
-                  At ITStartup, you will work with modern architectures, automated testing, and CI/CD workflows.
+                  At Our Company, you will work with modern architectures, automated testing, and CI/CD workflows.
                   We believe in continuous feedback, pragmatic code design, and maintaining high performance benchmarks.
                 </p>
               </div>
@@ -397,11 +397,11 @@ export default async function JobPage({
                 Reach out directly with your questions or portfolio links:
               </p>
               <a
-                href={`mailto:careers@itstartup.com?subject=Question regarding ${encodeURIComponent(job.title)}`}
+                href={`mailto:careers@yourwebsite.com?subject=Question regarding ${encodeURIComponent(job.title)}`}
                 className="inline-flex items-center gap-2 text-xs font-bold text-blue-700 hover:text-blue-800 hover:underline"
               >
                 <Mail className="w-3.5 h-3.5" />
-                <span>careers@itstartup.com</span>
+                <span>careers@yourwebsite.com</span>
               </a>
             </div>
 

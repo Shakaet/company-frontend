@@ -5,13 +5,13 @@ import HighlightsSection from "@/components/portfolio/HighlightsSection";
 import ProjectGrid from "@/components/portfolio/ProjectGrid";
 
 export const metadata: Metadata = {
-  title: "Case Studies & Work Portfolio | ITStartup",
+  title: "Case Studies & Work Portfolio",
   description:
     "Explore our portfolio of high-performance web applications, iOS & Android mobile apps, cloud platforms, and UI/UX design systems delivered for global clients.",
   openGraph: {
-    title: "Case Studies & Work Portfolio | ITStartup",
+    title: "Case Studies & Work Portfolio",
     description:
-      "See how ITStartup helps fast-moving startups and industry leaders engineer scalable digital products.",
+      "See how Our Company helps fast-moving startups and industry leaders engineer scalable digital products.",
   },
 };
 

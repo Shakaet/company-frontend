@@ -4,11 +4,11 @@ import CareerHero from "@/components/career/CareerHero";
 import CareerJobList from "@/components/career/CareerJobList";
 
 export const metadata: Metadata = {
-  title: "Careers & Open Positions | ITStartup",
-  description: "Join ITStartup's high-impact engineering, design, and growth team. Explore current open positions and build the future of software.",
+  title: "Careers & Open Positions",
+  description: "Join Our Company's high-impact engineering, design, and growth team. Explore current open positions and build the future of software.",
   openGraph: {
-    title: "Careers & Open Positions | ITStartup",
-    description: "Explore rewarding career opportunities in engineering, design, and product at ITStartup.",
+    title: "Careers & Open Positions",
+    description: "Explore rewarding career opportunities in engineering, design, and product at Our Company.",
   },
 };
 

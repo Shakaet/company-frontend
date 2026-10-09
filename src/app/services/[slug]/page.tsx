@@ -47,15 +47,15 @@ export async function generateMetadata({
 
   if (!service) {
     return {
-      title: "Service Not Found | ITStartup",
+      title: "Service Not Found",
     };
   }
 
   return {
-    title: `${service.title} | ITStartup Digital Services`,
+    title: `${service.title}`,
     description: service.shortDesc,
     openGraph: {
-      title: `${service.title} | ITStartup`,
+      title: `${service.title}`,
       description: service.shortDesc,
     },
   };
@@ -209,12 +209,12 @@ export default async function ServiceDetailPage({
               </div>
             )}
 
-            {/* Why Choose ITStartup for this Service */}
+            {/* Why Choose Our Company for this Service */}
             {service.benefits && service.benefits.length > 0 && (
               <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-9 shadow-xs">
                 <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2.5">
                   <Zap className="w-5 h-5 text-blue-600" />
-                  <span>The ITStartup Advantage</span>
+                  <span>The Our Company Advantage</span>
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-5">
                   {service.benefits.map((b, idx) => (

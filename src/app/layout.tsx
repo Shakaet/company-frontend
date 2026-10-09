@@ -7,10 +7,43 @@ import FloatingWhatsApp from "@/components/layout/FloatingWhatsApp";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import { getSiteSettings } from "@/lib/data";
 
-export const metadata: Metadata = {
-  title: "IT Startup Portfolio",
-  description: "We build web, mobile apps & digital experiences.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  
+  return {
+    title: {
+      template: `%s | ${settings.companyName}`,
+      default: settings.metaTitle || settings.companyName,
+    },
+    description: settings.metaDescription || settings.tagline,
+    keywords: ["Web Development", "App Development", "SEO", "UI/UX", "Digital Agency", settings.companyName],
+    openGraph: {
+      title: settings.metaTitle || settings.companyName,
+      description: settings.metaDescription || settings.tagline,
+      url: "https://www.neutrinobyte.com",
+      siteName: settings.companyName,
+      images: [
+        {
+          url: settings.logo || "https://www.neutrinobyte.com/og-image.jpg",
+          width: 1200,
+          height: 630,
+        },
+      ],
+      locale: "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: settings.metaTitle || settings.companyName,
+      description: settings.metaDescription || settings.tagline,
+      images: [settings.logo || "https://www.neutrinobyte.com/og-image.jpg"],
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 export default async function RootLayout({
   children,

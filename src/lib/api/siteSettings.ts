@@ -4,7 +4,7 @@ import type { SiteSettings, SiteSettingsApiResponse } from "@/lib/types";
 
 function mapSettings(api: SiteSettingsApiResponse["data"]): SiteSettings {
   return {
-    companyName: api.companyName || "ITStartup",
+    companyName: api.companyName || "Our Company",
     tagline: api.tagline || "",
     logo: api.logo || "",
     email: api.email || "",
@@ -37,7 +37,7 @@ export async function getSiteSettingsFromApi(): Promise<SiteSettings | null> {
 
 /** Hard fallback so nothing breaks if API is down */
 export const FALLBACK_SETTINGS: SiteSettings = {
-  companyName: "ITStartup",
+  companyName: "Our Company",
   tagline: "Building digital products that matter.",
   logo: "",
   email: "support@neutrinobyte.com",
@@ -50,8 +50,8 @@ export const FALLBACK_SETTINGS: SiteSettings = {
     { label: "Services", href: "/services" },
     { label: "Pricing", href: "/pricing" },
   ],
-  copyrightText: `© ${new Date().getFullYear()} ITStartup. All rights reserved.`,
-  metaTitle: "ITStartup",
+  copyrightText: `© ${new Date().getFullYear()} Our Company. All rights reserved.`,
+  metaTitle: "Our Company",
   metaDescription: "We build web, mobile apps & digital experiences.",
   socialLinks: [],
 };

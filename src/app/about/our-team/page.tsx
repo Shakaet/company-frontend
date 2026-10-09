@@ -4,8 +4,8 @@ import { Sparkles } from "lucide-react";
 import { getTeamMembers } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Our Team | ITStartup",
-  description: "Meet the passionate team behind ITStartup's digital products.",
+  title: "Our Team",
+  description: "Meet the passionate team behind Our Company's digital products.",
 };
 
 export default async function OurTeamPage() {

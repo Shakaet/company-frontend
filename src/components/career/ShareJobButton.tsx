@@ -23,7 +23,7 @@ export default function ShareJobButton({ title, jobId }: ShareJobButtonProps) {
   const getShareUrl = (platform: "linkedin" | "twitter" | "whatsapp") => {
     if (typeof window === "undefined") return "#";
     const currentUrl = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent(`Check out this open position for ${title} at ITStartup!`);
+    const text = encodeURIComponent(`Check out this open position for ${title} at Neutrinobyte!`);
 
     switch (platform) {
       case "linkedin":

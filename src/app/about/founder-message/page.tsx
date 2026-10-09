@@ -4,15 +4,15 @@ import { Quote, Sparkles, CheckCircle2 } from "lucide-react";
 import { getFounderMessage } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Founder Message | ITStartup",
-  description: "A message from the founders of ITStartup.",
+  title: "Founder Message",
+  description: "A message from the founders of Our Company.",
 };
 
 export default async function FounderMessagePage() {
   const founder = await getFounderMessage();
 
   // Fallback if API is down
-  const name = founder?.name || "The ITStartup Team";
+  const name = founder?.name || "The Our Company Team";
   const role = founder?.role || "Founders";
   const image = founder?.image || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80";
   const shortDesc = founder?.shortDesc || "";

@@ -42,7 +42,7 @@ export default async function WhyChooseUs() {
         <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-100/80 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-3">
             <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-            <span>The ITStartup Difference</span>
+            <span>The Our Company Difference</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Why High-Growth Companies Partner With Us

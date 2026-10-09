@@ -27,11 +27,11 @@ export default function TalentPoolCard() {
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <a
-                href="mailto:careers@itstartup.com?subject=General Application / Talent Network Inquiry"
+                href="mailto:careers@yourwebsite.com?subject=General Application / Talent Network Inquiry"
                 className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-blue-600 text-white font-semibold text-sm hover:bg-blue-500 shadow-lg shadow-blue-600/30 hover:-translate-y-0.5 transition-all duration-200"
               >
                 <Mail className="w-4 h-4" />
-                <span>Drop Your Resume (careers@itstartup.com)</span>
+                <span>Drop Your Resume (careers@yourwebsite.com)</span>
               </a>
 
               <a

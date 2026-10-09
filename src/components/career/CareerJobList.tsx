@@ -341,7 +341,7 @@ export default function CareerJobList({ jobs }: { jobs: Job[] }) {
               Reset Filters
             </button>
             <a
-              href="mailto:careers@itstartup.com?subject=Open Application / General Inquiry"
+              href="mailto:careers@yourwebsite.com?subject=Open Application / General Inquiry"
               className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-50 transition"
             >
               Submit Open Application

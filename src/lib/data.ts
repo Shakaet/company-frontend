@@ -395,7 +395,7 @@ export const testimonials: Testimonial[] = [
     name: "Sadia Rahman",
     role: "CEO & Co-Founder",
     company: "ShopEase Retail Inc.",
-    message: "ITStartup engineered our headless e-commerce store with Next.js and Stripe. Our site speed improved by 300% and checkout conversions increased by 140%. Their code architecture and speed of delivery are simply phenomenal.",
+    message: "Our Company engineered our headless e-commerce store with Next.js and Stripe. Our site speed improved by 300% and checkout conversions increased by 140%. Their code architecture and speed of delivery are simply phenomenal.",
     avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
     rating: 5,
     projectTag: "Headless E-Commerce",
@@ -428,7 +428,7 @@ export const testimonials: Testimonial[] = [
     name: "Elena Rostova",
     role: "Head of Product Design",
     company: "FinTrust Financial",
-    message: "Translating a 200+ component banking design system into accessible, pixel-perfect React components was executed flawlessly by ITStartup. They don't just write code; they care deeply about user experience.",
+    message: "Translating a 200+ component banking design system into accessible, pixel-perfect React components was executed flawlessly by Our Company. They don't just write code; they care deeply about user experience.",
     avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
     rating: 5,
     projectTag: "Design Systems & UI/UX",
@@ -455,7 +455,7 @@ export const jobs: Job[] = [
     featured: true,
     urgent: true,
     description: "Lead the frontend architecture of high-performance web applications using Next.js 15, React 19, TypeScript, and modern CSS frameworks.",
-    aboutRole: "As a Senior Frontend Engineer at ITStartup, you will lead the creation of responsive, ultra-smooth web applications. You will collaborate closely with UI/UX designers and backend engineers to craft intuitive user experiences that scale to hundreds of thousands of users.",
+    aboutRole: "As a Senior Frontend Engineer at Our Company, you will lead the creation of responsive, ultra-smooth web applications. You will collaborate closely with UI/UX designers and backend engineers to craft intuitive user experiences that scale to hundreds of thousands of users.",
     responsibilities: [
       "Architect and build reusable, performant React & Next.js components",
       "Optimize web applications for maximum speed, SEO, and accessibility (Core Web Vitals)",
@@ -722,7 +722,7 @@ export const hiringSteps = [
     step: "04",
     title: "Offer & Welcome",
     duration: "Within 48h",
-    desc: "We discuss compensation, perks, and onboarding date to welcome you to the ITStartup family!",
+    desc: "We discuss compensation, perks, and onboarding date to welcome you to the Our Company family!",
   },
 ];
 

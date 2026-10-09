@@ -387,7 +387,7 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
         {/* Cover Letter */}
         <div>
           <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-            Why do you want to join ITStartup? (Cover Letter / Notes)
+            Why do you want to join Our Company? (Cover Letter / Notes)
           </label>
           <textarea
             rows={4}
@@ -411,7 +411,7 @@ export default function ApplyForm({ jobTitle, jobId, department }: ApplyFormProp
           />
           <label htmlFor="agreeConsent" className="text-xs text-slate-500 leading-normal">
             I agree to the processing of my submitted information for recruitment
-            and talent evaluation at ITStartup.
+            and talent evaluation at Our Company.
           </label>
         </div>
 
