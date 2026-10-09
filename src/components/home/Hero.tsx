@@ -210,8 +210,7 @@ export default function Hero({ banners, partners, techStack, stats }: HeroProps)
           {slides.map((slide, index) => (
             <div
               key={slide.id}
-              className="relative shrink-0 pointer-events-none overflow-hidden"
-              style={{ width: "100vw", height: "100%" }}
+              className="relative shrink-0 pointer-events-none overflow-hidden w-full h-full"
             >
               <Image
                 src={slide.image}
