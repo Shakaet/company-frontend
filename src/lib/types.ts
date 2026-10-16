@@ -35,6 +35,7 @@ export type Project = {
 };
 
 export type BlogPost = {
+  id: string;
   slug: string;
   title: string;
   excerpt: string;
@@ -43,6 +44,9 @@ export type BlogPost = {
   author: string;
   date: string;
   category: string;
+  authorBio?: string;
+  readTime?: number;
+  featured?: boolean;
 };
 
 export type PricingPlan = {

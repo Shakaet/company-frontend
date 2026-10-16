@@ -13,6 +13,15 @@ import { getBlogBySlug, getRelatedBlogs } from "@/lib/data";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+function getTocItems(content: string) {
+  const headings = [...content.matchAll(/<h([1-3])[^>]*>(.*?)<\/h\1>/gi)];
+  return headings.map((heading, index) => ({
+    id: `section-${index + 1}`,
+    label: heading[2].replace(/<[^>]+>/g, "").trim(),
+    level: (Number(heading[1]) === 1 ? 1 : 2) as 1 | 2,
+  }));
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -40,14 +49,9 @@ export default async function BlogDetailPage({
   if (!post) notFound();
 
   const related = await getRelatedBlogs(slug, post.category);
-  const readTime = 8; // TODO: compute from content length
+  const readTime = post.readTime ?? Math.max(1, Math.ceil(post.content.replace(/<[^>]+>/g, " ").trim().split(/\s+/).length / 200));
 
-  // Table of contents — derive from content headings
-  const tocItems = [
-    { id: "section-1", label: "Why pods beat ad-hoc hiring", level: 1 as const },
-    { id: "section-2", label: "Predictable sprints", level: 1 as const },
-    { id: "conclusion", label: "Conclusion", level: 1 as const },
-  ];
+  const tocItems = getTocItems(post.content);
 
   return (
     <main className="min-h-screen bg-slate-50/30 pb-20">
@@ -57,12 +61,15 @@ export default async function BlogDetailPage({
 
         {/* Cover image — gradient block */}
         <div className="relative w-full aspect-[1200/630] rounded-3xl overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700 shadow-lg">
+          {post.cover && (
+            <img src={post.cover} alt={post.title} className="absolute inset-0 w-full h-full object-cover" />
+          )}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_60%)]" />
-          <div className="absolute inset-0 flex items-center justify-center">
+          {!post.cover && <div className="absolute inset-0 flex items-center justify-center">
             <p className="text-white text-2xl sm:text-3xl font-bold">
               Cover Image · 1200×630
             </p>
-          </div>
+          </div>}
         </div>
       </section>
 
@@ -78,7 +85,7 @@ export default async function BlogDetailPage({
           {/* Sidebar — fixed 205px on desktop */}
           <aside className="space-y-5 lg:sticky lg:top-28 self-start">
             <TableOfContents items={tocItems} />
-            <AuthorCard author={post.author} />
+            <AuthorCard author={post.author} bio={post.authorBio} />
             <SidebarCTA />
           </aside>
         </div>

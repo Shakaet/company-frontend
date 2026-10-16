@@ -1,12 +1,13 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import BlogHero from "@/components/blog/BlogHero";
 import BlogCategoryFilter from "@/components/blog/BlogCategoryFilter";
 import FeaturedPost from "@/components/blog/FeaturedPost";
 import BlogCard from "@/components/blog/BlogCard";
 import BlogPagination from "@/components/blog/BlogPagination";
 import Newsletter from "@/components/blog/Newsletter";
-import { blogs } from "@/lib/data";
+import { getBlogs } from "@/lib/data";
+import type { BlogPost } from "@/lib/types";
 
 const POSTS_PER_PAGE = 6;
 
@@ -14,12 +15,20 @@ export default function BlogPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getBlogs()
+      .then(setBlogs)
+      .finally(() => setLoading(false));
+  }, []);
 
   // Derive categories from posts
   const categories = useMemo(() => {
     const set = new Set(blogs.map((p) => p.category));
     return Array.from(set);
-  }, []);
+  }, [blogs]);
 
   // Filter
   const filtered = useMemo(() => {
@@ -32,7 +41,7 @@ export default function BlogPage() {
         p.excerpt.toLowerCase().includes(q);
       return matchesCat && matchesQuery;
     });
-  }, [activeCategory, query]);
+  }, [activeCategory, query, blogs]);
 
   // Split featured + rest
   const [featured, ...rest] = filtered;
@@ -83,7 +92,13 @@ export default function BlogPage() {
           </>
         )}
 
-        {filtered.length === 0 && (
+        {loading && (
+          <div className="text-center py-20">
+            <p className="text-slate-500">Loading articles...</p>
+          </div>
+        )}
+
+        {!loading && filtered.length === 0 && (
           <div className="text-center py-20">
             <p className="text-slate-500">No articles found.</p>
           </div>

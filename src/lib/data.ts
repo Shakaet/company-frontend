@@ -33,6 +33,11 @@ import {
 } from "./api/homeElements";
 
 import { getSiteSettingsFromApi, FALLBACK_SETTINGS } from "./api/siteSettings";
+import {
+  getBlogsFromApi,
+  getBlogBySlugFromApi,
+  getRelatedBlogsFromApi,
+} from "./api/blogs";
 
 export const services: Service[] = [
   {
@@ -365,29 +370,6 @@ export const projects: Project[] = [
 export async function getProjects(): Promise<Project[]> {
   return getProjectsFromApi();
 }
-
-export const blogs: BlogPost[] = [
-  {
-    slug: "why-nextjs",
-    title: "Why We Choose Next.js in 2025",
-    excerpt: "Server components, edge rendering and more.",
-    content: "<p>Next.js gives us the best of both worlds...</p>",
-    cover: "/images/blog1.jpg",
-    author: "Rahim",
-    date: "2025-01-12",
-    category: "Engineering",
-  },
-  {
-    slug: "seo-basics",
-    title: "SEO Basics Every Startup Must Know",
-    excerpt: "Rank higher with these fundamentals.",
-    content: "<p>SEO is not magic, it is consistency...</p>",
-    cover: "/images/blog2.jpg",
-    author: "Karim",
-    date: "2025-02-04",
-    category: "Marketing",
-  },
-];
 
 export const testimonials: Testimonial[] = [
   {
@@ -1029,19 +1011,16 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 // src/lib/data.ts — append at bottom
 
 export async function getBlogBySlug(slug: string): Promise<BlogPost | undefined> {
-  return blogs.find((b) => b.slug === slug);
+  return getBlogBySlugFromApi(slug);
 }
 
 export async function getRelatedBlogs(
   currentSlug: string,
   category?: string
 ): Promise<BlogPost[]> {
-  // Prefer same category, exclude current
-  const sameCategory = blogs.filter(
-    (b) => b.slug !== currentSlug && category && b.category === category
-  );
-  if (sameCategory.length >= 3) return sameCategory.slice(0, 3);
+  return getRelatedBlogsFromApi(currentSlug, category);
+}
 
-  // Fallback: any other posts
-  return blogs.filter((b) => b.slug !== currentSlug).slice(0, 3);
+export async function getBlogs(): Promise<BlogPost[]> {
+  return getBlogsFromApi();
 }

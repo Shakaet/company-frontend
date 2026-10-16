@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { blogs } from "@/lib/data";
+import { getBlogs } from "@/lib/data";
 import SectionTitle from "@/components/ui/SectionTitle";
 import Card from "@/components/ui/Card";
 
-export default function BlogPreview() {
+export default async function BlogPreview() {
+  const blogs = await getBlogs();
   return (
     <section className="section bg-gray-50">
       <div className="container-x">
