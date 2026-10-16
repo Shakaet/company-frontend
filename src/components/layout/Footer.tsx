@@ -6,16 +6,28 @@ import type { SiteSettings } from "@/lib/types";
 
 function getQuickLinkIcon(href: string, label: string) {
   const key = (href + " " + label).toLowerCase();
-  
+
   // Social media
   if (key.includes("facebook") || key.includes("fb")) return <FaFacebook className="w-4 h-4 shrink-0" />;
   if (key.includes("twitter") || key.includes(" x ") || key === "x" || href.includes("x.com")) return <FaTwitter className="w-4 h-4 shrink-0" />;
   if (key.includes("instagram") || key.includes("insta")) return <FaInstagram className="w-4 h-4 shrink-0" />;
-  if (key.includes("youtube") || key.includes("yt")) return <FaYoutube className="w-4 h-4 shrink-0" />;
-  if (key.includes("linkedin")) return <FaLinkedin className="w-4 h-4 shrink-0" />;
+  if (
+    key.includes("youtube") ||
+    href.includes("youtu.be") ||
+    href.includes("youtube.com")
+  ) {
+    return <FaYoutube className="w-4 h-4 shrink-0" />;
+  }
+
+  if (
+    key.includes("linkedin") ||
+    href.includes("lnkd.in")
+  ) {
+    return <FaLinkedin className="w-4 h-4 shrink-0" />;
+  }
   if (key.includes("telegram")) return <FaTelegramPlane className="w-4 h-4 shrink-0" />;
   if (key.includes("whatsapp") || key.includes("wa.me")) return <FaWhatsapp className="w-4 h-4 shrink-0" />;
-  
+
   // Other links
   if (key.includes("home") || key.trim() === "/" || key.trim() === "") return <Home className="w-4 h-4 shrink-0" />;
   if (key.includes("about")) return <Info className="w-4 h-4 shrink-0" />;
@@ -24,7 +36,7 @@ function getQuickLinkIcon(href: string, label: string) {
   if (key.includes("pric")) return <DollarSign className="w-4 h-4 shrink-0" />;
   if (key.includes("team") || key.includes("career") || key.includes("job")) return <Users className="w-4 h-4 shrink-0" />;
   if (key.includes("contact")) return <MessageCircle className="w-4 h-4 shrink-0" />;
-  
+
   return <ChevronRight className="w-4 h-4 shrink-0" />;
 }
 

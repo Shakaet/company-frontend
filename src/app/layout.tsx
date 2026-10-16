@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import FloatingWhatsApp from "@/components/layout/FloatingWhatsApp";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import { getSiteSettings } from "@/lib/data";
+import PageTransition from "@/components/layout/PageTransition";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
@@ -57,7 +58,7 @@ export default async function RootLayout({
       <body className="bg-white text-gray-900">
         <TopBar settings={settings} />
         <Navbar settings={settings} />
-        <main>{children}</main>
+        <PageTransition>{children}</PageTransition>
         <Footer settings={settings} />
         <FloatingWhatsApp settings={settings} />
         <ScrollToTop />
