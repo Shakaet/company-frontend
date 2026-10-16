@@ -22,7 +22,7 @@ export default function FeaturedPost({ post, categoryLabel }: FeaturedPostProps)
             <img
               src={post.cover}
               alt={post.title}
-              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="absolute inset-0 w-full h-full object-contain bg-slate-100"
               loading="lazy"
             />
           ) : (

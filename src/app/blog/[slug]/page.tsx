@@ -111,12 +111,12 @@ export default async function BlogDetailPage({
         <PostHeader post={post} readTime={readTime} />
 
         {/* Cover image container */}
-        <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[21/9] rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700 shadow-md sm:shadow-xl">
+        <div className="relative w-full min-h-[220px] sm:min-h-[320px] max-h-[min(70vh,42rem)] rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-100 shadow-md sm:shadow-xl">
           {post.cover ? (
             <img
               src={post.cover}
               alt={post.title}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="block w-full h-auto max-h-[min(70vh,42rem)] object-contain mx-auto"
             />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-blue-600 via-indigo-600 to-blue-800">
