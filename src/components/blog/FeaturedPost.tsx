@@ -68,12 +68,7 @@ export default function FeaturedPost({ post, categoryLabel }: FeaturedPostProps)
           <div className="mt-6 pt-5 border-t border-slate-100">
             {/* Meta row */}
             <div className="flex flex-wrap items-center gap-y-2 gap-x-3 text-xs text-slate-500 font-medium mb-5">
-              <div className="flex items-center gap-1.5">
-                <User className="w-3.5 h-3.5 text-blue-600" />
-                <span className="font-semibold text-slate-800 truncate max-w-[140px] sm:max-w-none">
-                  {post.author}
-                </span>
-              </div>
+             
               <span className="text-slate-300">·</span>
               <div className="flex items-center gap-1.5">
                 <Calendar className="w-3.5 h-3.5 text-slate-400" />

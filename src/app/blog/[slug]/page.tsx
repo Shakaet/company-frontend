@@ -5,7 +5,6 @@ import { ArrowLeft, ChevronRight, ListOrdered } from "lucide-react";
 import PostHeader from "@/components/blog/PostHeader";
 import PostContent from "@/components/blog/PostContent";
 import TableOfContents from "@/components/blog/TableOfContents";
-import AuthorCard from "@/components/blog/AuthorCard";
 import SidebarCTA from "@/components/blog/SidebarCTA";
 import ShareButtons from "@/components/blog/ShareButtons";
 import RelatedArticles from "@/components/blog/RelatedArticles";
@@ -184,20 +183,12 @@ export default async function BlogDetailPage({
               title={post.title}
             />
 
-            {/* Mobile Author Card (shown below article on mobile) */}
-            <div className="block lg:hidden pt-4">
-              <AuthorCard author={post.author} bio={post.authorBio} />
-            </div>
           </div>
 
           {/* Desktop Sticky Sidebar */}
           <aside className="lg:col-span-4 w-full space-y-6 lg:sticky lg:top-28 self-start">
             <div className="hidden lg:block">
               <TableOfContents items={tocItems} />
-            </div>
-
-            <div className="hidden lg:block">
-              <AuthorCard author={post.author} bio={post.authorBio} />
             </div>
 
             <SidebarCTA />
