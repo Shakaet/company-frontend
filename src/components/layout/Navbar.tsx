@@ -24,36 +24,79 @@ interface NavbarProps {
 }
 
 const aboutSubmenu: SubmenuItem[] = [
-  { href: "/about/our-company",     label: "Our Company" },
-  { href: "/about/our-team",        label: "Our Team" },
+  { href: "/about/our-company", label: "Our Company" },
+  { href: "/about/our-team", label: "Our Team" },
   { href: "/about/founder-message", label: "Founder Message" },
 ];
 
 const servicesSubmenu: SubmenuItem[] = [
-  { href: "/services/web-development",           label: "Web Development",             desc: "Modern and scalable web applications.", icon: "💻" },
-  { href: "/services/app-development",           label: "Mobile Apps",                 desc: "Native and cross-platform apps.",       icon: "📱" },
-  { href: "/services/creative-digital-solutions",label: "Creative & Digital Solutions",desc: "Design, branding & digital growth.",    icon: "🎨" },
-  { href: "/services/devops-cloud-solutions",    label: "DevOps & Cloud Solutions",    desc: "CI/CD, cloud infra & scalability.",     icon: "☁️" },
+  { href: "/services/web-development", label: "Web Development", desc: "Modern and scalable web applications.", icon: "💻" },
+  { href: "/services/app-development", label: "Mobile Apps", desc: "Native and cross-platform apps.", icon: "📱" },
+  { href: "/services/creative-digital-solutions", label: "Creative & Digital Solutions", desc: "Design, branding & digital growth.", icon: "🎨" },
+  { href: "/services/devops-cloud-solutions", label: "DevOps & Cloud Solutions", desc: "CI/CD, cloud infra & scalability.", icon: "☁️" },
 ];
 
 const links: NavLink[] = [
-  { href: "/",          label: "Home" },
-  { href: "/about",     label: "About",    submenu: aboutSubmenu },
-  { href: "/services",  label: "Services", submenu: servicesSubmenu, isMega: true },
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About", submenu: aboutSubmenu },
+  { href: "/services", label: "Services", submenu: servicesSubmenu, isMega: true },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/pricing",   label: "Pricing" },
-  { href: "/career",    label: "Career" },
-  { href: "/contact",   label: "Contact" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/blog", label: "Blog" },
+  { href: "/career", label: "Career" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Navbar({ settings }: NavbarProps) {
-  const pathname   = usePathname();
-  const [open, setOpen]           = useState(false);
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
-  const dropdownRef  = useRef<HTMLLIElement>(null);
-  const leaveTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const dropdownRef = useRef<HTMLLIElement>(null);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // ── Underline state ──
+  const navRef = useRef<HTMLUListElement>(null);
+  const linkRefs = useRef<Map<string, HTMLLIElement>>(new Map());
+  const [underline, setUnderline] = useState({ left: 0, width: 0, opacity: 0 });
+
+  // ── Helper — determine if a link is active ──
+  const isLinkActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  // ── Recalculate underline position on route change + resize ──
+  useEffect(() => {
+    const update = () => {
+      const nav = navRef.current;
+      if (!nav) return;
+
+      const activeLink = links.find((l) => isLinkActive(l.href));
+      if (!activeLink) {
+        setUnderline((s) => ({ ...s, opacity: 0 }));
+        return;
+      }
+
+      const el = linkRefs.current.get(activeLink.href);
+      if (!el) return;
+
+      const elRect = el.getBoundingClientRect();
+      const navRect = nav.getBoundingClientRect();
+
+      setUnderline({
+        left: elRect.left - navRect.left,
+        width: elRect.width,
+        opacity: 1,
+      });
+    };
+
+    const t = setTimeout(update, 10);
+    window.addEventListener("resize", update);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("resize", update);
+    };
+  }, [pathname]);
 
   // Auto-close drawer on scroll (>10px threshold)
   useEffect(() => {
@@ -99,15 +142,22 @@ export default function Navbar({ settings }: NavbarProps) {
           </Link>
 
           {/* ── Desktop links ── */}
-          <ul className="hidden md:flex items-center gap-4 lg:gap-6">
+          <ul
+            ref={navRef}
+            className="hidden md:flex items-center gap-4 lg:gap-6 relative"
+          >
             {links.map((l) => {
-              const isActive = pathname.startsWith(l.href) && l.href !== "/";
+              const isActive = isLinkActive(l.href);
               const isHovered = hoveredMenu === l.label;
 
               return l.submenu ? (
                 /* Menu with dropdown */
                 <li
                   key={l.href}
+                  ref={(node) => {
+                    if (node) linkRefs.current.set(l.href, node);
+                    else linkRefs.current.delete(l.href);
+                  }}
                   className="relative flex h-10 items-center"
                   onMouseEnter={() => {
                     if (leaveTimer.current) clearTimeout(leaveTimer.current);
@@ -118,9 +168,8 @@ export default function Navbar({ settings }: NavbarProps) {
                   }}
                 >
                   <button
-                    className={`flex h-10 items-center gap-1 px-2 text-sm lg:text-base font-bold transition-colors duration-200 cursor-pointer ${
-                      isActive ? "text-blue-600" : "text-gray-700 hover:text-blue-600"
-                    }`}
+                    className={`flex h-10 items-center gap-1 px-2 text-sm lg:text-base font-bold transition-colors duration-200 cursor-pointer ${isActive ? "text-blue-600" : "text-gray-700 hover:text-blue-600"
+                      }`}
                   >
                     {l.label}
                     <svg
@@ -136,11 +185,10 @@ export default function Navbar({ settings }: NavbarProps) {
 
                   {/* Dropdown panel */}
                   <div
-                    className={`absolute top-full left-1/2 -translate-x-1/2 translate-y-4 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 origin-top ${
-                      isHovered
+                    className={`absolute top-full left-1/2 -translate-x-1/2 translate-y-4 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 origin-top ${isHovered
                         ? "opacity-100 scale-100 pointer-events-auto"
                         : "opacity-0 scale-95 pointer-events-none"
-                    } ${l.isMega ? "w-[400px]" : "w-52"}`}
+                      } ${l.isMega ? "w-[400px]" : "w-52"}`}
                   >
                     {/* Small arrow caret */}
                     <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-l border-t border-gray-100 rotate-45" />
@@ -182,11 +230,10 @@ export default function Navbar({ settings }: NavbarProps) {
                             <Link
                               href={sub.href}
                               onClick={() => setHoveredMenu(null)}
-                              className={`flex items-center gap-3 px-4 py-2.5 text-sm lg:text-base font-medium transition-colors duration-150 ${
-                                pathname === sub.href
+                              className={`flex items-center gap-3 px-4 py-2.5 text-sm lg:text-base font-medium transition-colors duration-150 ${pathname === sub.href
                                   ? "bg-blue-50 text-blue-600"
                                   : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
-                              }`}
+                                }`}
                             >
                               {sub.label}
                             </Link>
@@ -198,18 +245,34 @@ export default function Navbar({ settings }: NavbarProps) {
                 </li>
               ) : (
                 /* Normal link */
-                <li key={l.href}>
+                <li
+                  key={l.href}
+                  ref={(node) => {
+                    if (node) linkRefs.current.set(l.href, node);
+                    else linkRefs.current.delete(l.href);
+                  }}
+                >
                   <Link
                     href={l.href}
-                    className={`flex h-10 items-center px-2 text-sm lg:text-base font-bold transition-colors duration-200 ${
-                      pathname === l.href ? "text-blue-600" : "text-gray-700 hover:text-blue-600"
-                    }`}
+                    className={`flex h-10 items-center px-2 text-sm lg:text-base font-bold transition-colors duration-200 ${isActive ? "text-blue-600" : "text-gray-700 hover:text-blue-600"
+                      }`}
                   >
                     {l.label}
                   </Link>
                 </li>
               );
             })}
+
+            {/* Animated underline */}
+            <span
+              aria-hidden
+              className="absolute -bottom-1 h-[2px] bg-blue-600 rounded-full transition-all duration-300 ease-out pointer-events-none"
+              style={{
+                left: `${underline.left}px`,
+                width: `${underline.width}px`,
+                opacity: underline.opacity,
+              }}
+            />
           </ul>
 
           {/* Hamburger */}
@@ -229,17 +292,15 @@ export default function Navbar({ settings }: NavbarProps) {
 
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden transition-opacity duration-300 ${
-          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden transition-opacity duration-300 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
         onClick={() => setOpen(false)}
       />
 
       {/* Drawer panel */}
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-72 bg-white shadow-2xl md:hidden flex flex-col transition-transform duration-300 ease-in-out ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed top-0 right-0 z-50 h-full w-72 bg-white shadow-2xl md:hidden flex flex-col transition-transform duration-300 ease-in-out ${open ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         {/* Drawer header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
@@ -271,7 +332,7 @@ export default function Navbar({ settings }: NavbarProps) {
         {/* Nav links */}
         <ul className="flex flex-col gap-1 px-4 py-6 flex-1 overflow-y-auto">
           {links.map((l, i) => {
-            const isActive = pathname.startsWith(l.href) && l.href !== "/";
+            const isActive = isLinkActive(l.href);
             const isMenuOpen = l.label === "About" ? aboutOpen : l.label === "Services" ? servicesOpen : false;
             const toggleMenu = () => {
               if (l.label === "About") setAboutOpen(!aboutOpen);
@@ -287,9 +348,8 @@ export default function Navbar({ settings }: NavbarProps) {
               >
                 <button
                   onClick={toggleMenu}
-                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer ${
-                    isActive ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
-                  }`}
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer ${isActive ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+                    }`}
                 >
                   <span>{l.label}</span>
                   <svg
@@ -310,11 +370,10 @@ export default function Navbar({ settings }: NavbarProps) {
                         <Link
                           href={sub.href}
                           onClick={() => setOpen(false)}
-                          className={`flex items-start gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 ${
-                            pathname === sub.href
+                          className={`flex items-start gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 ${pathname === sub.href
                               ? "bg-blue-50 text-blue-600"
                               : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"
-                          }`}
+                            }`}
                         >
                           {l.isMega && sub.icon && <span className="text-lg mt-0.5">{sub.icon}</span>}
                           <div>
@@ -337,9 +396,8 @@ export default function Navbar({ settings }: NavbarProps) {
                 <Link
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                    pathname === l.href ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
-                  }`}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${pathname === l.href ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+                    }`}
                 >
                   {l.label}
                 </Link>

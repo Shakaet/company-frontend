@@ -1025,3 +1025,23 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   const settings = await getSiteSettingsFromApi();
   return settings ?? FALLBACK_SETTINGS;
 }
+
+// src/lib/data.ts — append at bottom
+
+export async function getBlogBySlug(slug: string): Promise<BlogPost | undefined> {
+  return blogs.find((b) => b.slug === slug);
+}
+
+export async function getRelatedBlogs(
+  currentSlug: string,
+  category?: string
+): Promise<BlogPost[]> {
+  // Prefer same category, exclude current
+  const sameCategory = blogs.filter(
+    (b) => b.slug !== currentSlug && category && b.category === category
+  );
+  if (sameCategory.length >= 3) return sameCategory.slice(0, 3);
+
+  // Fallback: any other posts
+  return blogs.filter((b) => b.slug !== currentSlug).slice(0, 3);
+}
