@@ -33,13 +33,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getBlogBySlug(slug);
 
-  if (!post) return { title: "Article Not Found | NeutrinoByte" };
+  if (!post) return { title: "Article Not Found" };
 
   return {
-    title: `${post.title} | NeutrinoByte Blog`,
+    title: post.title,
     description: post.excerpt,
     openGraph: {
-      title: `${post.title} | NeutrinoByte Blog`,
+      title: `${post.title} | NeutrinoByte`,
       description: post.excerpt,
       images: post.cover ? [{ url: post.cover }] : undefined,
     },
@@ -178,7 +178,11 @@ export default async function BlogDetailPage({
             <PostContent post={post} />
 
             {/* Social Share Strip */}
-            <ShareButtons url="" title={post.title} />
+            <ShareButtons
+              slug={post.slug}
+              url={`https://www.neutrinobyte.com/blog/${post.slug}`}
+              title={post.title}
+            />
 
             {/* Mobile Author Card (shown below article on mobile) */}
             <div className="block lg:hidden pt-4">

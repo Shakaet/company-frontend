@@ -4,6 +4,7 @@ import { useState } from "react";
 
 interface ShareButtonsProps {
   url?: string;
+  slug?: string;
   title?: string;
 }
 
@@ -26,16 +27,35 @@ const XIcon = () => (
   </svg>
 );
 
-export default function ShareButtons({ url = "", title = "" }: ShareButtonsProps) {
+export default function ShareButtons({
+  url = "",
+  slug = "",
+  title = "",
+}: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
 
-  const shareUrl = url || (typeof window !== "undefined" ? window.location.href : "");
-  const encodedUrl = encodeURIComponent(shareUrl);
-  const encodedTitle = encodeURIComponent(title);
+  const productionBaseUrl = "https://www.neutrinobyte.com";
+
+  // Always produce a clean production URL for copying, replacing any localhost origin
+  const getCleanUrl = () => {
+    if (url) {
+      return url.replace(/^https?:\/\/localhost(:\d+)?/i, productionBaseUrl);
+    }
+    if (slug) {
+      return `${productionBaseUrl}/blog/${slug}`;
+    }
+    if (typeof window !== "undefined") {
+      const pathname = window.location.pathname;
+      return `${productionBaseUrl}${pathname}`;
+    }
+    return `${productionBaseUrl}/blog`;
+  };
+
+  const copyUrl = getCleanUrl();
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(shareUrl);
+      await navigator.clipboard.writeText(copyUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -48,36 +68,36 @@ export default function ShareButtons({ url = "", title = "" }: ShareButtonsProps
       <span className="text-xs sm:text-sm font-bold text-slate-600 mr-1">Share:</span>
 
       <a
-        href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
+        href="https://www.facebook.com/neutrinobyte"
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white border border-slate-200/90 text-slate-700 hover:border-blue-300 hover:text-blue-600 text-xs sm:text-sm font-medium transition-all shadow-2xs"
-        aria-label="Share on Facebook"
+        aria-label="NeutrinoByte on Facebook"
       >
         <FacebookIcon />
         <span>Facebook</span>
       </a>
 
       <a
-        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
+        href="https://www.linkedin.com/company/neutrinobyte/"
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white border border-slate-200/90 text-slate-700 hover:border-blue-300 hover:text-blue-600 text-xs sm:text-sm font-medium transition-all shadow-2xs"
-        aria-label="Share on LinkedIn"
+        aria-label="NeutrinoByte on LinkedIn"
       >
         <LinkedinIcon />
         <span>LinkedIn</span>
       </a>
 
       <a
-        href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`}
+        href="https://x.com/NeutrinoByte"
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white border border-slate-200/90 text-slate-700 hover:border-blue-300 hover:text-blue-600 text-xs sm:text-sm font-medium transition-all shadow-2xs"
-        aria-label="Share on X"
+        aria-label="NeutrinoByte on X"
       >
         <XIcon />
-        <span className="hidden xs:inline">Post</span>
+        <span className="hidden xs:inline">X (Twitter)</span>
       </a>
 
       <button
