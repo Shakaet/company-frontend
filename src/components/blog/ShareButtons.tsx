@@ -44,51 +44,57 @@ export default function ShareButtons({ url = "", title = "" }: ShareButtonsProps
   };
 
   return (
-    <div className="mt-12 pt-8 border-t border-slate-200 flex flex-wrap items-center gap-3">
-      <span className="text-sm font-semibold text-slate-500 mr-1">Share:</span>
+    <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-slate-200/90 flex flex-wrap items-center gap-2 sm:gap-3">
+      <span className="text-xs sm:text-sm font-bold text-slate-600 mr-1">Share:</span>
 
       <a
         href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-blue-300 hover:text-blue-600 text-sm font-medium transition-all"
+        className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white border border-slate-200/90 text-slate-700 hover:border-blue-300 hover:text-blue-600 text-xs sm:text-sm font-medium transition-all shadow-2xs"
+        aria-label="Share on Facebook"
       >
         <FacebookIcon />
-        Facebook
+        <span>Facebook</span>
       </a>
 
       <a
         href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-blue-300 hover:text-blue-600 text-sm font-medium transition-all"
+        className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white border border-slate-200/90 text-slate-700 hover:border-blue-300 hover:text-blue-600 text-xs sm:text-sm font-medium transition-all shadow-2xs"
+        aria-label="Share on LinkedIn"
       >
         <LinkedinIcon />
-        LinkedIn
+        <span>LinkedIn</span>
       </a>
 
       <a
         href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-blue-300 hover:text-blue-600 text-sm font-medium transition-all"
+        className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white border border-slate-200/90 text-slate-700 hover:border-blue-300 hover:text-blue-600 text-xs sm:text-sm font-medium transition-all shadow-2xs"
+        aria-label="Share on X"
       >
         <XIcon />
+        <span className="hidden xs:inline">Post</span>
       </a>
 
       <button
+        type="button"
         onClick={handleCopy}
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-blue-300 hover:text-blue-600 text-sm font-medium transition-all cursor-pointer"
+        className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white border border-slate-200/90 text-slate-700 hover:border-blue-300 hover:text-blue-600 text-xs sm:text-sm font-medium transition-all shadow-2xs cursor-pointer"
+        aria-label="Copy article link"
       >
         {copied ? (
           <>
-            <Check className="w-4 h-4 text-emerald-600" />
-            Copied!
+            <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0" />
+            <span className="text-emerald-700 font-semibold">Copied!</span>
           </>
         ) : (
           <>
-            <LinkIcon className="w-4 h-4" />
-            Copy link
+            <LinkIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+            <span>Copy link</span>
           </>
         )}
       </button>
