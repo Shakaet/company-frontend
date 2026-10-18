@@ -7,6 +7,7 @@ type FetchOptions = RequestInit & {
   /** If true, return parsed JSON even on 4xx/5xx (useful for validation errors) */
   allowErrorResponse?: boolean;
 };
+//
 
 export async function apiFetch<T>(
   endpoint: string,
