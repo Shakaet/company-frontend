@@ -10,6 +10,19 @@ body {
 
 html { scroll-behavior: smooth; }
 
+/* Keep the floating chat toggle evenly spaced between WhatsApp and scroll-to-top. */
+#site-n8n-chat {
+  --chat--window--bottom: 6rem;
+  --chat--window--right: 1.5rem;
+  --chat--window--margin-bottom: 0;
+}
+
+@media (min-width: 48rem) {
+  #site-n8n-chat {
+    --chat--window--right: 3.75rem;
+  }
+}
+
 @utility container-x {
   max-width: 80rem;
   margin-left: auto;

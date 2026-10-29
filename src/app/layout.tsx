@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FloatingWhatsApp from "@/components/layout/FloatingWhatsApp";
 import ScrollToTop from "@/components/layout/ScrollToTop";
+import N8nChat from "@/components/portfolio/N8nChat";
 import { getSiteSettings } from "@/lib/data";
 import PageTransition from "@/components/layout/PageTransition";
 
@@ -121,6 +122,7 @@ export default async function RootLayout({
         <Footer settings={settings} />
         <FloatingWhatsApp settings={settings} />
         <ScrollToTop />
+        <N8nChat />
       </body>
     </html>
   );
