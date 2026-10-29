@@ -21,7 +21,7 @@ export default function ScrollToTop() {
 
       const footerRect = footer.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
-      const BUTTON_OFFSET = 96; // matches bottom-[96px]
+      const BUTTON_OFFSET = 204;
       const BUTTON_CENTER_Y = viewportHeight - BUTTON_OFFSET;
 
       setOverFooter(footerRect.top <= BUTTON_CENTER_Y);
@@ -44,7 +44,7 @@ export default function ScrollToTop() {
     <button
       onClick={scrollToTop}
       aria-label="Scroll to top"
-      className={`group cursor-pointer fixed bottom-[96px] right-6 md:right-15 z-40 p-4 rounded-full transition-all duration-300 ${
+      className={`group cursor-pointer fixed bottom-[176px] right-6 md:right-15 z-40 p-4 rounded-full transition-all duration-300 ${
         isVisible
           ? "opacity-100 pointer-events-auto translate-y-0"
           : "opacity-0 pointer-events-none translate-y-4"
